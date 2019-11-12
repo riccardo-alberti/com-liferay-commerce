@@ -51,6 +51,8 @@ public class CommerceAdminModuleRegistry {
 				_log.debug(pe, pe);
 			}
 		}
+		
+		System.out.println("This is a test statement");
 
 		return commerceAdminModules;
 	}
