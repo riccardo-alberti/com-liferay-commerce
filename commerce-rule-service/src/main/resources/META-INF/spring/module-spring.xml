@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+	<bean class="com.liferay.commerce.rule.service.impl.CommerceRuleLocalServiceImpl" id="com.liferay.commerce.rule.service.CommerceRuleLocalService" />
+	<bean class="com.liferay.commerce.rule.service.impl.CommerceRuleServiceImpl" id="com.liferay.commerce.rule.service.CommerceRuleService" />
+	<bean class="com.liferay.commerce.rule.service.persistence.impl.CommerceRulePersistenceImpl" id="com.liferay.commerce.rule.service.persistence.CommerceRulePersistence" parent="basePersistence" />
+</beans>
