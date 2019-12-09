@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Commerce Rule Type Standard
+Bundle-SymbolicName: com.liferay.commerce.rule.type.standard
+Bundle-Version: 1.0.0
+Web-ContextPath: /commerce-rule-type-standard
