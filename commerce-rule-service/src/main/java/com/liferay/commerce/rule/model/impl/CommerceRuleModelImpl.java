@@ -77,9 +77,9 @@ public class CommerceRuleModelImpl
 		{"commerceRuleId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"description", Types.VARCHAR}, {"title", Types.VARCHAR},
 		{"type_", Types.VARCHAR}, {"typeSettings", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"displayDate", Types.TIMESTAMP},
-		{"expirationDate", Types.TIMESTAMP},
+		{"displayDate", Types.TIMESTAMP}, {"expirationDate", Types.TIMESTAMP},
 		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
 		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
 		{"statusDate", Types.TIMESTAMP}
@@ -95,9 +95,10 @@ public class CommerceRuleModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("typeSettings", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
@@ -108,7 +109,7 @@ public class CommerceRuleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceRule (commerceRuleId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null,description VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table CommerceRule (commerceRuleId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,description VARCHAR(75) null,title VARCHAR(75) null,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceRule";
 
@@ -168,9 +169,10 @@ public class CommerceRuleModelImpl
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setDescription(soapModel.getDescription());
+		model.setTitle(soapModel.getTitle());
 		model.setType(soapModel.getType());
 		model.setTypeSettings(soapModel.getTypeSettings());
-		model.setDescription(soapModel.getDescription());
 		model.setDisplayDate(soapModel.getDisplayDate());
 		model.setExpirationDate(soapModel.getExpirationDate());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
@@ -465,6 +467,50 @@ public class CommerceRuleModelImpl
 
 			});
 		attributeGetterFunctions.put(
+			"description",
+			new Function<CommerceRule, Object>() {
+
+				@Override
+				public Object apply(CommerceRule commerceRule) {
+					return commerceRule.getDescription();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"description",
+			new BiConsumer<CommerceRule, Object>() {
+
+				@Override
+				public void accept(
+					CommerceRule commerceRule, Object descriptionObject) {
+
+					commerceRule.setDescription((String)descriptionObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"title",
+			new Function<CommerceRule, Object>() {
+
+				@Override
+				public Object apply(CommerceRule commerceRule) {
+					return commerceRule.getTitle();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"title",
+			new BiConsumer<CommerceRule, Object>() {
+
+				@Override
+				public void accept(
+					CommerceRule commerceRule, Object titleObject) {
+
+					commerceRule.setTitle((String)titleObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
 			"type",
 			new Function<CommerceRule, Object>() {
 
@@ -505,28 +551,6 @@ public class CommerceRuleModelImpl
 					CommerceRule commerceRule, Object typeSettingsObject) {
 
 					commerceRule.setTypeSettings((String)typeSettingsObject);
-				}
-
-			});
-		attributeGetterFunctions.put(
-			"description",
-			new Function<CommerceRule, Object>() {
-
-				@Override
-				public Object apply(CommerceRule commerceRule) {
-					return commerceRule.getDescription();
-				}
-
-			});
-		attributeSetterBiConsumers.put(
-			"description",
-			new BiConsumer<CommerceRule, Object>() {
-
-				@Override
-				public void accept(
-					CommerceRule commerceRule, Object descriptionObject) {
-
-					commerceRule.setDescription((String)descriptionObject);
 				}
 
 			});
@@ -802,6 +826,38 @@ public class CommerceRuleModelImpl
 
 	@JSON
 	@Override
+	public String getDescription() {
+		if (_description == null) {
+			return "";
+		}
+		else {
+			return _description;
+		}
+	}
+
+	@Override
+	public void setDescription(String description) {
+		_description = description;
+	}
+
+	@JSON
+	@Override
+	public String getTitle() {
+		if (_title == null) {
+			return "";
+		}
+		else {
+			return _title;
+		}
+	}
+
+	@Override
+	public void setTitle(String title) {
+		_title = title;
+	}
+
+	@JSON
+	@Override
 	public String getType() {
 		if (_type == null) {
 			return "";
@@ -830,22 +886,6 @@ public class CommerceRuleModelImpl
 	@Override
 	public void setTypeSettings(String typeSettings) {
 		_typeSettings = typeSettings;
-	}
-
-	@JSON
-	@Override
-	public String getDescription() {
-		if (_description == null) {
-			return "";
-		}
-		else {
-			return _description;
-		}
-	}
-
-	@Override
-	public void setDescription(String description) {
-		_description = description;
 	}
 
 	@JSON
@@ -1100,9 +1140,10 @@ public class CommerceRuleModelImpl
 		commerceRuleImpl.setUserName(getUserName());
 		commerceRuleImpl.setCreateDate(getCreateDate());
 		commerceRuleImpl.setModifiedDate(getModifiedDate());
+		commerceRuleImpl.setDescription(getDescription());
+		commerceRuleImpl.setTitle(getTitle());
 		commerceRuleImpl.setType(getType());
 		commerceRuleImpl.setTypeSettings(getTypeSettings());
-		commerceRuleImpl.setDescription(getDescription());
 		commerceRuleImpl.setDisplayDate(getDisplayDate());
 		commerceRuleImpl.setExpirationDate(getExpirationDate());
 		commerceRuleImpl.setLastPublishDate(getLastPublishDate());
@@ -1230,6 +1271,22 @@ public class CommerceRuleModelImpl
 			commerceRuleCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		commerceRuleCacheModel.description = getDescription();
+
+		String description = commerceRuleCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			commerceRuleCacheModel.description = null;
+		}
+
+		commerceRuleCacheModel.title = getTitle();
+
+		String title = commerceRuleCacheModel.title;
+
+		if ((title != null) && (title.length() == 0)) {
+			commerceRuleCacheModel.title = null;
+		}
+
 		commerceRuleCacheModel.type = getType();
 
 		String type = commerceRuleCacheModel.type;
@@ -1244,14 +1301,6 @@ public class CommerceRuleModelImpl
 
 		if ((typeSettings != null) && (typeSettings.length() == 0)) {
 			commerceRuleCacheModel.typeSettings = null;
-		}
-
-		commerceRuleCacheModel.description = getDescription();
-
-		String description = commerceRuleCacheModel.description;
-
-		if ((description != null) && (description.length() == 0)) {
-			commerceRuleCacheModel.description = null;
 		}
 
 		Date displayDate = getDisplayDate();
@@ -1384,9 +1433,10 @@ public class CommerceRuleModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _description;
+	private String _title;
 	private String _type;
 	private String _typeSettings;
-	private String _description;
 	private Date _displayDate;
 	private Date _originalDisplayDate;
 	private Date _expirationDate;

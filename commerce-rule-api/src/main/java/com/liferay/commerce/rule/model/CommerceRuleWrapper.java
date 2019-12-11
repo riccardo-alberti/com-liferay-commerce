@@ -61,9 +61,10 @@ public class CommerceRuleWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("description", getDescription());
+		attributes.put("title", getTitle());
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
-		attributes.put("description", getDescription());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -113,6 +114,18 @@ public class CommerceRuleWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		String description = (String)attributes.get("description");
+
+		if (description != null) {
+			setDescription(description);
+		}
+
+		String title = (String)attributes.get("title");
+
+		if (title != null) {
+			setTitle(title);
+		}
+
 		String type = (String)attributes.get("type");
 
 		if (type != null) {
@@ -123,12 +136,6 @@ public class CommerceRuleWrapper
 
 		if (typeSettings != null) {
 			setTypeSettings(typeSettings);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
 		}
 
 		Date displayDate = (Date)attributes.get("displayDate");
@@ -344,6 +351,16 @@ public class CommerceRuleWrapper
 	@Override
 	public Date getStatusDate() {
 		return _commerceRule.getStatusDate();
+	}
+
+	/**
+	 * Returns the title of this commerce rule.
+	 *
+	 * @return the title of this commerce rule
+	 */
+	@Override
+	public String getTitle() {
+		return _commerceRule.getTitle();
 	}
 
 	/**
@@ -683,6 +700,16 @@ public class CommerceRuleWrapper
 	@Override
 	public void setStatusDate(Date statusDate) {
 		_commerceRule.setStatusDate(statusDate);
+	}
+
+	/**
+	 * Sets the title of this commerce rule.
+	 *
+	 * @param title the title of this commerce rule
+	 */
+	@Override
+	public void setTitle(String title) {
+		_commerceRule.setTitle(title);
 	}
 
 	/**

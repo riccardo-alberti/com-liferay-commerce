@@ -14,11 +14,11 @@
 
 package com.liferay.commerce.rule.model.impl;
 
-import java.io.IOException;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+
+import java.io.IOException;
 
 /**
  * The extended model implementation for the CommerceRule service. Represents a row in the &quot;CommerceRule&quot; database table, with each column mapped to a property of this class.
@@ -80,4 +80,5 @@ public class CommerceRuleImpl extends CommerceRuleBaseImpl {
 		CommerceRuleImpl.class);
 
 	private UnicodeProperties _settingsProperties;
+
 }

@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.rule.type;
 
+import aQute.bnd.annotation.ProviderType;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Riccardo Alberti
@@ -26,8 +26,7 @@ import aQute.bnd.annotation.ProviderType;
 public interface CommerceRuleTypeJSPContributor {
 
 	public void render(
-			long commerceRuleId,
-			HttpServletRequest httpServletRequest,
+			long commerceRuleId, HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception;
 

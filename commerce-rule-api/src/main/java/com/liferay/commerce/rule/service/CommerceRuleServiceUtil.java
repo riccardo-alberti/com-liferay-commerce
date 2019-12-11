@@ -44,12 +44,12 @@ public class CommerceRuleServiceUtil {
 	 * Never reference this class directly. Always use <code>CommerceRuleServiceUtil</code> to access the commerce rule remote service.
 	 */
 	public static com.liferay.commerce.rule.model.CommerceRule addCommerceRule(
-			String type, String typeSettings, String description,
+			String description, String title, String type, String typeSettings,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addCommerceRule(
-			type, typeSettings, description, serviceContext);
+			description, title, type, typeSettings, serviceContext);
 	}
 
 	public static com.liferay.commerce.rule.model.CommerceRule getCommerceRule(

@@ -26,8 +26,7 @@ import java.util.Comparator;
  * @author Riccardo Alberti
  */
 public class CommerceRuleTypeOrderComparator
-	implements Comparator<ServiceWrapper<CommerceRuleType>>,
-			   Serializable {
+	implements Comparator<ServiceWrapper<CommerceRuleType>>, Serializable {
 
 	public CommerceRuleTypeOrderComparator() {
 		this(true);

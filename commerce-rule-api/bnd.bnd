@@ -4,6 +4,6 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.commerce.rule.exception,\
 	com.liferay.commerce.rule.model,\
-	com.liferay.commerce.rule.type,\
 	com.liferay.commerce.rule.service,\
-	com.liferay.commerce.rule.service.persistence
+	com.liferay.commerce.rule.service.persistence,\
+	com.liferay.commerce.rule.type

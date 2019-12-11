@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.rule.type;
 
-import java.util.List;
-
 import aQute.bnd.annotation.ProviderType;
+
+import java.util.List;
 
 /**
  * @author Riccardo Alberti
@@ -24,8 +24,8 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public interface CommerceRuleTypeJSPContributorRegistry {
 
-	public CommerceRuleTypeJSPContributor
-		getCommerceRuleTypeJSPContributor(String key);
+	public CommerceRuleTypeJSPContributor getCommerceRuleTypeJSPContributor(
+		String key);
 
 	public List<CommerceRuleTypeJSPContributor>
 		getCommerceRuleTypeJSPContributors();

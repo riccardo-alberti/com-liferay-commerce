@@ -132,11 +132,13 @@ public class CommerceRulePersistenceTest {
 
 		newCommerceRule.setModifiedDate(RandomTestUtil.nextDate());
 
+		newCommerceRule.setDescription(RandomTestUtil.randomString());
+
+		newCommerceRule.setTitle(RandomTestUtil.randomString());
+
 		newCommerceRule.setType(RandomTestUtil.randomString());
 
 		newCommerceRule.setTypeSettings(RandomTestUtil.randomString());
-
-		newCommerceRule.setDescription(RandomTestUtil.randomString());
 
 		newCommerceRule.setDisplayDate(RandomTestUtil.nextDate());
 
@@ -174,13 +176,15 @@ public class CommerceRulePersistenceTest {
 			Time.getShortTimestamp(existingCommerceRule.getModifiedDate()),
 			Time.getShortTimestamp(newCommerceRule.getModifiedDate()));
 		Assert.assertEquals(
+			existingCommerceRule.getDescription(),
+			newCommerceRule.getDescription());
+		Assert.assertEquals(
+			existingCommerceRule.getTitle(), newCommerceRule.getTitle());
+		Assert.assertEquals(
 			existingCommerceRule.getType(), newCommerceRule.getType());
 		Assert.assertEquals(
 			existingCommerceRule.getTypeSettings(),
 			newCommerceRule.getTypeSettings());
-		Assert.assertEquals(
-			existingCommerceRule.getDescription(),
-			newCommerceRule.getDescription());
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingCommerceRule.getDisplayDate()),
 			Time.getShortTimestamp(newCommerceRule.getDisplayDate()));
@@ -253,10 +257,10 @@ public class CommerceRulePersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"CommerceRule", "commerceRuleId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"type", true, "typeSettings", true, "description", true,
-			"displayDate", true, "expirationDate", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			"description", true, "title", true, "type", true, "typeSettings",
+			true, "displayDate", true, "expirationDate", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -487,11 +491,13 @@ public class CommerceRulePersistenceTest {
 
 		commerceRule.setModifiedDate(RandomTestUtil.nextDate());
 
+		commerceRule.setDescription(RandomTestUtil.randomString());
+
+		commerceRule.setTitle(RandomTestUtil.randomString());
+
 		commerceRule.setType(RandomTestUtil.randomString());
 
 		commerceRule.setTypeSettings(RandomTestUtil.randomString());
-
-		commerceRule.setDescription(RandomTestUtil.randomString());
 
 		commerceRule.setDisplayDate(RandomTestUtil.nextDate());
 

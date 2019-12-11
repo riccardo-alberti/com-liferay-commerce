@@ -14,17 +14,6 @@
 
 package com.liferay.commerce.rule.test;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.frutilla.FrutillaRule;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -55,17 +44,29 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.frutilla.FrutillaRule;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 /**
  * @author Riccardo Alberti
  */
 @RunWith(Arquillian.class)
 public class CommerceRuleTest {
-	
+
 	@ClassRule
 	@Rule
 	public static AggregateTestRule aggregateTestRule = new AggregateTestRule(
 		new LiferayIntegrationTestRule(), PermissionCheckerTestRule.INSTANCE);
-	
+
 	@Before
 	public void setUp() throws Exception {
 		_user = UserTestUtil.addUser();
@@ -76,54 +77,53 @@ public class CommerceRuleTest {
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_commerceCurrency.getCode());
 	}
-	
+
 	@Test
 	public void testRuleAddedAll() throws Exception {
-		List<CommerceRuleType> commerceRuleTypes = _commerceRuleTypRegistry.getCommerceRuleTypes();
-		
+		List<CommerceRuleType> commerceRuleTypes =
+			_commerceRuleTypeRegistry.getCommerceRuleTypes();
+
 		Assert.assertNotEquals(0, commerceRuleTypes.size());
-		
-		CommerceRuleType commerceRuleType = _commerceRuleTypRegistry.getCommerceRuleType("added-all");
-		
+
+		CommerceRuleType commerceRuleType =
+			_commerceRuleTypeRegistry.getCommerceRuleType("added-all");
+
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-				_user.getUserId(), _commerceChannel.getSiteGroupId(),
-				_commerceCurrency);
-		
+			_user.getUserId(), _commerceChannel.getSiteGroupId(),
+			_commerceCurrency);
+
 		CPInstance cpInstance = CPTestUtil.addCPInstance();
-		
+
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-				CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
 
-			CommerceTestUtil.addWarehouseCommerceChannelRel(
-				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				_commerceChannel.getCommerceChannelId());
+		CommerceTestUtil.addWarehouseCommerceChannelRel(
+			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+			_commerceChannel.getCommerceChannelId());
 
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
-				_user.getUserId(), commerceInventoryWarehouse, cpInstance.getSku(),
-				10);
-		
+		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
+			_user.getUserId(), commerceInventoryWarehouse, cpInstance.getSku(),
+			10);
+
 		CommerceTestUtil.addCommerceOrderItem(
-				commerceOrder.getCommerceOrderId(),
-				cpInstance.getCPInstanceId(), 1);
-		
-		CommerceRule commerceRule = _commerceRuleService.addCommerceRule("added-all", 
-				String.valueOf(cpInstance.getCPDefinitionId()), RandomTestUtil.randomString() ,ServiceContextTestUtil.getServiceContext(_user.getGroupId()));
-		
+			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
+			1);
+
+		CommerceRule commerceRule = _commerceRuleService.addCommerceRule(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			"added-all", String.valueOf(cpInstance.getCPDefinitionId()),
+			ServiceContextTestUtil.getServiceContext(_user.getGroupId()));
+
 		CommerceContext commerceContext = new TestCommerceContext(
-				commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
-				null, commerceOrder);
-		
-		boolean commerceRuleEvaluate = commerceRuleType.evaluate(commerceRule, commerceContext);
-		
+			commerceOrder.getCommerceCurrency(), _commerceChannel, null, null,
+			null, commerceOrder);
+
+		boolean commerceRuleEvaluate = commerceRuleType.evaluate(
+			commerceRule, commerceContext);
+
 		Assert.assertEquals(true, commerceRuleEvaluate);
 	}
-	
-	@Inject
-	private CommerceRuleTypeRegistry _commerceRuleTypRegistry;
-	
-	@Inject
-	private CommerceRuleService _commerceRuleService;
-	
+
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
@@ -145,8 +145,16 @@ public class CommerceRuleTest {
 	private CommerceOrderLocalService _commerceOrderLocalService;
 
 	private List<CommerceOrder> _commerceOrders;
+
+	@Inject
+	private CommerceRuleService _commerceRuleService;
+
+	@Inject
+	private CommerceRuleTypeRegistry _commerceRuleTypeRegistry;
+
 	private User _user;
 
 	@Inject
 	private UserLocalService _userLocalService;
+
 }

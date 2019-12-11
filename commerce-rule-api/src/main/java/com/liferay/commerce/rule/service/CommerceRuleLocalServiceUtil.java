@@ -56,12 +56,12 @@ public class CommerceRuleLocalServiceUtil {
 	 * Never reference this class directly. Use <code>CommerceRuleLocalService</code> via injection or a <code>ServiceTracker</code> or use <code>CommerceRuleLocalServiceUtil</code>.
 	 */
 	public static com.liferay.commerce.rule.model.CommerceRule addCommerceRule(
-			String type, String typeSettings, String description,
+			String description, String title, String type, String typeSettings,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addCommerceRule(
-			type, typeSettings, description, serviceContext);
+			description, title, type, typeSettings, serviceContext);
 	}
 
 	/**

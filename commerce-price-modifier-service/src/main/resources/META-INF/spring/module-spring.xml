@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+	<bean class="com.liferay.commerce.price.modifier.service.impl.CommercePriceModifierLocalServiceImpl" id="com.liferay.commerce.price.modifier.service.CommercePriceModifierLocalService" />
+	<bean class="com.liferay.commerce.price.modifier.service.impl.CommercePriceModifierServiceImpl" id="com.liferay.commerce.price.modifier.service.CommercePriceModifierService" />
+	<bean class="com.liferay.commerce.price.modifier.service.persistence.impl.CommercePriceModifierPersistenceImpl" id="com.liferay.commerce.price.modifier.service.persistence.CommercePriceModifierPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.price.modifier.service.impl.CommercePriceModifierRelLocalServiceImpl" id="com.liferay.commerce.price.modifier.service.CommercePriceModifierRelLocalService" />
+	<bean class="com.liferay.commerce.price.modifier.service.impl.CommercePriceModifierRelServiceImpl" id="com.liferay.commerce.price.modifier.service.CommercePriceModifierRelService" />
+	<bean class="com.liferay.commerce.price.modifier.service.persistence.impl.CommercePriceModifierRelPersistenceImpl" id="com.liferay.commerce.price.modifier.service.persistence.CommercePriceModifierRelPersistence" parent="basePersistence" />
+</beans>

@@ -62,7 +62,7 @@ public class CommerceRuleCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{commerceRuleId=");
 		sb.append(commerceRuleId);
@@ -76,12 +76,14 @@ public class CommerceRuleCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", description=");
+		sb.append(description);
+		sb.append(", title=");
+		sb.append(title);
 		sb.append(", type=");
 		sb.append(type);
 		sb.append(", typeSettings=");
 		sb.append(typeSettings);
-		sb.append(", description=");
-		sb.append(description);
 		sb.append(", displayDate=");
 		sb.append(displayDate);
 		sb.append(", expirationDate=");
@@ -130,6 +132,20 @@ public class CommerceRuleCacheModel
 			commerceRuleImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (description == null) {
+			commerceRuleImpl.setDescription("");
+		}
+		else {
+			commerceRuleImpl.setDescription(description);
+		}
+
+		if (title == null) {
+			commerceRuleImpl.setTitle("");
+		}
+		else {
+			commerceRuleImpl.setTitle(title);
+		}
+
 		if (type == null) {
 			commerceRuleImpl.setType("");
 		}
@@ -142,13 +158,6 @@ public class CommerceRuleCacheModel
 		}
 		else {
 			commerceRuleImpl.setTypeSettings(typeSettings);
-		}
-
-		if (description == null) {
-			commerceRuleImpl.setDescription("");
-		}
-		else {
-			commerceRuleImpl.setDescription(description);
 		}
 
 		if (displayDate == Long.MIN_VALUE) {
@@ -204,9 +213,10 @@ public class CommerceRuleCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		description = objectInput.readUTF();
+		title = objectInput.readUTF();
 		type = objectInput.readUTF();
 		typeSettings = objectInput.readUTF();
-		description = objectInput.readUTF();
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
@@ -236,6 +246,20 @@ public class CommerceRuleCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		if (description == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(description);
+		}
+
+		if (title == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(title);
+		}
+
 		if (type == null) {
 			objectOutput.writeUTF("");
 		}
@@ -248,13 +272,6 @@ public class CommerceRuleCacheModel
 		}
 		else {
 			objectOutput.writeUTF(typeSettings);
-		}
-
-		if (description == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(description);
 		}
 
 		objectOutput.writeLong(displayDate);
@@ -281,9 +298,10 @@ public class CommerceRuleCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String description;
+	public String title;
 	public String type;
 	public String typeSettings;
-	public String description;
 	public long displayDate;
 	public long expirationDate;
 	public long lastPublishDate;

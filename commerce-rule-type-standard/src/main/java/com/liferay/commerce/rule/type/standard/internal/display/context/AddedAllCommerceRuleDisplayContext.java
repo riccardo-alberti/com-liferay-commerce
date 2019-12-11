@@ -14,13 +14,6 @@
 
 package com.liferay.commerce.rule.type.standard.internal.display.context;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.portlet.PortletURL;
-import javax.servlet.http.HttpServletRequest;
-
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
@@ -39,6 +32,14 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Riccardo Alberti
  */
@@ -55,9 +56,7 @@ public class AddedAllCommerceRuleDisplayContext {
 		_itemSelector = itemSelector;
 	}
 
-	public CommerceRule getCommerceRule()
-		throws PortalException {
-
+	public CommerceRule getCommerceRule() throws PortalException {
 		if (_commerceRule != null) {
 			return _commerceRule;
 		}
@@ -66,9 +65,8 @@ public class AddedAllCommerceRuleDisplayContext {
 			_httpServletRequest, "commerceRuleId");
 
 		if (commerceRuleId > 0) {
-			_commerceRule =
-				_commerceRuleService.getCommerceRule(
-					commerceRuleId);
+			_commerceRule = _commerceRuleService.getCommerceRule(
+				commerceRuleId);
 		}
 
 		return _commerceRule;
@@ -125,7 +123,7 @@ public class AddedAllCommerceRuleDisplayContext {
 		}
 
 		String type = BeanParamUtil.getString(
-				commerceRule, _httpServletRequest, "type");
+			commerceRule, _httpServletRequest, "type");
 
 		return commerceRule.getSettingsProperty(type);
 	}

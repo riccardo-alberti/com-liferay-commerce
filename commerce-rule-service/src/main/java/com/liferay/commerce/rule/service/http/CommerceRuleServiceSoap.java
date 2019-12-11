@@ -68,14 +68,15 @@ public class CommerceRuleServiceSoap {
 	 */
 	public static com.liferay.commerce.rule.model.CommerceRuleSoap
 			addCommerceRule(
-				String type, String typeSettings, String description,
+				String description, String title, String type,
+				String typeSettings,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.rule.model.CommerceRule returnValue =
 				CommerceRuleServiceUtil.addCommerceRule(
-					type, typeSettings, description, serviceContext);
+					description, title, type, typeSettings, serviceContext);
 
 			return com.liferay.commerce.rule.model.CommerceRuleSoap.toSoapModel(
 				returnValue);

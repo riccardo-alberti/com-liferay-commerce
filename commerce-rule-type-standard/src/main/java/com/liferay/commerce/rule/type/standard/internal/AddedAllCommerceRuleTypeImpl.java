@@ -14,15 +14,6 @@
 
 package com.liferay.commerce.rule.type.standard.internal;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.function.ToLongFunction;
-import java.util.stream.LongStream;
-import java.util.stream.Stream;
-
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -37,6 +28,15 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.function.ToLongFunction;
+import java.util.stream.LongStream;
+import java.util.stream.Stream;
+
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Riccardo Alberti
  */
@@ -48,13 +48,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 	},
 	service = CommerceRuleType.class
 )
-public class AddedAllCommerceRuleTypeImpl
-	implements CommerceRuleType {
+public class AddedAllCommerceRuleTypeImpl implements CommerceRuleType {
 
 	@Override
 	public boolean evaluate(
-			CommerceRule commerceRule,
-			CommerceContext commerceContext)
+			CommerceRule commerceRule, CommerceContext commerceContext)
 		throws PortalException {
 
 		CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
@@ -73,7 +71,7 @@ public class AddedAllCommerceRuleTypeImpl
 		long[] orderItemDefinitionIds = longStream.toArray();
 
 		String settingsProperty = commerceRule.getSettingsProperty(
-				commerceRule.getType());
+			commerceRule.getType());
 
 		long[] cpDefinitionIds = StringUtil.split(settingsProperty, 0L);
 

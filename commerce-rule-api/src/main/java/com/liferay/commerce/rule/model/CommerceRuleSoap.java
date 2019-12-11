@@ -37,9 +37,10 @@ public class CommerceRuleSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setDescription(model.getDescription());
+		soapModel.setTitle(model.getTitle());
 		soapModel.setType(model.getType());
 		soapModel.setTypeSettings(model.getTypeSettings());
-		soapModel.setDescription(model.getDescription());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
@@ -148,6 +149,22 @@ public class CommerceRuleSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getDescription() {
+		return _description;
+	}
+
+	public void setDescription(String description) {
+		_description = description;
+	}
+
+	public String getTitle() {
+		return _title;
+	}
+
+	public void setTitle(String title) {
+		_title = title;
+	}
+
 	public String getType() {
 		return _type;
 	}
@@ -162,14 +179,6 @@ public class CommerceRuleSoap implements Serializable {
 
 	public void setTypeSettings(String typeSettings) {
 		_typeSettings = typeSettings;
-	}
-
-	public String getDescription() {
-		return _description;
-	}
-
-	public void setDescription(String description) {
-		_description = description;
 	}
 
 	public Date getDisplayDate() {
@@ -234,9 +243,10 @@ public class CommerceRuleSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _description;
+	private String _title;
 	private String _type;
 	private String _typeSettings;
-	private String _description;
 	private Date _displayDate;
 	private Date _expirationDate;
 	private Date _lastPublishDate;

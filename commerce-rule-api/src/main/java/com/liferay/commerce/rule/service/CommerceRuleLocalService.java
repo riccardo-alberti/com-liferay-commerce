@@ -77,7 +77,7 @@ public interface CommerceRuleLocalService
 	 * Never reference this class directly. Use <code>CommerceRuleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>CommerceRuleLocalServiceUtil</code>.
 	 */
 	public CommerceRule addCommerceRule(
-			String type, String typeSettings, String description,
+			String description, String title, String type, String typeSettings,
 			ServiceContext serviceContext)
 		throws PortalException;
 

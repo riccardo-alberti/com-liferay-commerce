@@ -18,6 +18,7 @@ package com.liferay.commerce.rule.type.standard.internal.constants;
  * @author Riccardo Alberti
  */
 public class CommerceRuleConstants {
-	
+
 	public static final String TYPE_ADDED_ALL = "added-all";
+
 }

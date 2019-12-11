@@ -177,6 +177,36 @@ public interface CommerceRuleModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the description of this commerce rule.
+	 *
+	 * @return the description of this commerce rule
+	 */
+	@AutoEscape
+	public String getDescription();
+
+	/**
+	 * Sets the description of this commerce rule.
+	 *
+	 * @param description the description of this commerce rule
+	 */
+	public void setDescription(String description);
+
+	/**
+	 * Returns the title of this commerce rule.
+	 *
+	 * @return the title of this commerce rule
+	 */
+	@AutoEscape
+	public String getTitle();
+
+	/**
+	 * Sets the title of this commerce rule.
+	 *
+	 * @param title the title of this commerce rule
+	 */
+	public void setTitle(String title);
+
+	/**
 	 * Returns the type of this commerce rule.
 	 *
 	 * @return the type of this commerce rule
@@ -205,21 +235,6 @@ public interface CommerceRuleModel
 	 * @param typeSettings the type settings of this commerce rule
 	 */
 	public void setTypeSettings(String typeSettings);
-
-	/**
-	 * Returns the description of this commerce rule.
-	 *
-	 * @return the description of this commerce rule
-	 */
-	@AutoEscape
-	public String getDescription();
-
-	/**
-	 * Sets the description of this commerce rule.
-	 *
-	 * @param description the description of this commerce rule
-	 */
-	public void setDescription(String description);
 
 	/**
 	 * Returns the display date of this commerce rule.

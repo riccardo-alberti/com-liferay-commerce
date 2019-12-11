@@ -39,9 +39,8 @@ public class CommerceRuleServiceImpl extends CommerceRuleServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.commerce.rule.service.CommerceRuleServiceUtil</code> to access the commerce rule remote service.
 	 */
-	
 	public CommerceRule addCommerceRule(
-			String type, String typeSettings, String description,
+			String description, String title, String type, String typeSettings,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -49,17 +48,15 @@ public class CommerceRuleServiceImpl extends CommerceRuleServiceBaseImpl {
 			getPermissionChecker(), commerceDiscountId, ActionKeys.UPDATE);*/
 
 		return commerceRuleLocalService.addCommerceRule(
-				type, typeSettings, description, serviceContext);
+			description, title, type, typeSettings, serviceContext);
 	}
-	
+
 	@Override
-	public CommerceRule getCommerceRule(
-			long commerceRuleId)
+	public CommerceRule getCommerceRule(long commerceRuleId)
 		throws PortalException {
 
-		CommerceRule commerceRule =
-			commerceRuleLocalService.getCommerceRule(
-				commerceRuleId);
+		CommerceRule commerceRule = commerceRuleLocalService.getCommerceRule(
+			commerceRuleId);
 
 		/*_commerceDiscountResourcePermission.check(
 			getPermissionChecker(),
@@ -67,4 +64,5 @@ public class CommerceRuleServiceImpl extends CommerceRuleServiceBaseImpl {
 
 		return commerceRule;
 	}
+
 }

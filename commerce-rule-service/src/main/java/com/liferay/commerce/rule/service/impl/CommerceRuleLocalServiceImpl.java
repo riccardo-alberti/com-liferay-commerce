@@ -21,6 +21,8 @@ import com.liferay.commerce.rule.type.CommerceRuleType;
 import com.liferay.commerce.rule.type.CommerceRuleTypeRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -46,9 +48,10 @@ public class CommerceRuleLocalServiceImpl
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.commerce.rule.service.CommerceRuleLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.commerce.rule.service.CommerceRuleLocalServiceUtil</code>.
 	 */
-	
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public CommerceRule addCommerceRule(
-			String type, String typeSettings, String description,
+			String description, String title, String type, String typeSettings,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -60,22 +63,22 @@ public class CommerceRuleLocalServiceImpl
 
 		long commerceRuleId = counterLocalService.increment();
 
-		CommerceRule commerceRule =
-			commerceRulePersistence.create(commerceRuleId);
+		CommerceRule commerceRule = commerceRulePersistence.create(
+			commerceRuleId);
 
 		commerceRule.setCompanyId(user.getCompanyId());
 		commerceRule.setUserId(user.getUserId());
 		commerceRule.setUserName(user.getFullName());
+		commerceRule.setDescription(description);
+		commerceRule.setTitle(title);
 		commerceRule.setType(type);
 
 		UnicodeProperties settingsProperties =
-				commerceRule.getSettingsProperties();
+			commerceRule.getSettingsProperties();
 
 		settingsProperties.put(type, typeSettings);
 
 		commerceRule.setSettingsProperties(settingsProperties);
-		
-		commerceRule.setDescription(description);
 
 		commerceRulePersistence.update(commerceRule);
 
@@ -83,7 +86,7 @@ public class CommerceRuleLocalServiceImpl
 
 		return commerceRule;
 	}
-	
+
 	protected void validate(String type) throws PortalException {
 		CommerceRuleType commerceRuleType =
 			_commerceRuleTypeRegistry.getCommerceRuleType(type);
@@ -95,4 +98,5 @@ public class CommerceRuleLocalServiceImpl
 
 	@ServiceReference(type = CommerceRuleTypeRegistry.class)
 	private CommerceRuleTypeRegistry _commerceRuleTypeRegistry;
+
 }

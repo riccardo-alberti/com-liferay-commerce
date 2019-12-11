@@ -52,8 +52,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CommerceRuleServiceHttp {
 
 	public static com.liferay.commerce.rule.model.CommerceRule addCommerceRule(
-			HttpPrincipal httpPrincipal, String type, String typeSettings,
-			String description,
+			HttpPrincipal httpPrincipal, String description, String title,
+			String type, String typeSettings,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -63,7 +63,8 @@ public class CommerceRuleServiceHttp {
 				_addCommerceRuleParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, type, typeSettings, description, serviceContext);
+				methodKey, description, title, type, typeSettings,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -134,7 +135,7 @@ public class CommerceRuleServiceHttp {
 
 	private static final Class<?>[] _addCommerceRuleParameterTypes0 =
 		new Class[] {
-			String.class, String.class, String.class,
+			String.class, String.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _getCommerceRuleParameterTypes1 =

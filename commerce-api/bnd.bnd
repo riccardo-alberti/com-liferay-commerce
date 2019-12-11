@@ -14,6 +14,7 @@ Export-Package:\
 	com.liferay.commerce.payment.request,\
 	com.liferay.commerce.payment.result,\
 	com.liferay.commerce.price,\
+	com.liferay.commerce.price.modifier,\
 	com.liferay.commerce.search.facet,\
 	com.liferay.commerce.service,\
 	com.liferay.commerce.service.persistence,\

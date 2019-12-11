@@ -14,16 +14,6 @@
 
 package com.liferay.commerce.rule.internal.type;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-
 import com.liferay.commerce.rule.internal.type.comparator.CommerceRuleTypeOrderComparator;
 import com.liferay.commerce.rule.type.CommerceRuleType;
 import com.liferay.commerce.rule.type.CommerceRuleTypeRegistry;
@@ -35,23 +25,30 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+
 /**
  * @author Riccardo Alberti
  */
 @Component(immediate = true, service = CommerceRuleTypeRegistry.class)
-public class CommerceRuleTypeRegistryImpl
-	implements CommerceRuleTypeRegistry {
+public class CommerceRuleTypeRegistryImpl implements CommerceRuleTypeRegistry {
 
 	@Override
 	public CommerceRuleType getCommerceRuleType(String key) {
-		ServiceWrapper<CommerceRuleType>
-			commerceRuleTypeServiceWrapper =
-				_serviceTrackerMap.getService(key);
+		ServiceWrapper<CommerceRuleType> commerceRuleTypeServiceWrapper =
+			_serviceTrackerMap.getService(key);
 
 		if (commerceRuleTypeServiceWrapper == null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"No CommerceRuleType registered with key " + key);
+				_log.debug("No CommerceRuleType registered with key " + key);
 			}
 
 			return null;
@@ -62,15 +59,13 @@ public class CommerceRuleTypeRegistryImpl
 
 	@Override
 	public List<CommerceRuleType> getCommerceRuleTypes() {
-		List<CommerceRuleType> commerceDiscountRuleTypes =
-			new ArrayList<>();
+		List<CommerceRuleType> commerceDiscountRuleTypes = new ArrayList<>();
 
-		List<ServiceWrapper<CommerceRuleType>>
-			commerceRuleTypeServiceWrappers = ListUtil.fromCollection(
-				_serviceTrackerMap.values());
+		List<ServiceWrapper<CommerceRuleType>> commerceRuleTypeServiceWrappers =
+			ListUtil.fromCollection(_serviceTrackerMap.values());
 
 		Collections.sort(
-				commerceRuleTypeServiceWrappers,
+			commerceRuleTypeServiceWrappers,
 			_commerceRuleTypeServiceWrapperOrderComparator);
 
 		for (ServiceWrapper<CommerceRuleType>
@@ -87,10 +82,9 @@ public class CommerceRuleTypeRegistryImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, CommerceRuleType.class,
-			"commerce.rule.type.key",
-			ServiceTrackerCustomizerFactory.
-				<CommerceRuleType>serviceWrapper(bundleContext));
+			bundleContext, CommerceRuleType.class, "commerce.rule.type.key",
+			ServiceTrackerCustomizerFactory.<CommerceRuleType>serviceWrapper(
+				bundleContext));
 	}
 
 	@Deactivate

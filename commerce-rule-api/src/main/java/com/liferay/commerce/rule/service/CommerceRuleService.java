@@ -65,7 +65,7 @@ public interface CommerceRuleService extends BaseService {
 	 * Never reference this class directly. Always use <code>CommerceRuleServiceUtil</code> to access the commerce rule remote service.
 	 */
 	public CommerceRule addCommerceRule(
-			String type, String typeSettings, String description,
+			String description, String title, String type, String typeSettings,
 			ServiceContext serviceContext)
 		throws PortalException;
 

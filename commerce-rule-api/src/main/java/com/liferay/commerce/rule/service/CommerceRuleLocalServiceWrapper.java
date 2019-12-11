@@ -53,12 +53,12 @@ public class CommerceRuleLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.commerce.rule.model.CommerceRule addCommerceRule(
-			String type, String typeSettings, String description,
+			String description, String title, String type, String typeSettings,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceRuleLocalService.addCommerceRule(
-			type, typeSettings, description, serviceContext);
+			description, title, type, typeSettings, serviceContext);
 	}
 
 	/**

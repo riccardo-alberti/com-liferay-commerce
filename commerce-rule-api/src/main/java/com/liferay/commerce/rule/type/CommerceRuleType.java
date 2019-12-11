@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.rule.type;
 
-import java.util.Locale;
+import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.rule.model.CommerceRule;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import aQute.bnd.annotation.ProviderType;
+import java.util.Locale;
 
 /**
  * @author Riccardo Alberti
@@ -29,8 +29,7 @@ import aQute.bnd.annotation.ProviderType;
 public interface CommerceRuleType {
 
 	public boolean evaluate(
-			CommerceRule commerceRule,
-			CommerceContext commerceContext)
+			CommerceRule commerceRule, CommerceContext commerceContext)
 		throws PortalException;
 
 	public String getKey();
