@@ -56,6 +56,7 @@ public class CommercePriceModifierServiceHttp {
 				addCommercePriceModifier(
 					HttpPrincipal httpPrincipal, long userId,
 					String description, String title, String target,
+					String modifierType, java.math.BigDecimal modifierAmount,
 					double priority, boolean active, int displayDateMonth,
 					int displayDateDay, int displayDateYear,
 					int displayDateHour, int displayDateMinute,
@@ -73,11 +74,12 @@ public class CommercePriceModifierServiceHttp {
 				_addCommercePriceModifierParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, description, title, target, priority, active,
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, serviceContext);
+				methodKey, userId, description, title, target, modifierType,
+				modifierAmount, priority, active, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, serviceContext);
 
 			Object returnObj = null;
 
@@ -406,6 +408,7 @@ public class CommercePriceModifierServiceHttp {
 				updateCommercePriceModifier(
 					HttpPrincipal httpPrincipal, long commercePriceModifierId,
 					String description, String title, String target,
+					String modifierType, java.math.BigDecimal modifierAmount,
 					double priority, boolean active, int displayDateMonth,
 					int displayDateDay, int displayDateYear,
 					int displayDateHour, int displayDateMinute,
@@ -424,11 +427,11 @@ public class CommercePriceModifierServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePriceModifierId, description, title, target,
-				priority, active, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire,
-				serviceContext);
+				modifierType, modifierAmount, priority, active,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, serviceContext);
 
 			Object returnObj = null;
 
@@ -462,7 +465,8 @@ public class CommercePriceModifierServiceHttp {
 				upsertCommercePriceModifier(
 					HttpPrincipal httpPrincipal, long userId,
 					long commercePriceModifierId, String description,
-					String title, String target, double priority,
+					String title, String target, String modifierType,
+					java.math.BigDecimal modifierAmount, double priority,
 					boolean active, int displayDateMonth, int displayDateDay,
 					int displayDateYear, int displayDateHour,
 					int displayDateMinute, int expirationDateMonth,
@@ -481,11 +485,12 @@ public class CommercePriceModifierServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, commercePriceModifierId, description, title,
-				target, priority, active, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, externalReferenceCode,
-				neverExpire, serviceContext);
+				target, modifierType, modifierAmount, priority, active,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, externalReferenceCode, neverExpire,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -519,10 +524,10 @@ public class CommercePriceModifierServiceHttp {
 
 	private static final Class<?>[] _addCommercePriceModifierParameterTypes0 =
 		new Class[] {
-			long.class, String.class, String.class, String.class, double.class,
-			boolean.class, int.class, int.class, int.class, int.class,
+			long.class, String.class, String.class, String.class, String.class,
+			java.math.BigDecimal.class, double.class, boolean.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			boolean.class,
+			int.class, int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
@@ -546,18 +551,19 @@ public class CommercePriceModifierServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateCommercePriceModifierParameterTypes8 = new Class[] {
-			long.class, String.class, String.class, String.class, double.class,
-			boolean.class, int.class, int.class, int.class, int.class,
+			long.class, String.class, String.class, String.class, String.class,
+			java.math.BigDecimal.class, double.class, boolean.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			boolean.class,
+			int.class, int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
 		_upsertCommercePriceModifierParameterTypes9 = new Class[] {
 			long.class, long.class, String.class, String.class, String.class,
-			double.class, boolean.class, int.class, int.class, int.class,
+			String.class, java.math.BigDecimal.class, double.class,
+			boolean.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, String.class, boolean.class,
+			String.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 

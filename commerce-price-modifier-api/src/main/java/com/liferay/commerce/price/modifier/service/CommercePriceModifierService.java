@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 
 /**
@@ -72,12 +74,13 @@ public interface CommercePriceModifierService extends BaseService {
 	 */
 	public CommercePriceModifier addCommercePriceModifier(
 			long userId, String description, String title, String target,
-			double priority, boolean active, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			String modifierType, BigDecimal modifierAmount, double priority,
+			boolean active, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommercePriceModifier deleteCommercePriceModifier(
@@ -123,9 +126,10 @@ public interface CommercePriceModifierService extends BaseService {
 
 	public CommercePriceModifier updateCommercePriceModifier(
 			long commercePriceModifierId, String description, String title,
-			String target, double priority, boolean active,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			String target, String modifierType, BigDecimal modifierAmount,
+			double priority, boolean active, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, ServiceContext serviceContext)
@@ -133,7 +137,8 @@ public interface CommercePriceModifierService extends BaseService {
 
 	public CommercePriceModifier upsertCommercePriceModifier(
 			long userId, long commercePriceModifierId, String description,
-			String title, String target, double priority, boolean active,
+			String title, String target, String modifierType,
+			BigDecimal modifierAmount, double priority, boolean active,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,

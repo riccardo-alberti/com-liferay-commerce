@@ -53,8 +53,8 @@ public class CommercePriceModifierRelServiceHttp {
 
 	public static
 		com.liferay.commerce.price.modifier.model.CommercePriceModifierRel
-				addCommerceDiscountRel(
-					HttpPrincipal httpPrincipal, long commerceDiscountId,
+				addCommercePriceModifierRel(
+					HttpPrincipal httpPrincipal, long commercePriceModifierId,
 					String className, long classPK,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
@@ -63,11 +63,11 @@ public class CommercePriceModifierRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceModifierRelServiceUtil.class,
-				"addCommerceDiscountRel",
-				_addCommerceDiscountRelParameterTypes0);
+				"addCommercePriceModifierRel",
+				_addCommercePriceModifierRelParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commerceDiscountId, className, classPK,
+				methodKey, commercePriceModifierId, className, classPK,
 				serviceContext);
 
 			Object returnObj = null;
@@ -392,8 +392,8 @@ public class CommercePriceModifierRelServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(
 		CommercePriceModifierRelServiceHttp.class);
 
-	private static final Class<?>[] _addCommerceDiscountRelParameterTypes0 =
-		new Class[] {
+	private static final Class<?>[]
+		_addCommercePriceModifierRelParameterTypes0 = new Class[] {
 			long.class, String.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};

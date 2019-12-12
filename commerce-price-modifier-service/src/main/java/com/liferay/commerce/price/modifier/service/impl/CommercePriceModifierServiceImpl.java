@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 
 /**
@@ -53,12 +55,13 @@ public class CommercePriceModifierServiceImpl
 	@Override
 	public CommercePriceModifier addCommercePriceModifier(
 			long userId, String description, String title, String target,
-			double priority, boolean active, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			String modifierType, BigDecimal modifierAmount, double priority,
+			boolean active, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		PortalPermissionUtil.check(
@@ -66,11 +69,11 @@ public class CommercePriceModifierServiceImpl
 			CommercePriceModifierActionKeys.ADD_PRICE_MODIFIER);
 
 		return commercePriceModifierLocalService.addCommercePriceModifier(
-			userId, description, title, target, priority, active,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+			userId, description, title, target, modifierType, modifierAmount,
+			priority, active, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	@Override
@@ -171,9 +174,10 @@ public class CommercePriceModifierServiceImpl
 	@Override
 	public CommercePriceModifier updateCommercePriceModifier(
 			long commercePriceModifierId, String description, String title,
-			String target, double priority, boolean active,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			String target, String modifierType, BigDecimal modifierAmount,
+			double priority, boolean active, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, ServiceContext serviceContext)
@@ -183,17 +187,19 @@ public class CommercePriceModifierServiceImpl
 			getPermissionChecker(), commercePriceModifierId, ActionKeys.UPDATE);
 
 		return commercePriceModifierLocalService.updateCommercePriceModifier(
-			commercePriceModifierId, description, title, target, priority,
-			active, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+			commercePriceModifierId, description, title, target, modifierType,
+			modifierAmount, priority, active, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	@Override
 	public CommercePriceModifier upsertCommercePriceModifier(
 			long userId, long commercePriceModifierId, String description,
-			String title, String target, double priority, boolean active,
+			String title, String target, String modifierType,
+			BigDecimal modifierAmount, double priority, boolean active,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -208,11 +214,11 @@ public class CommercePriceModifierServiceImpl
 
 		return commercePriceModifierLocalService.upsertCommercePriceModifier(
 			userId, commercePriceModifierId, description, title, target,
-			priority, active, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, externalReferenceCode, neverExpire,
-			serviceContext);
+			modifierType, modifierAmount, priority, active, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, externalReferenceCode,
+			neverExpire, serviceContext);
 	}
 
 	private static volatile ModelResourcePermission<CommercePriceModifier>

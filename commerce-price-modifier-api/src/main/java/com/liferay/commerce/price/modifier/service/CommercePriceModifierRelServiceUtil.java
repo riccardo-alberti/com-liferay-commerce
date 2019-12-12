@@ -45,14 +45,15 @@ public class CommercePriceModifierRelServiceUtil {
 	 */
 	public static
 		com.liferay.commerce.price.modifier.model.CommercePriceModifierRel
-				addCommerceDiscountRel(
-					long commerceDiscountId, String className, long classPK,
+				addCommercePriceModifierRel(
+					long commercePriceModifierId, String className,
+					long classPK,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().addCommerceDiscountRel(
-			commerceDiscountId, className, classPK, serviceContext);
+		return getService().addCommercePriceModifierRel(
+			commercePriceModifierId, className, classPK, serviceContext);
 	}
 
 	public static void deleteCommercePriceModifierRel(

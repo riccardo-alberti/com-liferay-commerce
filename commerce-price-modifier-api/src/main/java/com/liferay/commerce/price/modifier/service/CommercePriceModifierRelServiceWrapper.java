@@ -40,13 +40,13 @@ public class CommercePriceModifierRelServiceWrapper
 	 */
 	@Override
 	public com.liferay.commerce.price.modifier.model.CommercePriceModifierRel
-			addCommerceDiscountRel(
-				long commerceDiscountId, String className, long classPK,
+			addCommercePriceModifierRel(
+				long commercePriceModifierId, String className, long classPK,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _commercePriceModifierRelService.addCommerceDiscountRel(
-			commerceDiscountId, className, classPK, serviceContext);
+		return _commercePriceModifierRelService.addCommercePriceModifierRel(
+			commercePriceModifierId, className, classPK, serviceContext);
 	}
 
 	@Override

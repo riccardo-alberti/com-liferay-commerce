@@ -1481,6 +1481,145 @@ public class CommercePriceModifierUtil {
 	}
 
 	/**
+	 * Returns all the commerce price modifiers that the user has permission to view where groupId = &#63; and companyId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @return the matching commerce price modifiers that the user has permission to view
+	 */
+	public static List<CommercePriceModifier> filterFindByG_C_S(
+		long groupId, long companyId, int status) {
+
+		return getPersistence().filterFindByG_C_S(groupId, companyId, status);
+	}
+
+	/**
+	 * Returns a range of all the commerce price modifiers that the user has permission to view where groupId = &#63; and companyId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceModifierModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce price modifiers
+	 * @param end the upper bound of the range of commerce price modifiers (not inclusive)
+	 * @return the range of matching commerce price modifiers that the user has permission to view
+	 */
+	public static List<CommercePriceModifier> filterFindByG_C_S(
+		long groupId, long companyId, int status, int start, int end) {
+
+		return getPersistence().filterFindByG_C_S(
+			groupId, companyId, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce price modifiers that the user has permissions to view where groupId = &#63; and companyId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceModifierModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce price modifiers
+	 * @param end the upper bound of the range of commerce price modifiers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce price modifiers that the user has permission to view
+	 */
+	public static List<CommercePriceModifier> filterFindByG_C_S(
+		long groupId, long companyId, int status, int start, int end,
+		OrderByComparator<CommercePriceModifier> orderByComparator) {
+
+		return getPersistence().filterFindByG_C_S(
+			groupId, companyId, status, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce price modifiers before and after the current commerce price modifier in the ordered set of commerce price modifiers that the user has permission to view where groupId = &#63; and companyId = &#63; and status = &#63;.
+	 *
+	 * @param commercePriceModifierId the primary key of the current commerce price modifier
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce price modifier
+	 * @throws NoSuchPriceModifierException if a commerce price modifier with the primary key could not be found
+	 */
+	public static CommercePriceModifier[] filterFindByG_C_S_PrevAndNext(
+			long commercePriceModifierId, long groupId, long companyId,
+			int status,
+			OrderByComparator<CommercePriceModifier> orderByComparator)
+		throws com.liferay.commerce.price.modifier.exception.
+			NoSuchPriceModifierException {
+
+		return getPersistence().filterFindByG_C_S_PrevAndNext(
+			commercePriceModifierId, groupId, companyId, status,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce price modifiers that the user has permission to view where groupId = any &#63; and companyId = &#63; and status = &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @return the matching commerce price modifiers that the user has permission to view
+	 */
+	public static List<CommercePriceModifier> filterFindByG_C_S(
+		long[] groupIds, long companyId, int status) {
+
+		return getPersistence().filterFindByG_C_S(groupIds, companyId, status);
+	}
+
+	/**
+	 * Returns a range of all the commerce price modifiers that the user has permission to view where groupId = any &#63; and companyId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceModifierModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce price modifiers
+	 * @param end the upper bound of the range of commerce price modifiers (not inclusive)
+	 * @return the range of matching commerce price modifiers that the user has permission to view
+	 */
+	public static List<CommercePriceModifier> filterFindByG_C_S(
+		long[] groupIds, long companyId, int status, int start, int end) {
+
+		return getPersistence().filterFindByG_C_S(
+			groupIds, companyId, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce price modifiers that the user has permission to view where groupId = any &#63; and companyId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceModifierModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce price modifiers
+	 * @param end the upper bound of the range of commerce price modifiers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce price modifiers that the user has permission to view
+	 */
+	public static List<CommercePriceModifier> filterFindByG_C_S(
+		long[] groupIds, long companyId, int status, int start, int end,
+		OrderByComparator<CommercePriceModifier> orderByComparator) {
+
+		return getPersistence().filterFindByG_C_S(
+			groupIds, companyId, status, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns all the commerce price modifiers where groupId = any &#63; and companyId = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -1603,6 +1742,34 @@ public class CommercePriceModifierUtil {
 		long[] groupIds, long companyId, int status) {
 
 		return getPersistence().countByG_C_S(groupIds, companyId, status);
+	}
+
+	/**
+	 * Returns the number of commerce price modifiers that the user has permission to view where groupId = &#63; and companyId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @return the number of matching commerce price modifiers that the user has permission to view
+	 */
+	public static int filterCountByG_C_S(
+		long groupId, long companyId, int status) {
+
+		return getPersistence().filterCountByG_C_S(groupId, companyId, status);
+	}
+
+	/**
+	 * Returns the number of commerce price modifiers that the user has permission to view where groupId = any &#63; and companyId = &#63; and status = &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @return the number of matching commerce price modifiers that the user has permission to view
+	 */
+	public static int filterCountByG_C_S(
+		long[] groupIds, long companyId, int status) {
+
+		return getPersistence().filterCountByG_C_S(groupIds, companyId, status);
 	}
 
 	/**
@@ -1787,6 +1954,147 @@ public class CommercePriceModifierUtil {
 	}
 
 	/**
+	 * Returns all the commerce price modifiers that the user has permission to view where groupId = &#63; and companyId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @return the matching commerce price modifiers that the user has permission to view
+	 */
+	public static List<CommercePriceModifier> filterFindByG_C_NotS(
+		long groupId, long companyId, int status) {
+
+		return getPersistence().filterFindByG_C_NotS(
+			groupId, companyId, status);
+	}
+
+	/**
+	 * Returns a range of all the commerce price modifiers that the user has permission to view where groupId = &#63; and companyId = &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceModifierModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce price modifiers
+	 * @param end the upper bound of the range of commerce price modifiers (not inclusive)
+	 * @return the range of matching commerce price modifiers that the user has permission to view
+	 */
+	public static List<CommercePriceModifier> filterFindByG_C_NotS(
+		long groupId, long companyId, int status, int start, int end) {
+
+		return getPersistence().filterFindByG_C_NotS(
+			groupId, companyId, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce price modifiers that the user has permissions to view where groupId = &#63; and companyId = &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceModifierModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce price modifiers
+	 * @param end the upper bound of the range of commerce price modifiers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce price modifiers that the user has permission to view
+	 */
+	public static List<CommercePriceModifier> filterFindByG_C_NotS(
+		long groupId, long companyId, int status, int start, int end,
+		OrderByComparator<CommercePriceModifier> orderByComparator) {
+
+		return getPersistence().filterFindByG_C_NotS(
+			groupId, companyId, status, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce price modifiers before and after the current commerce price modifier in the ordered set of commerce price modifiers that the user has permission to view where groupId = &#63; and companyId = &#63; and status &ne; &#63;.
+	 *
+	 * @param commercePriceModifierId the primary key of the current commerce price modifier
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce price modifier
+	 * @throws NoSuchPriceModifierException if a commerce price modifier with the primary key could not be found
+	 */
+	public static CommercePriceModifier[] filterFindByG_C_NotS_PrevAndNext(
+			long commercePriceModifierId, long groupId, long companyId,
+			int status,
+			OrderByComparator<CommercePriceModifier> orderByComparator)
+		throws com.liferay.commerce.price.modifier.exception.
+			NoSuchPriceModifierException {
+
+		return getPersistence().filterFindByG_C_NotS_PrevAndNext(
+			commercePriceModifierId, groupId, companyId, status,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce price modifiers that the user has permission to view where groupId = any &#63; and companyId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @return the matching commerce price modifiers that the user has permission to view
+	 */
+	public static List<CommercePriceModifier> filterFindByG_C_NotS(
+		long[] groupIds, long companyId, int status) {
+
+		return getPersistence().filterFindByG_C_NotS(
+			groupIds, companyId, status);
+	}
+
+	/**
+	 * Returns a range of all the commerce price modifiers that the user has permission to view where groupId = any &#63; and companyId = &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceModifierModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce price modifiers
+	 * @param end the upper bound of the range of commerce price modifiers (not inclusive)
+	 * @return the range of matching commerce price modifiers that the user has permission to view
+	 */
+	public static List<CommercePriceModifier> filterFindByG_C_NotS(
+		long[] groupIds, long companyId, int status, int start, int end) {
+
+		return getPersistence().filterFindByG_C_NotS(
+			groupIds, companyId, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce price modifiers that the user has permission to view where groupId = any &#63; and companyId = &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePriceModifierModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of commerce price modifiers
+	 * @param end the upper bound of the range of commerce price modifiers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce price modifiers that the user has permission to view
+	 */
+	public static List<CommercePriceModifier> filterFindByG_C_NotS(
+		long[] groupIds, long companyId, int status, int start, int end,
+		OrderByComparator<CommercePriceModifier> orderByComparator) {
+
+		return getPersistence().filterFindByG_C_NotS(
+			groupIds, companyId, status, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns all the commerce price modifiers where groupId = any &#63; and companyId = &#63; and status &ne; &#63;.
 	 *
 	 * <p>
@@ -1913,6 +2221,36 @@ public class CommercePriceModifierUtil {
 		long[] groupIds, long companyId, int status) {
 
 		return getPersistence().countByG_C_NotS(groupIds, companyId, status);
+	}
+
+	/**
+	 * Returns the number of commerce price modifiers that the user has permission to view where groupId = &#63; and companyId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @return the number of matching commerce price modifiers that the user has permission to view
+	 */
+	public static int filterCountByG_C_NotS(
+		long groupId, long companyId, int status) {
+
+		return getPersistence().filterCountByG_C_NotS(
+			groupId, companyId, status);
+	}
+
+	/**
+	 * Returns the number of commerce price modifiers that the user has permission to view where groupId = any &#63; and companyId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @return the number of matching commerce price modifiers that the user has permission to view
+	 */
+	public static int filterCountByG_C_NotS(
+		long[] groupIds, long companyId, int status) {
+
+		return getPersistence().filterCountByG_C_NotS(
+			groupIds, companyId, status);
 	}
 
 	/**

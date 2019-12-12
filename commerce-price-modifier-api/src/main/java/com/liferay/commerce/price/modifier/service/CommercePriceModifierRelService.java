@@ -67,8 +67,8 @@ public interface CommercePriceModifierRelService extends BaseService {
 	 *
 	 * Never reference this class directly. Always use <code>CommercePriceModifierRelServiceUtil</code> to access the commerce price modifier rel remote service.
 	 */
-	public CommercePriceModifierRel addCommerceDiscountRel(
-			long commerceDiscountId, String className, long classPK,
+	public CommercePriceModifierRel addCommercePriceModifierRel(
+			long commercePriceModifierId, String className, long classPK,
 			ServiceContext serviceContext)
 		throws PortalException;
 

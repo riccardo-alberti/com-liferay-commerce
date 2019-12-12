@@ -122,6 +122,8 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>CommercePriceModifierType</exception>
+		<exception>CommercePriceModifierAmount</exception>
 		<exception>CommercePriceModifierDisplayDate</exception>
 		<exception>CommercePriceModifierExpirationDate</exception>
 		<exception>CommercePriceModifierTarget</exception>

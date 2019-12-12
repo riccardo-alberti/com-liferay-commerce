@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.price.modifier.internal.search;
 
+import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.price.modifier.model.CommercePriceModifier;
 import com.liferay.commerce.price.modifier.service.CommercePriceModifierLocalService;
 import com.liferay.commerce.price.modifier.target.CommercePriceModifierPricelistTarget;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -32,17 +35,25 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Riccardo Alberti
@@ -52,7 +63,7 @@ public class CommercePriceModifierIndexer
 	extends BaseIndexer<CommercePriceModifier> {
 
 	public static final String CLASS_NAME =
-		CommercePriceModifierIndexer.class.getName();
+		CommercePriceModifier.class.getName();
 
 	public static final String FIELD_ACTIVE = "active";
 
@@ -68,11 +79,61 @@ public class CommercePriceModifierIndexer
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.GROUP_ID, Field.MODIFIED_DATE, Field.NAME,
 			Field.SCOPE_GROUP_ID, Field.UID);
+		setFilterSearch(true);
 	}
 
 	@Override
 	public String getClassName() {
 		return CLASS_NAME;
+	}
+
+	@Override
+	public void postProcessContextBooleanFilter(
+			BooleanFilter contextBooleanFilter, SearchContext searchContext)
+		throws Exception {
+
+		int[] statuses = GetterUtil.getIntegerValues(
+			searchContext.getAttribute(Field.STATUS), null);
+
+		if (ArrayUtil.isEmpty(statuses)) {
+			int status = GetterUtil.getInteger(
+				searchContext.getAttribute(Field.STATUS),
+				WorkflowConstants.STATUS_APPROVED);
+
+			statuses = new int[] {status};
+		}
+
+		if (!ArrayUtil.contains(statuses, WorkflowConstants.STATUS_ANY)) {
+			TermsFilter statusesTermsFilter = new TermsFilter(Field.STATUS);
+
+			statusesTermsFilter.addValues(ArrayUtil.toStringArray(statuses));
+
+			contextBooleanFilter.add(
+				statusesTermsFilter, BooleanClauseOccur.MUST);
+		}
+		else {
+			contextBooleanFilter.addTerm(
+				Field.STATUS, String.valueOf(WorkflowConstants.STATUS_IN_TRASH),
+				BooleanClauseOccur.MUST_NOT);
+		}
+
+		long commercePriceListId = GetterUtil.getLong(
+			searchContext.getAttribute("commercePriceListId"));
+
+		if (commercePriceListId > 0) {
+			CommercePriceList commercePriceList =
+				_commercePriceListLocalService.getCommercePriceList(
+						commercePriceListId);
+
+			for (CommercePriceModifierPricelistTarget
+					commercePriceModifierPricelistTarget :
+						_commercePriceModifierPricelistTargets) {
+
+				commercePriceModifierPricelistTarget.
+					postProcessContextBooleanFilter(
+						contextBooleanFilter, commercePriceList);
+			}
+		}
 	}
 
 	@Override
@@ -200,6 +261,20 @@ public class CommercePriceModifierIndexer
 		reindexCommercePriceModifiers(companyId);
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		service = CommercePriceModifierPricelistTarget.class
+	)
+	protected void registerCommercePriceModifierPricelistTarget(
+		CommercePriceModifierPricelistTarget
+			commercePriceModifierPricelistTarget) {
+
+		_commercePriceModifierPricelistTargets.add(
+			commercePriceModifierPricelistTarget);
+	}
+
 	protected void reindexCommercePriceModifiers(long companyId)
 		throws PortalException {
 
@@ -229,12 +304,26 @@ public class CommercePriceModifierIndexer
 		indexableActionableDynamicQuery.performActions();
 	}
 
+	protected void unregisterCommercePriceModifierPricelistTarget(
+		CommercePriceModifierPricelistTarget
+			commercePriceModifierPricelistTarget) {
+
+		_commercePriceModifierPricelistTargets.remove(
+			commercePriceModifierPricelistTarget);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommercePriceModifierIndexer.class);
 
 	@Reference
+	private CommercePriceListLocalService _commercePriceListLocalService;
+
+	@Reference
 	private CommercePriceModifierLocalService
 		_commercePriceModifierLocalService;
+
+	private final List<CommercePriceModifierPricelistTarget>
+		_commercePriceModifierPricelistTargets = new CopyOnWriteArrayList<>();
 
 	@Reference
 	private CommercePriceModifierTargetRegistry

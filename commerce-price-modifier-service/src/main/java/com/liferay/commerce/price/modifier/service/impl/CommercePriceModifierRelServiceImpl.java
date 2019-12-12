@@ -47,16 +47,16 @@ public class CommercePriceModifierRelServiceImpl
 	 * Never reference this class directly. Always use <code>com.liferay.commerce.price.modifier.service.CommercePriceModifierRelServiceUtil</code> to access the commerce price modifier rel remote service.
 	 */
 	@Override
-	public CommercePriceModifierRel addCommerceDiscountRel(
-			long commerceDiscountId, String className, long classPK,
+	public CommercePriceModifierRel addCommercePriceModifierRel(
+			long commercePriceModifierId, String className, long classPK,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		_commercePriceModifierResourcePermission.check(
-			getPermissionChecker(), commerceDiscountId, ActionKeys.UPDATE);
+			getPermissionChecker(), commercePriceModifierId, ActionKeys.UPDATE);
 
 		return commercePriceModifierRelLocalService.addCommercePriceModifierRel(
-			commerceDiscountId, className, classPK, serviceContext);
+			commercePriceModifierId, className, classPK, serviceContext);
 	}
 
 	@Override

@@ -44,6 +44,7 @@ public class CommercePriceModifierServiceWrapper
 	public com.liferay.commerce.price.modifier.model.CommercePriceModifier
 			addCommercePriceModifier(
 				long userId, String description, String title, String target,
+				String modifierType, java.math.BigDecimal modifierAmount,
 				double priority, boolean active, int displayDateMonth,
 				int displayDateDay, int displayDateYear, int displayDateHour,
 				int displayDateMinute, int expirationDateMonth,
@@ -54,11 +55,11 @@ public class CommercePriceModifierServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceModifierService.addCommercePriceModifier(
-			userId, description, title, target, priority, active,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+			userId, description, title, target, modifierType, modifierAmount,
+			priority, active, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	@Override
@@ -141,9 +142,10 @@ public class CommercePriceModifierServiceWrapper
 	public com.liferay.commerce.price.modifier.model.CommercePriceModifier
 			updateCommercePriceModifier(
 				long commercePriceModifierId, String description, String title,
-				String target, double priority, boolean active,
-				int displayDateMonth, int displayDateDay, int displayDateYear,
-				int displayDateHour, int displayDateMinute,
+				String target, String modifierType,
+				java.math.BigDecimal modifierAmount, double priority,
+				boolean active, int displayDateMonth, int displayDateDay,
+				int displayDateYear, int displayDateHour, int displayDateMinute,
 				int expirationDateMonth, int expirationDateDay,
 				int expirationDateYear, int expirationDateHour,
 				int expirationDateMinute, boolean neverExpire,
@@ -151,20 +153,22 @@ public class CommercePriceModifierServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceModifierService.updateCommercePriceModifier(
-			commercePriceModifierId, description, title, target, priority,
-			active, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+			commercePriceModifierId, description, title, target, modifierType,
+			modifierAmount, priority, active, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	@Override
 	public com.liferay.commerce.price.modifier.model.CommercePriceModifier
 			upsertCommercePriceModifier(
 				long userId, long commercePriceModifierId, String description,
-				String title, String target, double priority, boolean active,
-				int displayDateMonth, int displayDateDay, int displayDateYear,
-				int displayDateHour, int displayDateMinute,
+				String title, String target, String modifierType,
+				java.math.BigDecimal modifierAmount, double priority,
+				boolean active, int displayDateMonth, int displayDateDay,
+				int displayDateYear, int displayDateHour, int displayDateMinute,
 				int expirationDateMonth, int expirationDateDay,
 				int expirationDateYear, int expirationDateHour,
 				int expirationDateMinute, String externalReferenceCode,
@@ -174,11 +178,11 @@ public class CommercePriceModifierServiceWrapper
 
 		return _commercePriceModifierService.upsertCommercePriceModifier(
 			userId, commercePriceModifierId, description, title, target,
-			priority, active, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, externalReferenceCode, neverExpire,
-			serviceContext);
+			modifierType, modifierAmount, priority, active, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, externalReferenceCode,
+			neverExpire, serviceContext);
 	}
 
 	@Override

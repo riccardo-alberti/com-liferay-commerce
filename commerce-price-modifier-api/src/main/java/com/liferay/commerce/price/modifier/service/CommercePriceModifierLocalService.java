@@ -43,6 +43,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 import java.util.Map;
 
@@ -88,12 +90,13 @@ public interface CommercePriceModifierLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceModifier addCommercePriceModifier(
 			long userId, String description, String title, String target,
-			double priority, boolean active, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			String modifierType, BigDecimal modifierAmount, double priority,
+			boolean active, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -364,9 +367,10 @@ public interface CommercePriceModifierLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceModifier updateCommercePriceModifier(
 			long commercePriceModifierId, String description, String title,
-			String target, double priority, boolean active,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			String target, String modifierType, BigDecimal modifierAmount,
+			double priority, boolean active, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, ServiceContext serviceContext)
@@ -382,7 +386,8 @@ public interface CommercePriceModifierLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceModifier upsertCommercePriceModifier(
 			long userId, long commercePriceModifierId, String description,
-			String title, String target, double priority, boolean active,
+			String title, String target, String modifierType,
+			BigDecimal modifierAmount, double priority, boolean active,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,

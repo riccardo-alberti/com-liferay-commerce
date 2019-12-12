@@ -5,6 +5,9 @@ Export-Package:\
 	com.liferay.commerce.price.modifier.constants,\
 	com.liferay.commerce.price.modifier.exception,\
 	com.liferay.commerce.price.modifier.model,\
+	com.liferay.commerce.price.modifier.permission,\
 	com.liferay.commerce.price.modifier.service,\
 	com.liferay.commerce.price.modifier.service.persistence,\
-	com.liferay.commerce.price.modifier.target
+	com.liferay.commerce.price.modifier.target,\
+	com.liferay.commerce.price.modifier.util.comparator
+	

@@ -68,8 +68,9 @@ public class CommercePriceModifierRelServiceSoap {
 	 */
 	public static
 		com.liferay.commerce.price.modifier.model.CommercePriceModifierRelSoap
-				addCommerceDiscountRel(
-					long commerceDiscountId, String className, long classPK,
+				addCommercePriceModifierRel(
+					long commercePriceModifierId, String className,
+					long classPK,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
 			throws RemoteException {
@@ -77,8 +78,10 @@ public class CommercePriceModifierRelServiceSoap {
 		try {
 			com.liferay.commerce.price.modifier.model.CommercePriceModifierRel
 				returnValue =
-					CommercePriceModifierRelServiceUtil.addCommerceDiscountRel(
-						commerceDiscountId, className, classPK, serviceContext);
+					CommercePriceModifierRelServiceUtil.
+						addCommercePriceModifierRel(
+							commercePriceModifierId, className, classPK,
+							serviceContext);
 
 			return com.liferay.commerce.price.modifier.model.
 				CommercePriceModifierRelSoap.toSoapModel(returnValue);

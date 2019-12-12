@@ -49,8 +49,9 @@ public class CommercePriceModifierServiceUtil {
 		com.liferay.commerce.price.modifier.model.CommercePriceModifier
 				addCommercePriceModifier(
 					long userId, String description, String title,
-					String target, double priority, boolean active,
-					int displayDateMonth, int displayDateDay,
+					String target, String modifierType,
+					java.math.BigDecimal modifierAmount, double priority,
+					boolean active, int displayDateMonth, int displayDateDay,
 					int displayDateYear, int displayDateHour,
 					int displayDateMinute, int expirationDateMonth,
 					int expirationDateDay, int expirationDateYear,
@@ -61,11 +62,11 @@ public class CommercePriceModifierServiceUtil {
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addCommercePriceModifier(
-			userId, description, title, target, priority, active,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+			userId, description, title, target, modifierType, modifierAmount,
+			priority, active, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	public static
@@ -141,7 +142,8 @@ public class CommercePriceModifierServiceUtil {
 		com.liferay.commerce.price.modifier.model.CommercePriceModifier
 				updateCommercePriceModifier(
 					long commercePriceModifierId, String description,
-					String title, String target, double priority,
+					String title, String target, String modifierType,
+					java.math.BigDecimal modifierAmount, double priority,
 					boolean active, int displayDateMonth, int displayDateDay,
 					int displayDateYear, int displayDateHour,
 					int displayDateMinute, int expirationDateMonth,
@@ -153,11 +155,12 @@ public class CommercePriceModifierServiceUtil {
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateCommercePriceModifier(
-			commercePriceModifierId, description, title, target, priority,
-			active, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+			commercePriceModifierId, description, title, target, modifierType,
+			modifierAmount, priority, active, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	public static
@@ -165,6 +168,7 @@ public class CommercePriceModifierServiceUtil {
 				upsertCommercePriceModifier(
 					long userId, long commercePriceModifierId,
 					String description, String title, String target,
+					String modifierType, java.math.BigDecimal modifierAmount,
 					double priority, boolean active, int displayDateMonth,
 					int displayDateDay, int displayDateYear,
 					int displayDateHour, int displayDateMinute,
@@ -178,11 +182,11 @@ public class CommercePriceModifierServiceUtil {
 
 		return getService().upsertCommercePriceModifier(
 			userId, commercePriceModifierId, description, title, target,
-			priority, active, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, externalReferenceCode, neverExpire,
-			serviceContext);
+			modifierType, modifierAmount, priority, active, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, externalReferenceCode,
+			neverExpire, serviceContext);
 	}
 
 	public static CommercePriceModifierService getService() {

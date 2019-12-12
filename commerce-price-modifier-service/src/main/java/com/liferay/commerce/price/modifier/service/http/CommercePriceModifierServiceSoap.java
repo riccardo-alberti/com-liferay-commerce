@@ -72,8 +72,9 @@ public class CommercePriceModifierServiceSoap {
 		com.liferay.commerce.price.modifier.model.CommercePriceModifierSoap
 				addCommercePriceModifier(
 					long userId, String description, String title,
-					String target, double priority, boolean active,
-					int displayDateMonth, int displayDateDay,
+					String target, String modifierType,
+					java.math.BigDecimal modifierAmount, double priority,
+					boolean active, int displayDateMonth, int displayDateDay,
 					int displayDateYear, int displayDateHour,
 					int displayDateMinute, int expirationDateMonth,
 					int expirationDateDay, int expirationDateYear,
@@ -87,9 +88,10 @@ public class CommercePriceModifierServiceSoap {
 			com.liferay.commerce.price.modifier.model.CommercePriceModifier
 				returnValue =
 					CommercePriceModifierServiceUtil.addCommercePriceModifier(
-						userId, description, title, target, priority, active,
-						displayDateMonth, displayDateDay, displayDateYear,
-						displayDateHour, displayDateMinute, expirationDateMonth,
+						userId, description, title, target, modifierType,
+						modifierAmount, priority, active, displayDateMonth,
+						displayDateDay, displayDateYear, displayDateHour,
+						displayDateMinute, expirationDateMonth,
 						expirationDateDay, expirationDateYear,
 						expirationDateHour, expirationDateMinute, neverExpire,
 						serviceContext);
@@ -231,7 +233,8 @@ public class CommercePriceModifierServiceSoap {
 		com.liferay.commerce.price.modifier.model.CommercePriceModifierSoap
 				updateCommercePriceModifier(
 					long commercePriceModifierId, String description,
-					String title, String target, double priority,
+					String title, String target, String modifierType,
+					java.math.BigDecimal modifierAmount, double priority,
 					boolean active, int displayDateMonth, int displayDateDay,
 					int displayDateYear, int displayDateHour,
 					int displayDateMinute, int expirationDateMonth,
@@ -248,8 +251,9 @@ public class CommercePriceModifierServiceSoap {
 					CommercePriceModifierServiceUtil.
 						updateCommercePriceModifier(
 							commercePriceModifierId, description, title, target,
-							priority, active, displayDateMonth, displayDateDay,
-							displayDateYear, displayDateHour, displayDateMinute,
+							modifierType, modifierAmount, priority, active,
+							displayDateMonth, displayDateDay, displayDateYear,
+							displayDateHour, displayDateMinute,
 							expirationDateMonth, expirationDateDay,
 							expirationDateYear, expirationDateHour,
 							expirationDateMinute, neverExpire, serviceContext);
@@ -269,6 +273,7 @@ public class CommercePriceModifierServiceSoap {
 				upsertCommercePriceModifier(
 					long userId, long commercePriceModifierId,
 					String description, String title, String target,
+					String modifierType, java.math.BigDecimal modifierAmount,
 					double priority, boolean active, int displayDateMonth,
 					int displayDateDay, int displayDateYear,
 					int displayDateHour, int displayDateMinute,
@@ -286,12 +291,13 @@ public class CommercePriceModifierServiceSoap {
 					CommercePriceModifierServiceUtil.
 						upsertCommercePriceModifier(
 							userId, commercePriceModifierId, description, title,
-							target, priority, active, displayDateMonth,
-							displayDateDay, displayDateYear, displayDateHour,
-							displayDateMinute, expirationDateMonth,
-							expirationDateDay, expirationDateYear,
-							expirationDateHour, expirationDateMinute,
-							externalReferenceCode, neverExpire, serviceContext);
+							target, modifierType, modifierAmount, priority,
+							active, displayDateMonth, displayDateDay,
+							displayDateYear, displayDateHour, displayDateMinute,
+							expirationDateMonth, expirationDateDay,
+							expirationDateYear, expirationDateHour,
+							expirationDateMinute, externalReferenceCode,
+							neverExpire, serviceContext);
 
 			return com.liferay.commerce.price.modifier.model.
 				CommercePriceModifierSoap.toSoapModel(returnValue);

@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 		CommercePriceModifierTarget.class
 	}
 )
-public class ApplyToPricelistCommercePriceModifierTargetImpl
+public class ApplyToPriceListCommercePriceModifierTargetImpl
 	implements CommercePriceModifierPricelistTarget,
 			   CommercePriceModifierTarget {
 
@@ -64,7 +64,7 @@ public class ApplyToPricelistCommercePriceModifierTargetImpl
 		List<CommercePriceModifierRel> commercePriceModifierRels =
 			_commercePriceModifierRelLocalService.getCommercePriceModifierRels(
 				commercePriceModifier.getCommercePriceModifierId(),
-				CommercePriceModifier.class.getName());
+				CommercePriceList.class.getName());
 
 		Stream<CommercePriceModifierRel> stream =
 			commercePriceModifierRels.stream();

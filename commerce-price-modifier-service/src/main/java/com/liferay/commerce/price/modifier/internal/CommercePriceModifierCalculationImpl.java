@@ -30,11 +30,10 @@ import com.liferay.commerce.price.modifier.target.CommercePriceModifierTarget;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -44,7 +43,6 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -120,34 +118,9 @@ public class CommercePriceModifierCalculationImpl
 		CommerceCurrency commerceCurrency =
 			commerceContext.getCommerceCurrency();
 
-		List<CommercePriceModifier> commercePriceModifiers =
-			_commercePriceModifierLocalService.getCommercePriceModifiers(
-				commercePriceEntry.getCompanyId(),
-				CommercePriceModifierTarget.Type.APPLY_TO_PRICELIST.getValue());
-
-		CommercePriceModifier commercePriceModifier =
-			commercePriceModifiers.get(commercePriceModifiers.size() - 1);
-
-		String settingsProperty = commercePriceModifier.getSettingsProperty(
-			CommercePriceModifierTarget.Type.APPLY_TO_PRICELIST.getValue());
-
-		long[] priceListIds = StringUtil.split(settingsProperty, 0L);
-
-		if (ArrayUtil.contains(
-				priceListIds, commercePriceEntry.getCommercePriceListId())) {
-
-			return _getCommercePriceModifierValueByType(
-				commercePriceEntry, commercePriceModifier, commerceCurrency);
-		}
-
-		return null;
-
-		/*BaseModelSearchResult<CommercePriceModifier> baseModelSearchResult =
+		BaseModelSearchResult<CommercePriceModifier> baseModelSearchResult =
 			_commercePriceModifierLocalService.searchCommercePriceModifiers(
 				searchContext);
-
-		CommerceCurrency commerceCurrency =
-			commerceContext.getCommerceCurrency();
 
 		for (CommercePriceModifier commercePriceModifier :
 				baseModelSearchResult.getBaseModels()) {
@@ -156,7 +129,7 @@ public class CommercePriceModifierCalculationImpl
 				commercePriceEntry, commercePriceModifier, commerceCurrency);
 		}
 
-		return null;*/
+		return null;
 	}
 
 	private CommercePriceModifierValue _getCommercePriceModifierValueByType(

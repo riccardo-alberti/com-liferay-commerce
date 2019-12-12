@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.price.modifier.test;
+package com.liferay.commerce.price.modifer.test.util;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalServiceUtil;

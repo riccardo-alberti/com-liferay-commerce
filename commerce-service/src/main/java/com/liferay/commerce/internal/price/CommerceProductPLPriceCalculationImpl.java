@@ -106,8 +106,14 @@ public class CommerceProductPLPriceCalculationImpl
 		if (commercePriceModifierValue != null) {
 			unitPriceMoney = commercePriceModifierValue.get_modifiedPrice();
 		}
+		
+		CommerceProductPriceImpl commerceProductPriceImpl =
+				new CommerceProductPriceImpl();
 
-		CommerceMoney promoPriceMoney = getPromoPrice(
+		commerceProductPriceImpl.setQuantity(quantity);
+		commerceProductPriceImpl.setFinalPrice(unitPriceMoney);
+
+		/*CommerceMoney promoPriceMoney = getPromoPrice(
 			cpInstanceId, quantity, commerceContext.getCommerceCurrency(),
 			secure, commerceContext);
 
@@ -151,7 +157,7 @@ public class CommerceProductPLPriceCalculationImpl
 
 		commerceProductPriceImpl.setFinalPrice(
 			_commerceMoneyFactory.create(
-				commerceContext.getCommerceCurrency(), finalPrice));
+				commerceContext.getCommerceCurrency(), finalPrice));*/
 
 		return commerceProductPriceImpl;
 	}
