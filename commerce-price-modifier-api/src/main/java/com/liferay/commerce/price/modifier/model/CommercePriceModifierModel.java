@@ -272,6 +272,20 @@ public interface CommercePriceModifierModel
 	public void setTarget(String target);
 
 	/**
+	 * Returns the modifier amount of this commerce price modifier.
+	 *
+	 * @return the modifier amount of this commerce price modifier
+	 */
+	public BigDecimal getModifierAmount();
+
+	/**
+	 * Sets the modifier amount of this commerce price modifier.
+	 *
+	 * @param modifierAmount the modifier amount of this commerce price modifier
+	 */
+	public void setModifierAmount(BigDecimal modifierAmount);
+
+	/**
 	 * Returns the modifier type of this commerce price modifier.
 	 *
 	 * @return the modifier type of this commerce price modifier
@@ -285,20 +299,6 @@ public interface CommercePriceModifierModel
 	 * @param modifierType the modifier type of this commerce price modifier
 	 */
 	public void setModifierType(String modifierType);
-
-	/**
-	 * Returns the modifier amount of this commerce price modifier.
-	 *
-	 * @return the modifier amount of this commerce price modifier
-	 */
-	public BigDecimal getModifierAmount();
-
-	/**
-	 * Sets the modifier amount of this commerce price modifier.
-	 *
-	 * @param modifierAmount the modifier amount of this commerce price modifier
-	 */
-	public void setModifierAmount(BigDecimal modifierAmount);
 
 	/**
 	 * Returns the priority of this commerce price modifier.

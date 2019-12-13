@@ -54,14 +54,14 @@ public class CommercePriceModifierServiceImpl
 	 */
 	@Override
 	public CommercePriceModifier addCommercePriceModifier(
-			long userId, String description, String title, String target,
-			String modifierType, BigDecimal modifierAmount, double priority,
-			boolean active, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			long userId, long groupId, String description, String title,
+			String target, String modifierType, BigDecimal modifierAmount,
+			double priority, boolean active, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		PortalPermissionUtil.check(
@@ -69,11 +69,12 @@ public class CommercePriceModifierServiceImpl
 			CommercePriceModifierActionKeys.ADD_PRICE_MODIFIER);
 
 		return commercePriceModifierLocalService.addCommercePriceModifier(
-			userId, description, title, target, modifierType, modifierAmount,
-			priority, active, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+			userId, groupId, description, title, target, modifierType,
+			modifierAmount, priority, active, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	@Override
@@ -173,11 +174,11 @@ public class CommercePriceModifierServiceImpl
 
 	@Override
 	public CommercePriceModifier updateCommercePriceModifier(
-			long commercePriceModifierId, String description, String title,
-			String target, String modifierType, BigDecimal modifierAmount,
-			double priority, boolean active, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
+			long commercePriceModifierId, long groupId, String description,
+			String title, String target, String modifierType,
+			BigDecimal modifierAmount, double priority, boolean active,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, ServiceContext serviceContext)
@@ -187,9 +188,9 @@ public class CommercePriceModifierServiceImpl
 			getPermissionChecker(), commercePriceModifierId, ActionKeys.UPDATE);
 
 		return commercePriceModifierLocalService.updateCommercePriceModifier(
-			commercePriceModifierId, description, title, target, modifierType,
-			modifierAmount, priority, active, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
+			commercePriceModifierId, groupId, description, title, target,
+			modifierType, modifierAmount, priority, active, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			serviceContext);
@@ -197,15 +198,15 @@ public class CommercePriceModifierServiceImpl
 
 	@Override
 	public CommercePriceModifier upsertCommercePriceModifier(
-			long userId, long commercePriceModifierId, String description,
-			String title, String target, String modifierType,
-			BigDecimal modifierAmount, double priority, boolean active,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			String externalReferenceCode, boolean neverExpire,
-			ServiceContext serviceContext)
+			long userId, long commercePriceModifierId, long groupId,
+			String description, String title, String target,
+			String modifierType, BigDecimal modifierAmount, double priority,
+			boolean active, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, String externalReferenceCode,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		PortalPermissionUtil.check(
@@ -213,12 +214,12 @@ public class CommercePriceModifierServiceImpl
 			CommercePriceModifierActionKeys.ADD_PRICE_MODIFIER);
 
 		return commercePriceModifierLocalService.upsertCommercePriceModifier(
-			userId, commercePriceModifierId, description, title, target,
-			modifierType, modifierAmount, priority, active, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, externalReferenceCode,
-			neverExpire, serviceContext);
+			userId, commercePriceModifierId, groupId, description, title,
+			target, modifierType, modifierAmount, priority, active,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			externalReferenceCode, neverExpire, serviceContext);
 	}
 
 	private static volatile ModelResourcePermission<CommercePriceModifier>

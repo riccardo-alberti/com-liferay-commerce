@@ -24,7 +24,6 @@ import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.model.CommerceMoneyFactory;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.discount.CommerceDiscountCalculation;
-import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
@@ -60,7 +59,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Riccardo Alberti
  */
-@Component(service = CommerceProductPriceCalculation.class)
+@Component(
+	property = "commerce.price.calculation.key=CommerceProductPLPriceCalculationImpl",
+	service = CommerceProductPriceCalculation.class
+)
 public class CommerceProductPLPriceCalculationImpl
 	implements CommerceProductPriceCalculation {
 
@@ -73,9 +75,6 @@ public class CommerceProductPLPriceCalculationImpl
 		if (secure && !_hasViewPricePermission(commerceContext)) {
 			return null;
 		}
-
-		CommerceCurrency commerceCurrency =
-			commerceContext.getCommerceCurrency();
 
 		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
@@ -92,28 +91,16 @@ public class CommerceProductPLPriceCalculationImpl
 				commercePriceList.getCommercePriceListId(),
 				cpInstance.getCPInstanceUuid());
 
-		// apply price list modifier
+		// apply price list modifier // add support for tiered price entry
 
-		CommercePriceModifierValue commercePriceModifierValue =
+		CommercePriceModifierValue commercePriceListPriceModifierValue =
 			_commercePriceModifierCalculation.getPriceListPriceModifierValue(
-				commercePriceEntry, commerceContext);
-		
-		// add support for tiered price entry
-		
-		CommerceMoney unitPriceMoney = commercePriceEntry.getPriceMoney(
-				commerceCurrency.getCommerceCurrencyId());
+				commercePriceEntry, quantity, commerceContext);
 
-		if (commercePriceModifierValue != null) {
-			unitPriceMoney = commercePriceModifierValue.get_modifiedPrice();
-		}
-		
-		CommerceProductPriceImpl commerceProductPriceImpl =
-				new CommerceProductPriceImpl();
+		CommerceMoney priceListPrice =
+			commercePriceListPriceModifierValue.getModifiedPrice();
 
-		commerceProductPriceImpl.setQuantity(quantity);
-		commerceProductPriceImpl.setFinalPrice(unitPriceMoney);
-
-		/*CommerceMoney promoPriceMoney = getPromoPrice(
+		CommerceMoney promoPriceMoney = getPromoPrice(
 			cpInstanceId, quantity, commerceContext.getCommerceCurrency(),
 			secure, commerceContext);
 
@@ -121,19 +108,26 @@ public class CommerceProductPLPriceCalculationImpl
 			new CommerceProductPriceImpl();
 
 		commerceProductPriceImpl.setQuantity(quantity);
-		commerceProductPriceImpl.setUnitPrice(unitPriceMoney);
+		commerceProductPriceImpl.setUnitPrice(priceListPrice);
 		commerceProductPriceImpl.setUnitPromoPrice(promoPriceMoney);
+		commerceProductPriceImpl.setFinalPrice(priceListPrice);
 
-		BigDecimal finalPrice = unitPriceMoney.getPrice();
+		BigDecimal finalPrice = priceListPrice.getPrice();
 
 		BigDecimal promoPrice = promoPriceMoney.getPrice();
 
 		if ((promoPrice != null) &&
 			(promoPrice.compareTo(BigDecimal.ZERO) > 0) &&
-			(promoPrice.compareTo(unitPriceMoney.getPrice()) <= 0)) {
+			(promoPrice.compareTo(priceListPrice.getPrice()) <= 0)) {
 
 			finalPrice = promoPriceMoney.getPrice();
 		}
+
+		commerceProductPriceImpl.setFinalPrice(
+			_commerceMoneyFactory.create(
+				commerceContext.getCommerceCurrency(), finalPrice));
+
+		/*
 
 		// DISCOUNT PRODUCT CALCULATION
 

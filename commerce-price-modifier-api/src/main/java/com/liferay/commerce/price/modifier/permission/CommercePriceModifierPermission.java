@@ -44,8 +44,8 @@ public interface CommercePriceModifierPermission {
 		throws PortalException;
 
 	public boolean contains(
-			PermissionChecker permissionChecker, long[] commercePriceModifierIds,
-			String actionId)
+			PermissionChecker permissionChecker,
+			long[] commercePriceModifierIds, String actionId)
 		throws PortalException;
 
 }

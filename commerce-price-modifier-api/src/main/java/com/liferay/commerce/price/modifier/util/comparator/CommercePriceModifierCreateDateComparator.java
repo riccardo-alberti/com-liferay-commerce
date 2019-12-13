@@ -40,12 +40,12 @@ public class CommercePriceModifierCreateDateComparator
 
 	@Override
 	public int compare(
-			CommercePriceModifier commercePriceModifier1,
-			CommercePriceModifier commercePriceModifier2) {
+		CommercePriceModifier commercePriceModifier1,
+		CommercePriceModifier commercePriceModifier2) {
 
 		int value = DateUtil.compareTo(
-				commercePriceModifier1.getCreateDate(),
-				commercePriceModifier2.getCreateDate());
+			commercePriceModifier1.getCreateDate(),
+			commercePriceModifier2.getCreateDate());
 
 		if (_ascending) {
 			return value;

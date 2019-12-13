@@ -19,7 +19,7 @@ import com.liferay.commerce.price.modifier.constants.CommercePriceModifierConsta
 import com.liferay.commerce.price.modifier.model.CommercePriceModifier;
 import com.liferay.commerce.price.modifier.model.CommercePriceModifierRel;
 import com.liferay.commerce.price.modifier.service.CommercePriceModifierRelLocalService;
-import com.liferay.commerce.price.modifier.target.CommercePriceModifierPricelistTarget;
+import com.liferay.commerce.price.modifier.target.CommercePriceModifierPriceListTarget;
 import com.liferay.commerce.price.modifier.target.CommercePriceModifierTarget;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -49,12 +49,12 @@ import org.osgi.service.component.annotations.Reference;
 		"commerce.price.modifier.target.order:Integer=20"
 	},
 	service = {
-		CommercePriceModifierPricelistTarget.class,
+		CommercePriceModifierPriceListTarget.class,
 		CommercePriceModifierTarget.class
 	}
 )
 public class ApplyToPriceListCommercePriceModifierTargetImpl
-	implements CommercePriceModifierPricelistTarget,
+	implements CommercePriceModifierPriceListTarget,
 			   CommercePriceModifierTarget {
 
 	@Override

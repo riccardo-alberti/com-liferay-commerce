@@ -72,8 +72,8 @@ public class CommercePriceModifierWrapper
 		attributes.put("description", getDescription());
 		attributes.put("title", getTitle());
 		attributes.put("target", getTarget());
-		attributes.put("modifierType", getModifierType());
 		attributes.put("modifierAmount", getModifierAmount());
+		attributes.put("modifierType", getModifierType());
 		attributes.put("priority", getPriority());
 		attributes.put("active", isActive());
 		attributes.put("displayDate", getDisplayDate());
@@ -163,17 +163,17 @@ public class CommercePriceModifierWrapper
 			setTarget(target);
 		}
 
-		String modifierType = (String)attributes.get("modifierType");
-
-		if (modifierType != null) {
-			setModifierType(modifierType);
-		}
-
 		BigDecimal modifierAmount = (BigDecimal)attributes.get(
 			"modifierAmount");
 
 		if (modifierAmount != null) {
 			setModifierAmount(modifierAmount);
+		}
+
+		String modifierType = (String)attributes.get("modifierType");
+
+		if (modifierType != null) {
+			setModifierType(modifierType);
 		}
 
 		Double priority = (Double)attributes.get("priority");

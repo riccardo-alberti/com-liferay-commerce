@@ -24,7 +24,8 @@ import java.util.List;
 @ProviderType
 public interface CommercePriceModifierTargetRegistry {
 
-	public CommercePriceModifierTarget getCommercePriceModifierTarget(String key);
+	public CommercePriceModifierTarget getCommercePriceModifierTarget(
+		String key);
 
 	public List<CommercePriceModifierTarget> getCommercePriceModifierTargets();
 

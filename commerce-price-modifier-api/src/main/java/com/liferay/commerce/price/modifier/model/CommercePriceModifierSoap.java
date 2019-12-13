@@ -48,8 +48,8 @@ public class CommercePriceModifierSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setTarget(model.getTarget());
-		soapModel.setModifierType(model.getModifierType());
 		soapModel.setModifierAmount(model.getModifierAmount());
+		soapModel.setModifierType(model.getModifierType());
 		soapModel.setPriority(model.getPriority());
 		soapModel.setActive(model.isActive());
 		soapModel.setDisplayDate(model.getDisplayDate());
@@ -217,20 +217,20 @@ public class CommercePriceModifierSoap implements Serializable {
 		_target = target;
 	}
 
-	public String getModifierType() {
-		return _modifierType;
-	}
-
-	public void setModifierType(String modifierType) {
-		_modifierType = modifierType;
-	}
-
 	public BigDecimal getModifierAmount() {
 		return _modifierAmount;
 	}
 
 	public void setModifierAmount(BigDecimal modifierAmount) {
 		_modifierAmount = modifierAmount;
+	}
+
+	public String getModifierType() {
+		return _modifierType;
+	}
+
+	public void setModifierType(String modifierType) {
+		_modifierType = modifierType;
 	}
 
 	public double getPriority() {
@@ -321,8 +321,8 @@ public class CommercePriceModifierSoap implements Serializable {
 	private String _description;
 	private String _title;
 	private String _target;
-	private String _modifierType;
 	private BigDecimal _modifierAmount;
+	private String _modifierType;
 	private double _priority;
 	private boolean _active;
 	private Date _displayDate;

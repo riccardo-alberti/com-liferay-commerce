@@ -14,20 +14,43 @@
 
 package com.liferay.commerce.price.modifier;
 
-import java.util.List;
-
 import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
-import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.portal.kernel.exception.PortalException;
+
+import java.math.BigDecimal;
 
 /**
  * @author Riccardo Alberti
  */
 public interface CommercePriceModifierCalculation {
 
-	public CommercePriceModifierValue getPriceListPriceModifierValue(
-			CommercePriceEntry commercePriceEntry,
+	public CommercePriceModifierValue
+			getOrderShippingCommercePriceModifierValue(
+				CommerceOrder commerceOrder, BigDecimal shippingAmount,
+				CommerceContext commerceContext)
+		throws PortalException;
+
+	public CommercePriceModifierValue
+			getOrderSubtotalCommercePriceModifierValue(
+				CommerceOrder commerceOrder, BigDecimal subtotalAmount,
+				CommerceContext commerceContext)
+		throws PortalException;
+
+	public CommercePriceModifierValue getOrderTotalCommercePriceModifierValue(
+			CommerceOrder commerceOrder, BigDecimal totalAmount,
 			CommerceContext commerceContext)
 		throws PortalException;
+
+	public CommercePriceModifierValue getPriceListPriceModifierValue(
+			CommercePriceEntry commercePriceEntry, int quantity,
+			CommerceContext commerceContext)
+		throws PortalException;
+
+	public CommercePriceModifierValue getProductPriceModifierValue(
+			CommercePriceEntry commercePriceEntry, int quantity,
+			CommerceContext commerceContext)
+		throws PortalException;
+
 }

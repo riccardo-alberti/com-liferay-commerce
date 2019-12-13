@@ -29,13 +29,13 @@ public interface CommercePriceModifierTarget {
 
 	public enum Type {
 
+		APPLY_TO_CATEGORY("APPLY_TO_CATEGORY"),
+		APPLY_TO_DYNAMIC_TARGET("APPLY_TO_DYNAMIC_TARGET"),
 		APPLY_TO_PRICELIST("APPLY_TO_PRICELIST"),
 		APPLY_TO_PRODUCT("APPLY_TO_PRODUCT"),
-		APPLY_TO_CATEGORY("APPLY_TO_CATEGORY"),
 		APPLY_TO_SHIPPING("APPLY_TO_SHIPPING"),
 		APPLY_TO_SUBTOTAL("APPLY_TO_SUBTOTAL"),
-		APPLY_TO_TOTAL("APPLY_TO_TOTAL"),
-		APPLY_TO_DYNAMIC_TARGET("APPLY_TO_DYNAMIC_TARGET");
+		APPLY_TO_TOTAL("APPLY_TO_TOTAL");
 
 		public String getValue() {
 			return _value;
@@ -53,4 +53,5 @@ public interface CommercePriceModifierTarget {
 		private final String _value;
 
 	}
+
 }

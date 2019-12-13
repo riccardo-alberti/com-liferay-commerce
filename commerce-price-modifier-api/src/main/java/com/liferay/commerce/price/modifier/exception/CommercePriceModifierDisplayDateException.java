@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.commerce.price.modifier.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,7 +28,9 @@ public class CommercePriceModifierDisplayDateException extends PortalException {
 		super(msg);
 	}
 
-	public CommercePriceModifierDisplayDateException(String msg, Throwable cause) {
+	public CommercePriceModifierDisplayDateException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 

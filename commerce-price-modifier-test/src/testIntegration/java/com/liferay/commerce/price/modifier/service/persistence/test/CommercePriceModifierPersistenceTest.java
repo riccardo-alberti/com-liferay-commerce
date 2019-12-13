@@ -155,10 +155,10 @@ public class CommercePriceModifierPersistenceTest {
 
 		newCommercePriceModifier.setTarget(RandomTestUtil.randomString());
 
-		newCommercePriceModifier.setModifierType(RandomTestUtil.randomString());
-
 		newCommercePriceModifier.setModifierAmount(
 			new BigDecimal(RandomTestUtil.nextDouble()));
+
+		newCommercePriceModifier.setModifierType(RandomTestUtil.randomString());
 
 		newCommercePriceModifier.setPriority(RandomTestUtil.nextDouble());
 
@@ -225,11 +225,11 @@ public class CommercePriceModifierPersistenceTest {
 			existingCommercePriceModifier.getTarget(),
 			newCommercePriceModifier.getTarget());
 		Assert.assertEquals(
-			existingCommercePriceModifier.getModifierType(),
-			newCommercePriceModifier.getModifierType());
-		Assert.assertEquals(
 			existingCommercePriceModifier.getModifierAmount(),
 			newCommercePriceModifier.getModifierAmount());
+		Assert.assertEquals(
+			existingCommercePriceModifier.getModifierType(),
+			newCommercePriceModifier.getModifierType());
 		AssertUtils.assertEquals(
 			existingCommercePriceModifier.getPriority(),
 			newCommercePriceModifier.getPriority());
@@ -397,7 +397,7 @@ public class CommercePriceModifierPersistenceTest {
 			true, "commercePriceModifierId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "description", true, "title", true, "target",
-			true, "modifierType", true, "modifierAmount", true, "priority",
+			true, "modifierAmount", true, "modifierType", true, "priority",
 			true, "active", true, "displayDate", true, "expirationDate", true,
 			"lastPublishDate", true, "status", true, "statusByUserId", true,
 			"statusByUserName", true, "statusDate", true);
@@ -705,10 +705,10 @@ public class CommercePriceModifierPersistenceTest {
 
 		commercePriceModifier.setTarget(RandomTestUtil.randomString());
 
-		commercePriceModifier.setModifierType(RandomTestUtil.randomString());
-
 		commercePriceModifier.setModifierAmount(
 			new BigDecimal(RandomTestUtil.nextDouble()));
+
+		commercePriceModifier.setModifierType(RandomTestUtil.randomString());
 
 		commercePriceModifier.setPriority(RandomTestUtil.nextDouble());
 

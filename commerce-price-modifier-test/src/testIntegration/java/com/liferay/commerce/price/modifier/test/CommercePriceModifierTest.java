@@ -25,6 +25,7 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLoca
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.price.CommerceProductPriceCalculationRegistry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.modifer.test.util.CommercePriceListTestUtil;
@@ -91,6 +92,85 @@ public class CommercePriceModifierTest {
 
 		_commerceAccount = CommerceTestUtil.addAccount(
 			_user.getGroupId(), _user.getUserId());
+
+		_commerceProductPriceCalculation =
+			_commerceProductPriceCalculationRegistry.getCommerceProductPrice(
+				"CommerceProductPLPriceCalculationImpl");
+	}
+
+	@Test
+	public void testAddMultiplePriceListPriceModifierAbsolute()
+		throws Exception {
+
+		String name = RandomTestUtil.randomString();
+
+		List<CommerceCatalog> commerceCatalogs =
+			CommerceCatalogLocalServiceUtil.getCommerceCatalogs(
+				_user.getCompanyId(), true);
+
+		CommerceCatalog commerceCatalog = commerceCatalogs.get(0);
+
+		CPInstance cpInstance = CPTestUtil.addCPInstance(
+			commerceCatalog.getGroupId());
+
+		CPDefinition cpDefinition =
+			CPDefinitionLocalServiceUtil.getCPDefinition(
+				cpInstance.getCPDefinitionId());
+		
+		_commercePriceList = CommercePriceListTestUtil.addCommercePriceList(
+				commerceCatalog.getGroupId(), _commerceCurrency.getCode(), name,
+				RandomTestUtil.randomDouble(), true, null, null, null);
+
+		BigDecimal priceEntryPrice = BigDecimal.valueOf(10);
+		BigDecimal promoPrice = BigDecimal.valueOf(0);
+
+		_commercePriceEntryLocalService.addCommercePriceEntry(
+			cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+			_commercePriceList.getCommercePriceListId(),
+			RandomTestUtil.randomString(), priceEntryPrice, promoPrice,
+			ServiceContextTestUtil.getServiceContext(
+				_commercePriceList.getGroupId()));
+
+		BigDecimal amount = BigDecimal.valueOf(1);
+
+		CommerceContext commerceContext = new TestCommerceContext(
+			_commerceCurrency, null, null, _user.getGroup(), _commerceAccount,
+			null);
+
+		_commercePriceModifier =
+			CommercePriceModifierTestUtil.addCommercePriceModifierAbsolute(
+				_user.getUserId(), _commercePriceList.getGroupId(),
+				CommercePriceModifierConstants.TARGET_PRICELIST, amount, 10);
+
+		CommercePriceModifierTestUtil.addCommercePriceModifierRelPricelist(
+			_commercePriceModifier.getCommercePriceModifierId(),
+			_commercePriceList.getGroupId(),
+			_commercePriceList.getCommercePriceListId());
+
+		amount = BigDecimal.valueOf(2);
+
+		_commercePriceModifier =
+			CommercePriceModifierTestUtil.addCommercePriceModifierAbsolute(
+				_user.getUserId(), _commercePriceList.getGroupId(),
+				CommercePriceModifierConstants.TARGET_PRICELIST, amount, 3);
+
+		CommercePriceModifierTestUtil.addCommercePriceModifierRelPricelist(
+			_commercePriceModifier.getCommercePriceModifierId(),
+			_commercePriceList.getGroupId(),
+			_commercePriceList.getCommercePriceListId());
+
+		CommerceProductPrice commerceProductPrice =
+			_commerceProductPriceCalculation.getCommerceProductPrice(
+				cpInstance.getCPInstanceId(), 1, commerceContext);
+
+		CommerceMoney finalCommerceMoney = commerceProductPrice.getFinalPrice();
+
+		BigDecimal finalPrice = finalCommerceMoney.getPrice();
+
+		BigDecimal discountedPrice = priceEntryPrice.subtract(amount);
+
+		Assert.assertEquals(
+			discountedPrice.doubleValue(), finalPrice.doubleValue(), 0);
 	}
 
 	@Test
@@ -131,9 +211,9 @@ public class CommercePriceModifierTest {
 			null);
 
 		_commercePriceModifier =
-			CommercePriceModifierTestUtil.addCommercePriceModifier(
+			CommercePriceModifierTestUtil.addCommercePriceModifierAbsolute(
 				_user.getUserId(), _commercePriceList.getGroupId(),
-				CommercePriceModifierConstants.TARGET_PRICELIST);
+				CommercePriceModifierConstants.TARGET_PRICELIST, amount, 0);
 
 		CommercePriceModifierTestUtil.addCommercePriceModifierRelPricelist(
 			_commercePriceModifier.getCommercePriceModifierId(),
@@ -354,8 +434,11 @@ public class CommercePriceModifierTest {
 	private CommercePriceModifierLocalService
 		_commercePriceModifierLocalService;
 
-	@Inject
 	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
+
+	@Inject
+	private CommerceProductPriceCalculationRegistry
+		_commerceProductPriceCalculationRegistry;
 
 	@DeleteAfterTestRun
 	private User _user;

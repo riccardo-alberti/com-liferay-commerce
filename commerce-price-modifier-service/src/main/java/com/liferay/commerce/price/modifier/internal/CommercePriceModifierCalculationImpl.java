@@ -18,15 +18,17 @@ import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.model.CommerceMoneyFactory;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.modifier.CommercePriceModifierCalculation;
 import com.liferay.commerce.price.modifier.CommercePriceModifierValue;
-import com.liferay.commerce.price.modifier.constants.CommercePriceModifierConstants;
 import com.liferay.commerce.price.modifier.exception.InvalidPriceModifierTypeException;
 import com.liferay.commerce.price.modifier.internal.search.CommercePriceModifierIndexer;
 import com.liferay.commerce.price.modifier.model.CommercePriceModifier;
 import com.liferay.commerce.price.modifier.service.CommercePriceModifierLocalService;
 import com.liferay.commerce.price.modifier.target.CommercePriceModifierTarget;
+import com.liferay.commerce.price.modifier.type.CommercePriceModifierType;
+import com.liferay.commerce.price.modifier.type.CommercePriceModifierTypeRegistry;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,6 +36,8 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -43,6 +47,7 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -56,8 +61,43 @@ public class CommercePriceModifierCalculationImpl
 	implements CommercePriceModifierCalculation {
 
 	@Override
+	public CommercePriceModifierValue
+			getOrderShippingCommercePriceModifierValue(
+				CommerceOrder commerceOrder, BigDecimal shippingAmount,
+				CommerceContext commerceContext)
+		throws PortalException {
+
+		// TODO Auto-generated method stub
+
+		return null;
+	}
+
+	@Override
+	public CommercePriceModifierValue
+			getOrderSubtotalCommercePriceModifierValue(
+				CommerceOrder commerceOrder, BigDecimal subtotalAmount,
+				CommerceContext commerceContext)
+		throws PortalException {
+
+		// TODO Auto-generated method stub
+
+		return null;
+	}
+
+	@Override
+	public CommercePriceModifierValue getOrderTotalCommercePriceModifierValue(
+			CommerceOrder commerceOrder, BigDecimal totalAmount,
+			CommerceContext commerceContext)
+		throws PortalException {
+
+		// TODO Auto-generated method stub
+
+		return null;
+	}
+
+	@Override
 	public CommercePriceModifierValue getPriceListPriceModifierValue(
-			CommercePriceEntry commercePriceEntry,
+			CommercePriceEntry commercePriceEntry, int quantity,
 			CommerceContext commerceContext)
 		throws PortalException {
 
@@ -69,18 +109,50 @@ public class CommercePriceModifierCalculationImpl
 
 		SearchContext searchContext = buildSearchContext(
 			cpInstance.getCompanyId(), 0, 0,
-			commercePriceEntry.getCommercePriceListId(),
+			commercePriceEntry.getCommercePriceListId(), 0,
 			commerceContext.getCommerceAccountGroupIds(),
 			CommercePriceModifierTarget.Type.APPLY_TO_PRICELIST);
 
+		searchContext.setStart(0);
+		searchContext.setEnd(1);
+
+		Sort sort = SortFactoryUtil.create(
+			Field.PRIORITY + "_Number_sortable", true);
+
+		searchContext.setSorts(sort);
+
 		return _getCommercePriceModifierValue(
-			commercePriceEntry, commerceContext, searchContext);
+			commercePriceEntry, quantity, commerceContext, searchContext);
+	}
+
+	@Override
+	public CommercePriceModifierValue getProductPriceModifierValue(
+			CommercePriceEntry commercePriceEntry, int quantity,
+			CommerceContext commerceContext)
+		throws PortalException {
+
+		if (commercePriceEntry == null) {
+			return null;
+		}
+
+		CPInstance cpInstance = commercePriceEntry.getCPInstance();
+
+		SearchContext searchContext = buildSearchContext(
+			cpInstance.getCompanyId(), cpInstance.getCPDefinitionId(),
+			cpInstance.getCPInstanceId(),
+			commercePriceEntry.getCommercePriceListId(), 0,
+			commerceContext.getCommerceAccountGroupIds(),
+			CommercePriceModifierTarget.Type.APPLY_TO_PRODUCT);
+
+		return _getCommercePriceModifierValue(
+			commercePriceEntry, quantity, commerceContext, searchContext);
 	}
 
 	protected SearchContext buildSearchContext(
 		long companyId, long cpDefinitionId, long cpInstanceId,
-		long commercePriceListId, long[] commerceAccountGroupIds,
-		CommercePriceModifierTarget.Type commerceDiscountTargetType) {
+		long commercePriceListId, long commerceOrderId,
+		long[] commerceAccountGroupIds,
+		CommercePriceModifierTarget.Type commercePriceModifierTargetType) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -89,9 +161,10 @@ public class CommercePriceModifierCalculationImpl
 		attributes.put(CommercePriceModifierIndexer.FIELD_ACTIVE, true);
 		attributes.put(
 			CommercePriceModifierIndexer.FIELD_TARGET_TYPE,
-			commerceDiscountTargetType.toString());
+			commercePriceModifierTargetType.toString());
 		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
 		attributes.put("commerceAccountGroupIds", commerceAccountGroupIds);
+		attributes.put("commerceOrderId", commerceOrderId);
 		attributes.put("commercePriceListId", commercePriceListId);
 		attributes.put("cpDefinitionId", cpDefinitionId);
 		attributes.put("cpInstanceId", cpInstanceId);
@@ -111,7 +184,7 @@ public class CommercePriceModifierCalculationImpl
 	}
 
 	private CommercePriceModifierValue _getCommercePriceModifierValue(
-			CommercePriceEntry commercePriceEntry,
+			CommercePriceEntry commercePriceEntry, int quantity,
 			CommerceContext commerceContext, SearchContext searchContext)
 		throws PortalException {
 
@@ -122,63 +195,53 @@ public class CommercePriceModifierCalculationImpl
 			_commercePriceModifierLocalService.searchCommercePriceModifiers(
 				searchContext);
 
+		List<CommercePriceModifier> commercePriceModifiers =
+			baseModelSearchResult.getBaseModels();
+
+		if (commercePriceModifiers == null) {
+			return new CommercePriceModifierValue(
+				0,
+				commercePriceEntry.getPriceMoney(
+					commerceCurrency.getCommerceCurrencyId()),
+				null, null);
+		}
+
+		// Solve price modifier hierarchy
+
 		for (CommercePriceModifier commercePriceModifier :
 				baseModelSearchResult.getBaseModels()) {
 
 			return _getCommercePriceModifierValueByType(
-				commercePriceEntry, commercePriceModifier, commerceCurrency);
+				commercePriceEntry, quantity, commercePriceModifier,
+				commerceCurrency);
 		}
 
 		return null;
 	}
 
 	private CommercePriceModifierValue _getCommercePriceModifierValueByType(
-			CommercePriceEntry commercePriceEntry,
+			CommercePriceEntry commercePriceEntry, int quantity,
 			CommercePriceModifier commercePriceModifier,
 			CommerceCurrency commerceCurrency)
 		throws PortalException {
 
 		String modifierType = commercePriceModifier.getModifierType();
 
+		CommercePriceModifierType commercePriceModifierType =
+			_commercePriceModifierTypeRegistry.getCommercePriceModifierType(
+				modifierType);
+
+		if (commercePriceModifierType == null) {
+			throw new InvalidPriceModifierTypeException(modifierType);
+		}
+
+		CommerceMoney modifiedCommerceMoney =
+			commercePriceModifierType.evaluate(
+				commercePriceEntry, quantity, commercePriceModifier,
+				commerceCurrency);
+
 		CommerceMoney originalCommerceMoney = commercePriceEntry.getPriceMoney(
 			commerceCurrency.getCommerceCurrencyId());
-
-		BigDecimal originalPrice = originalCommerceMoney.getPrice();
-
-		BigDecimal modifiedPrice = null;
-		CommerceMoney modifiedCommerceMoney = null;
-
-		// VALIDATE
-
-		if (modifierType.equals(CommercePriceModifierConstants.PERCENTAGE)) {
-			BigDecimal modifierAmount =
-				commercePriceModifier.getModifierAmount();
-
-			BigDecimal percentage = BigDecimal.ONE.subtract(
-				modifierAmount.divide(_ONE_HUNDRED));
-
-			modifiedPrice = originalPrice.multiply(percentage);
-		}
-		else if (modifierType.equals(CommercePriceModifierConstants.ABSOLUTE)) {
-			modifiedPrice = originalPrice.subtract(
-				commercePriceModifier.getModifierAmount());
-		}
-		else if (modifierType.equals(CommercePriceModifierConstants.FORMULA)) {
-
-			// TO DO
-
-			throw new InvalidPriceModifierTypeException(modifierType);
-		}
-		else {
-			throw new InvalidPriceModifierTypeException(modifierType);
-		}
-
-		if (modifiedPrice.compareTo(BigDecimal.ZERO) < 0) {
-			modifiedPrice = originalPrice;
-		}
-
-		modifiedCommerceMoney = _commerceMoneyFactory.create(
-			commerceCurrency, modifiedPrice);
 
 		RoundingMode roundingMode = RoundingMode.valueOf(
 			commerceCurrency.getRoundingMode());
@@ -218,5 +281,9 @@ public class CommercePriceModifierCalculationImpl
 	@Reference
 	private CommercePriceModifierLocalService
 		_commercePriceModifierLocalService;
+
+	@Reference
+	private CommercePriceModifierTypeRegistry
+		_commercePriceModifierTypeRegistry;
 
 }

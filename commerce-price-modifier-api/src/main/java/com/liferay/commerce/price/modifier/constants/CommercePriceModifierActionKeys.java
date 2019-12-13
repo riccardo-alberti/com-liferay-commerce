@@ -21,7 +21,6 @@ public class CommercePriceModifierActionKeys {
 
 	public static final String ADD_PRICE_MODIFIER = "ADD_PRICE_MODIFIER";
 
-	public static final String VIEW_PRICE_MODIFIERS =
-		"VIEW_PRICE_MODIFIERS";
+	public static final String VIEW_PRICE_MODIFIERS = "VIEW_PRICE_MODIFIERS";
 
 }

@@ -14,26 +14,27 @@
 
 package com.liferay.commerce.price.modifier.target;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.modifier.model.CommercePriceModifier;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 
-import aQute.bnd.annotation.ProviderType;
-
 /**
  * @author Riccardo Alberti
  */
 @ProviderType
-public interface CommercePriceModifierPricelistTarget {
+public interface CommercePriceModifierPriceListTarget {
 
 	public void contributeDocument(
 			Document document, CommercePriceModifier commercePriceModifier)
 		throws PortalException;
 
 	public void postProcessContextBooleanFilter(
-			BooleanFilter contextBooleanFilter, CommercePriceList commercePriceList)
+			BooleanFilter contextBooleanFilter,
+			CommercePriceList commercePriceList)
 		throws PortalException;
 
 }

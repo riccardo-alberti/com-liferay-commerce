@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.price.modifier.service.impl;
 
-import com.liferay.commerce.price.modifier.constants.CommercePriceModifierConstants;
 import com.liferay.commerce.price.modifier.exception.CommercePriceModifierAmountException;
 import com.liferay.commerce.price.modifier.exception.CommercePriceModifierDisplayDateException;
 import com.liferay.commerce.price.modifier.exception.CommercePriceModifierExpirationDateException;
@@ -27,6 +26,8 @@ import com.liferay.commerce.price.modifier.model.CommercePriceModifier;
 import com.liferay.commerce.price.modifier.service.base.CommercePriceModifierLocalServiceBaseImpl;
 import com.liferay.commerce.price.modifier.target.CommercePriceModifierTarget;
 import com.liferay.commerce.price.modifier.target.CommercePriceModifierTargetRegistry;
+import com.liferay.commerce.price.modifier.type.CommercePriceModifierType;
+import com.liferay.commerce.price.modifier.type.CommercePriceModifierTypeRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -89,14 +90,14 @@ public class CommercePriceModifierLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommercePriceModifier addCommercePriceModifier(
-			long userId, String description, String title, String target,
-			String modifierType, BigDecimal modifierAmount, double priority,
-			boolean active, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			long userId, long groupId, String description, String title,
+			String target, String modifierType, BigDecimal modifierAmount,
+			double priority, boolean active, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce price modifier
@@ -131,11 +132,13 @@ public class CommercePriceModifierLocalServiceImpl
 		commercePriceModifier.setCompanyId(user.getCompanyId());
 		commercePriceModifier.setUserId(user.getUserId());
 		commercePriceModifier.setUserName(user.getFullName());
+		commercePriceModifier.setGroupId(groupId);
 		commercePriceModifier.setDescription(description);
 		commercePriceModifier.setTarget(target);
 		commercePriceModifier.setTitle(title);
 		commercePriceModifier.setModifierType(modifierType);
 		commercePriceModifier.setModifierAmount(modifierAmount);
+		commercePriceModifier.setPriority(priority);
 		commercePriceModifier.setActive(active);
 		commercePriceModifier.setDisplayDate(displayDate);
 		commercePriceModifier.setExpirationDate(expirationDate);
@@ -290,11 +293,11 @@ public class CommercePriceModifierLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommercePriceModifier updateCommercePriceModifier(
-			long commercePriceModifierId, String description, String title,
-			String target, String modifierType, BigDecimal modifierAmount,
-			double priority, boolean active, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
+			long commercePriceModifierId, long groupId, String description,
+			String title, String target, String modifierType,
+			BigDecimal modifierAmount, double priority, boolean active,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, ServiceContext serviceContext)
@@ -326,11 +329,13 @@ public class CommercePriceModifierLocalServiceImpl
 				CommercePriceModifierExpirationDateException.class);
 		}
 
+		commercePriceModifier.setGroupId(groupId);
 		commercePriceModifier.setDescription(description);
 		commercePriceModifier.setTarget(target);
 		commercePriceModifier.setTitle(title);
 		commercePriceModifier.setModifierType(modifierType);
 		commercePriceModifier.setModifierAmount(modifierAmount);
+		commercePriceModifier.setPriority(priority);
 		commercePriceModifier.setActive(active);
 		commercePriceModifier.setDisplayDate(displayDate);
 		commercePriceModifier.setExpirationDate(expirationDate);
@@ -401,15 +406,15 @@ public class CommercePriceModifierLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommercePriceModifier upsertCommercePriceModifier(
-			long userId, long commercePriceModifierId, String description,
-			String title, String target, String modifierType,
-			BigDecimal modifierAmount, double priority, boolean active,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			String externalReferenceCode, boolean neverExpire,
-			ServiceContext serviceContext)
+			long userId, long commercePriceModifierId, long groupId,
+			String description, String title, String target,
+			String modifierType, BigDecimal modifierAmount, double priority,
+			boolean active, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, String externalReferenceCode,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Update
@@ -418,13 +423,14 @@ public class CommercePriceModifierLocalServiceImpl
 			try {
 				return commercePriceModifierLocalService.
 					upsertCommercePriceModifier(
-						userId, commercePriceModifierId, description, title,
-						target, modifierType, modifierAmount, priority, active,
-						displayDateMonth, displayDateDay, displayDateYear,
-						displayDateHour, displayDateMinute, expirationDateMonth,
-						expirationDateDay, expirationDateYear,
-						expirationDateHour, expirationDateMinute,
-						externalReferenceCode, neverExpire, serviceContext);
+						userId, commercePriceModifierId, groupId, description,
+						title, target, modifierType, modifierAmount, priority,
+						active, displayDateMonth, displayDateDay,
+						displayDateYear, displayDateHour, displayDateMinute,
+						expirationDateMonth, expirationDateDay,
+						expirationDateYear, expirationDateHour,
+						expirationDateMinute, externalReferenceCode,
+						neverExpire, serviceContext);
 			}
 			catch (NoSuchPriceModifierException nspme) {
 				if (_log.isDebugEnabled()) {
@@ -443,8 +449,8 @@ public class CommercePriceModifierLocalServiceImpl
 			if (commercePriceModifier != null) {
 				return commercePriceModifierLocalService.
 					updateCommercePriceModifier(
-						commercePriceModifierId, description, title, target,
-						modifierType, modifierAmount, priority, active,
+						commercePriceModifierId, groupId, description, title,
+						target, modifierType, modifierAmount, priority, active,
 						displayDateMonth, displayDateDay, displayDateYear,
 						displayDateHour, displayDateMinute, expirationDateMonth,
 						expirationDateDay, expirationDateYear,
@@ -456,11 +462,12 @@ public class CommercePriceModifierLocalServiceImpl
 		// Add
 
 		return commercePriceModifierLocalService.addCommercePriceModifier(
-			userId, description, title, target, modifierType, modifierAmount,
-			priority, active, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+			userId, groupId, description, title, target, modifierType,
+			modifierAmount, priority, active, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	protected SearchContext buildSearchContext(
@@ -568,11 +575,11 @@ public class CommercePriceModifierLocalServiceImpl
 			throw new CommercePriceModifierTargetException();
 		}
 
-		if ((modifierType == null) ||
-			(!modifierType.equals(CommercePriceModifierConstants.ABSOLUTE) &&
-			 !modifierType.equals(CommercePriceModifierConstants.FORMULA) &&
-			 !modifierType.equals(CommercePriceModifierConstants.PERCENTAGE))) {
+		CommercePriceModifierType commercePriceModifierType =
+			_commercePriceModifierTypeRegistry.getCommercePriceModifierType(
+				modifierType);
 
+		if (commercePriceModifierType == null) {
 			throw new CommercePriceModifierTypeException();
 		}
 
@@ -593,5 +600,9 @@ public class CommercePriceModifierLocalServiceImpl
 	@ServiceReference(type = CommercePriceModifierTargetRegistry.class)
 	private CommercePriceModifierTargetRegistry
 		_commercePriceModifierTargetRegistry;
+
+	@ServiceReference(type = CommercePriceModifierTypeRegistry.class)
+	private CommercePriceModifierTypeRegistry
+		_commercePriceModifierTypeRegistry;
 
 }

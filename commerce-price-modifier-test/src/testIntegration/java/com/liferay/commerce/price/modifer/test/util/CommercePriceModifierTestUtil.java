@@ -38,7 +38,8 @@ import java.util.Date;
 public class CommercePriceModifierTestUtil {
 
 	public static CommercePriceModifier addCommercePriceModifier(
-			long userId, long groupId, String target)
+			long userId, long groupId, String target, String modifierType,
+			BigDecimal modifierAmount, double priority)
 		throws Exception {
 
 		User user = UserLocalServiceUtil.getUser(userId);
@@ -79,14 +80,33 @@ public class CommercePriceModifierTestUtil {
 		}
 
 		return CommercePriceModifierLocalServiceUtil.addCommercePriceModifier(
-			userId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), target,
-			CommercePriceModifierConstants.PERCENTAGE, BigDecimal.valueOf(10),
-			RandomTestUtil.nextDouble(), true, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, true,
+			userId, groupId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), target, modifierType, modifierAmount,
+			priority, true, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, true,
 			ServiceContextTestUtil.getServiceContext(groupId));
+	}
+
+	public static CommercePriceModifier addCommercePriceModifierAbsolute(
+			long userId, long groupId, String target, BigDecimal modifierAmount,
+			double priority)
+		throws Exception {
+
+		return addCommercePriceModifier(
+			userId, groupId, target, CommercePriceModifierConstants.ABSOLUTE,
+			modifierAmount, priority);
+	}
+
+	public static CommercePriceModifier addCommercePriceModifierPercentage(
+			long userId, long groupId, String target, BigDecimal modifierAmount,
+			double priority)
+		throws Exception {
+
+		return addCommercePriceModifier(
+			userId, groupId, target, CommercePriceModifierConstants.PERCENTAGE,
+			modifierAmount, priority);
 	}
 
 	public static CommercePriceModifierRel addCommercePriceModifierRel(

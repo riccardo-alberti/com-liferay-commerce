@@ -89,14 +89,14 @@ public interface CommercePriceModifierLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceModifier addCommercePriceModifier(
-			long userId, String description, String title, String target,
-			String modifierType, BigDecimal modifierAmount, double priority,
-			boolean active, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			long userId, long groupId, String description, String title,
+			String target, String modifierType, BigDecimal modifierAmount,
+			double priority, boolean active, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -366,11 +366,11 @@ public interface CommercePriceModifierLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceModifier updateCommercePriceModifier(
-			long commercePriceModifierId, String description, String title,
-			String target, String modifierType, BigDecimal modifierAmount,
-			double priority, boolean active, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
+			long commercePriceModifierId, long groupId, String description,
+			String title, String target, String modifierType,
+			BigDecimal modifierAmount, double priority, boolean active,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, ServiceContext serviceContext)
@@ -385,15 +385,15 @@ public interface CommercePriceModifierLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceModifier upsertCommercePriceModifier(
-			long userId, long commercePriceModifierId, String description,
-			String title, String target, String modifierType,
-			BigDecimal modifierAmount, double priority, boolean active,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			String externalReferenceCode, boolean neverExpire,
-			ServiceContext serviceContext)
+			long userId, long commercePriceModifierId, long groupId,
+			String description, String title, String target,
+			String modifierType, BigDecimal modifierAmount, double priority,
+			boolean active, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, String externalReferenceCode,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException;
 
 }

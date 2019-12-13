@@ -18,9 +18,13 @@ import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.price.modifier.model.CommercePriceModifier;
 import com.liferay.commerce.price.modifier.service.CommercePriceModifierLocalService;
-import com.liferay.commerce.price.modifier.target.CommercePriceModifierPricelistTarget;
+import com.liferay.commerce.price.modifier.target.CommercePriceModifierPriceListTarget;
+import com.liferay.commerce.price.modifier.target.CommercePriceModifierProductTarget;
 import com.liferay.commerce.price.modifier.target.CommercePriceModifierTarget;
 import com.liferay.commerce.price.modifier.target.CommercePriceModifierTargetRegistry;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -123,15 +127,32 @@ public class CommercePriceModifierIndexer
 		if (commercePriceListId > 0) {
 			CommercePriceList commercePriceList =
 				_commercePriceListLocalService.getCommercePriceList(
-						commercePriceListId);
+					commercePriceListId);
 
-			for (CommercePriceModifierPricelistTarget
-					commercePriceModifierPricelistTarget :
-						_commercePriceModifierPricelistTargets) {
+			for (CommercePriceModifierPriceListTarget
+					commercePriceModifierPriceListTarget :
+						_commercePriceModifierPriceListTargets) {
 
-				commercePriceModifierPricelistTarget.
+				commercePriceModifierPriceListTarget.
 					postProcessContextBooleanFilter(
 						contextBooleanFilter, commercePriceList);
+			}
+		}
+
+		long cpDefinitionId = GetterUtil.getLong(
+			searchContext.getAttribute("cpDefinitionId"));
+
+		if (cpDefinitionId > 0) {
+			CPDefinition cpDefinition =
+				_cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
+
+			for (CommercePriceModifierProductTarget
+					commercePriceModifierProductTarget :
+						_commercePriceModifierProductTargets) {
+
+				commercePriceModifierProductTarget.
+					postProcessContextBooleanFilter(
+						contextBooleanFilter, cpDefinition);
 			}
 		}
 	}
@@ -210,14 +231,26 @@ public class CommercePriceModifierIndexer
 		}
 
 		if (commercePriceModifierTarget instanceof
-				CommercePriceModifierPricelistTarget) {
+				CommercePriceModifierPriceListTarget) {
 
-			CommercePriceModifierPricelistTarget
-				commercePriceModifierPricelistTarget =
-					(CommercePriceModifierPricelistTarget)
+			CommercePriceModifierPriceListTarget
+				commercePriceModifierPriceListTarget =
+					(CommercePriceModifierPriceListTarget)
 						commercePriceModifierTarget;
 
-			commercePriceModifierPricelistTarget.contributeDocument(
+			commercePriceModifierPriceListTarget.contributeDocument(
+				document, commercePriceModifier);
+		}
+
+		if (commercePriceModifierTarget instanceof
+				CommercePriceModifierProductTarget) {
+
+			CommercePriceModifierProductTarget
+				commercePriceModifierProductTarget =
+					(CommercePriceModifierProductTarget)
+						commercePriceModifierTarget;
+
+			commercePriceModifierProductTarget.contributeDocument(
 				document, commercePriceModifier);
 		}
 
@@ -265,14 +298,27 @@ public class CommercePriceModifierIndexer
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		service = CommercePriceModifierPricelistTarget.class
+		service = CommercePriceModifierPriceListTarget.class
 	)
-	protected void registerCommercePriceModifierPricelistTarget(
-		CommercePriceModifierPricelistTarget
-			commercePriceModifierPricelistTarget) {
+	protected void registerCommercePriceModifierPriceListTarget(
+		CommercePriceModifierPriceListTarget
+			commercePriceModifierPriceListTarget) {
 
-		_commercePriceModifierPricelistTargets.add(
-			commercePriceModifierPricelistTarget);
+		_commercePriceModifierPriceListTargets.add(
+			commercePriceModifierPriceListTarget);
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		service = CommercePriceModifierProductTarget.class
+	)
+	protected void registerCommercePriceModifierProductTarget(
+		CommercePriceModifierProductTarget commercePriceModifierProductTarget) {
+
+		_commercePriceModifierProductTargets.add(
+			commercePriceModifierProductTarget);
 	}
 
 	protected void reindexCommercePriceModifiers(long companyId)
@@ -304,16 +350,26 @@ public class CommercePriceModifierIndexer
 		indexableActionableDynamicQuery.performActions();
 	}
 
-	protected void unregisterCommercePriceModifierPricelistTarget(
-		CommercePriceModifierPricelistTarget
-			commercePriceModifierPricelistTarget) {
+	protected void unregisterCommercePriceModifierPriceListTarget(
+		CommercePriceModifierPriceListTarget
+			commercePriceModifierPriceListTarget) {
 
-		_commercePriceModifierPricelistTargets.remove(
-			commercePriceModifierPricelistTarget);
+		_commercePriceModifierPriceListTargets.remove(
+			commercePriceModifierPriceListTarget);
+	}
+
+	protected void unregisterCommercePriceModifierProductTarget(
+		CommercePriceModifierProductTarget commercePriceModifierProductTarget) {
+
+		_commercePriceModifierProductTargets.remove(
+			commercePriceModifierProductTarget);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommercePriceModifierIndexer.class);
+
+	@Reference
+	private CommerceOrderLocalService _commerceOrderLocalService;
 
 	@Reference
 	private CommercePriceListLocalService _commercePriceListLocalService;
@@ -322,12 +378,17 @@ public class CommercePriceModifierIndexer
 	private CommercePriceModifierLocalService
 		_commercePriceModifierLocalService;
 
-	private final List<CommercePriceModifierPricelistTarget>
-		_commercePriceModifierPricelistTargets = new CopyOnWriteArrayList<>();
+	private final List<CommercePriceModifierPriceListTarget>
+		_commercePriceModifierPriceListTargets = new CopyOnWriteArrayList<>();
+	private final List<CommercePriceModifierProductTarget>
+		_commercePriceModifierProductTargets = new CopyOnWriteArrayList<>();
 
 	@Reference
 	private CommercePriceModifierTargetRegistry
 		_commercePriceModifierTargetRegistry;
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;

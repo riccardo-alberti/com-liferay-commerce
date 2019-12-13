@@ -92,10 +92,10 @@ public class CommercePriceModifierCacheModel
 		sb.append(title);
 		sb.append(", target=");
 		sb.append(target);
-		sb.append(", modifierType=");
-		sb.append(modifierType);
 		sb.append(", modifierAmount=");
 		sb.append(modifierAmount);
+		sb.append(", modifierType=");
+		sb.append(modifierType);
 		sb.append(", priority=");
 		sb.append(priority);
 		sb.append(", active=");
@@ -187,6 +187,8 @@ public class CommercePriceModifierCacheModel
 			commercePriceModifierImpl.setTarget(target);
 		}
 
+		commercePriceModifierImpl.setModifierAmount(modifierAmount);
+
 		if (modifierType == null) {
 			commercePriceModifierImpl.setModifierType("");
 		}
@@ -194,7 +196,6 @@ public class CommercePriceModifierCacheModel
 			commercePriceModifierImpl.setModifierType(modifierType);
 		}
 
-		commercePriceModifierImpl.setModifierAmount(modifierAmount);
 		commercePriceModifierImpl.setPriority(priority);
 		commercePriceModifierImpl.setActive(active);
 
@@ -263,8 +264,8 @@ public class CommercePriceModifierCacheModel
 		description = objectInput.readUTF();
 		title = objectInput.readUTF();
 		target = objectInput.readUTF();
-		modifierType = objectInput.readUTF();
 		modifierAmount = (BigDecimal)objectInput.readObject();
+		modifierType = objectInput.readUTF();
 
 		priority = objectInput.readDouble();
 
@@ -335,14 +336,14 @@ public class CommercePriceModifierCacheModel
 			objectOutput.writeUTF(target);
 		}
 
+		objectOutput.writeObject(modifierAmount);
+
 		if (modifierType == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(modifierType);
 		}
-
-		objectOutput.writeObject(modifierAmount);
 
 		objectOutput.writeDouble(priority);
 
@@ -377,8 +378,8 @@ public class CommercePriceModifierCacheModel
 	public String description;
 	public String title;
 	public String target;
-	public String modifierType;
 	public BigDecimal modifierAmount;
+	public String modifierType;
 	public double priority;
 	public boolean active;
 	public long displayDate;

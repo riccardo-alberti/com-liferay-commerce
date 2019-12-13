@@ -9,5 +9,5 @@ Export-Package:\
 	com.liferay.commerce.price.modifier.service,\
 	com.liferay.commerce.price.modifier.service.persistence,\
 	com.liferay.commerce.price.modifier.target,\
+	com.liferay.commerce.price.modifier.type,\
 	com.liferay.commerce.price.modifier.util.comparator
-	

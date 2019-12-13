@@ -33,20 +33,20 @@ public class CommercePriceModifierValue {
 		_modifiedPercentage = modifiedPercentage;
 	}
 
-	public BigDecimal get_modifiedPercentage() {
+	public long getId() {
+		return _id;
+	}
+
+	public BigDecimal getModifiedPercentage() {
 		return _modifiedPercentage;
 	}
 
-	public CommerceMoney get_modifiedPrice() {
+	public CommerceMoney getModifiedPrice() {
 		return _modifiedPrice;
 	}
 
-	public CommerceMoney get_originalPrice() {
+	public CommerceMoney getOriginalPrice() {
 		return _originalPrice;
-	}
-
-	public long getId() {
-		return _id;
 	}
 
 	private final long _id;

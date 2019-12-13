@@ -14,8 +14,8 @@
 		<field name="description" type="String" />
 		<field name="title" type="String" />
 		<field name="target" type="String" />
-		<field name="modifierType" type="String" />
 		<field name="modifierAmount" type="BigDecimal" />
+		<field name="modifierType" type="String" />
 		<field name="priority" type="double" />
 		<field name="active" type="boolean" />
 		<field name="displayDate" type="Date" />

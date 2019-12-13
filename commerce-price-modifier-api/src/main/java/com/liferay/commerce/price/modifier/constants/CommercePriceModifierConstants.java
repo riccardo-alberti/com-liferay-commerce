@@ -24,7 +24,9 @@ public class CommercePriceModifierConstants {
 	public static final String FORMULA = "formula";
 
 	public static final String PERCENTAGE = "percentage";
-	
+
 	public static final String TARGET_PRICELIST = "pricelist";
+
+	public static final String TARGET_PRODUCT = "product";
 
 }
