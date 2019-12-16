@@ -38,18 +38,18 @@ public class CommerceTierPriceEntryServiceImpl
 	@Override
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
 			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
-			int minQuantity, ServiceContext serviceContext)
+			int minQuantity, boolean bulk, ServiceContext serviceContext)
 		throws PortalException {
 
 		return commerceTierPriceEntryService.addCommerceTierPriceEntry(
-			commercePriceEntryId, null, price, promoPrice, minQuantity,
+			commercePriceEntryId, null, price, promoPrice, minQuantity, bulk,
 			serviceContext);
 	}
 
 	@Override
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
 			long commercePriceEntryId, String externalReferenceCode,
-			BigDecimal price, BigDecimal promoPrice, int minQuantity,
+			BigDecimal price, BigDecimal promoPrice, int minQuantity, boolean bulk,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -59,7 +59,7 @@ public class CommerceTierPriceEntryServiceImpl
 
 		return commerceTierPriceEntryLocalService.addCommerceTierPriceEntry(
 			commercePriceEntryId, externalReferenceCode, price, promoPrice,
-			minQuantity, serviceContext);
+			minQuantity, bulk, serviceContext);
 	}
 
 	@Override
@@ -227,7 +227,7 @@ public class CommerceTierPriceEntryServiceImpl
 	public CommerceTierPriceEntry upsertCommerceTierPriceEntry(
 			long commerceTierPriceEntryId, long commercePriceEntryId,
 			String externalReferenceCode, BigDecimal price,
-			BigDecimal promoPrice, int minQuantity,
+			BigDecimal promoPrice, int minQuantity, boolean bulk,
 			String priceEntryExternalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -238,7 +238,7 @@ public class CommerceTierPriceEntryServiceImpl
 
 		return commerceTierPriceEntryLocalService.upsertCommerceTierPriceEntry(
 			commerceTierPriceEntryId, commercePriceEntryId,
-			externalReferenceCode, price, promoPrice, minQuantity,
+			externalReferenceCode, price, promoPrice, minQuantity, bulk,
 			priceEntryExternalReferenceCode, serviceContext);
 	}
 

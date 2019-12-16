@@ -66,6 +66,7 @@ public class CommerceTierPriceEntryServiceSoap {
 				addCommerceTierPriceEntry(
 					long commercePriceEntryId, java.math.BigDecimal price,
 					java.math.BigDecimal promoPrice, int minQuantity,
+					boolean bulk,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
 			throws RemoteException {
@@ -75,7 +76,7 @@ public class CommerceTierPriceEntryServiceSoap {
 				returnValue =
 					CommerceTierPriceEntryServiceUtil.addCommerceTierPriceEntry(
 						commercePriceEntryId, price, promoPrice, minQuantity,
-						serviceContext);
+						bulk, serviceContext);
 
 			return com.liferay.commerce.price.list.model.
 				CommerceTierPriceEntrySoap.toSoapModel(returnValue);
@@ -92,7 +93,7 @@ public class CommerceTierPriceEntryServiceSoap {
 				addCommerceTierPriceEntry(
 					long commercePriceEntryId, String externalReferenceCode,
 					java.math.BigDecimal price, java.math.BigDecimal promoPrice,
-					int minQuantity,
+					int minQuantity, boolean bulk,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
 			throws RemoteException {
@@ -102,7 +103,7 @@ public class CommerceTierPriceEntryServiceSoap {
 				returnValue =
 					CommerceTierPriceEntryServiceUtil.addCommerceTierPriceEntry(
 						commercePriceEntryId, externalReferenceCode, price,
-						promoPrice, minQuantity, serviceContext);
+						promoPrice, minQuantity, bulk, serviceContext);
 
 			return com.liferay.commerce.price.list.model.
 				CommerceTierPriceEntrySoap.toSoapModel(returnValue);
@@ -367,7 +368,7 @@ public class CommerceTierPriceEntryServiceSoap {
 					long commerceTierPriceEntryId, long commercePriceEntryId,
 					String externalReferenceCode, java.math.BigDecimal price,
 					java.math.BigDecimal promoPrice, int minQuantity,
-					String priceEntryExternalReferenceCode,
+					boolean bulk, String priceEntryExternalReferenceCode,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
 			throws RemoteException {
@@ -379,7 +380,7 @@ public class CommerceTierPriceEntryServiceSoap {
 						upsertCommerceTierPriceEntry(
 							commerceTierPriceEntryId, commercePriceEntryId,
 							externalReferenceCode, price, promoPrice,
-							minQuantity, priceEntryExternalReferenceCode,
+							minQuantity, bulk, priceEntryExternalReferenceCode,
 							serviceContext);
 
 			return com.liferay.commerce.price.list.model.

@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 import java.util.List;
 import java.util.Optional;
@@ -76,31 +75,7 @@ public class CommerceProductPLPriceCalculationImpl
 			return null;
 		}
 
-		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
-			cpInstanceId);
-
-		// Solve price list hierarchy
-
-		CommercePriceList commercePriceList = _getPriceList(
-			cpInstance.getGroupId(), commerceContext);
-
-		// get currenct price entry
-
-		CommercePriceEntry commercePriceEntry =
-			_commercePriceEntryLocalService.fetchCommercePriceEntry(
-				commercePriceList.getCommercePriceListId(),
-				cpInstance.getCPInstanceUuid());
-
-		// apply price list modifier // add support for tiered price entry
-
-		CommercePriceModifierValue commercePriceListPriceModifierValue =
-			_commercePriceModifierCalculation.getPriceListPriceModifierValue(
-				commercePriceEntry, quantity, commerceContext);
-
-		CommerceMoney priceListPrice =
-			commercePriceListPriceModifierValue.getModifiedPrice();
-
-		CommerceMoney promoPriceMoney = getPromoPrice(
+		CommerceMoney unitPriceMoney = getUnitPrice(
 			cpInstanceId, quantity, commerceContext.getCommerceCurrency(),
 			secure, commerceContext);
 
@@ -108,20 +83,28 @@ public class CommerceProductPLPriceCalculationImpl
 			new CommerceProductPriceImpl();
 
 		commerceProductPriceImpl.setQuantity(quantity);
-		commerceProductPriceImpl.setUnitPrice(priceListPrice);
-		commerceProductPriceImpl.setUnitPromoPrice(promoPriceMoney);
-		commerceProductPriceImpl.setFinalPrice(priceListPrice);
+		commerceProductPriceImpl.setUnitPrice(unitPriceMoney);
 
-		BigDecimal finalPrice = priceListPrice.getPrice();
+		BigDecimal finalPrice = unitPriceMoney.getPrice();
+
+		CommerceMoney promoPriceMoney = getPromoPrice(
+			cpInstanceId, quantity, commerceContext.getCommerceCurrency(),
+			secure, commerceContext);
+
+		commerceProductPriceImpl.setUnitPromoPrice(promoPriceMoney);
 
 		BigDecimal promoPrice = promoPriceMoney.getPrice();
 
 		if ((promoPrice != null) &&
 			(promoPrice.compareTo(BigDecimal.ZERO) > 0) &&
-			(promoPrice.compareTo(priceListPrice.getPrice()) <= 0)) {
+			(promoPrice.compareTo(unitPriceMoney.getPrice()) <= 0)) {
 
 			finalPrice = promoPriceMoney.getPrice();
 		}
+
+		finalPrice = _getFinalPrice(
+			cpInstanceId, quantity, finalPrice,
+			commerceContext.getCommerceCurrency(), secure, commerceContext);
 
 		commerceProductPriceImpl.setFinalPrice(
 			_commerceMoneyFactory.create(
@@ -204,16 +187,18 @@ public class CommerceProductPLPriceCalculationImpl
 		if (secure && !_hasViewPricePermission(commerceContext)) {
 			return null;
 		}
-
+		
 		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
 
 		CommercePriceList commercePriceList = _getPriceList(
 			cpInstance.getGroupId(), commerceContext);
-
-		BigDecimal priceListPrice = _getPriceListPrice(
-			cpInstanceId, quantity, commercePriceList,
-			commerceContext.getCommerceCurrency(), true);
+		
+		BigDecimal priceListPrice = _getUnitPrice(
+				commercePriceList.getCommercePriceListId(),
+				cpInstance.getCPInstanceUuid(), quantity);
+		
+		CommercePriceModifierValue commercePromoPriceModifierValue = _commercePriceModifierCalculation.getProductPriceModifierValue(priceListPrice, cpInstance.getCompanyId(), cpInstanceId, cpInstance.getCPDefinitionId(), commercePriceList.getCommercePriceListId(), commerceContext);
 
 		return _commerceMoneyFactory.create(commerceCurrency, priceListPrice);
 	}
@@ -315,16 +300,92 @@ public class CommerceProductPLPriceCalculationImpl
 		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
 
+		// Solve price list hierarchy (add targets)
+
 		CommercePriceList commercePriceList = _getPriceList(
 			cpInstance.getGroupId(), commerceContext);
 
-		BigDecimal priceListPrice = _getPriceListPrice(
-			cpInstanceId, quantity, commercePriceList,
-			commerceContext.getCommerceCurrency(), false);
+		BigDecimal priceListPrice = _getUnitPrice(
+			commercePriceList.getCommercePriceListId(),
+			cpInstance.getCPInstanceUuid(), quantity);
 
-		//priceListPrice = _getPLPriceModifierPrice(cpInstanceId, commercePriceList, commerceContext);
+		CommercePriceModifierValue commercePriceListPriceModifierValue =
+			_commercePriceModifierCalculation.getPriceListPriceModifierValue(
+				priceListPrice, cpInstance.getCompanyId(),
+				commercePriceList.getCommercePriceListId(), commerceContext);
 
-		return _commerceMoneyFactory.create(commerceCurrency, priceListPrice);
+		return commercePriceListPriceModifierValue.getModifiedPrice();
+	}
+
+	private BigDecimal _getFinalPrice(
+			long cpInstanceId, int quantity, BigDecimal finalPrice,
+			CommerceCurrency commerceCurrency, boolean secure,
+			CommerceContext commerceContext)
+		throws PortalException {
+
+		if (secure && !_hasViewPricePermission(commerceContext)) {
+			return null;
+		}
+
+		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+			cpInstanceId);
+
+		CommercePriceList commercePriceList = _getPriceList(
+			cpInstance.getGroupId(), commerceContext);
+
+		CommercePriceEntry commercePriceEntry =
+			_commercePriceEntryLocalService.fetchCommercePriceEntry(
+				commercePriceList.getCommercePriceListId(),
+				cpInstance.getCPInstanceUuid());
+
+		if (commercePriceEntry.isHasTierPrice() &&
+			!commercePriceEntry.isBulk()) {
+
+			BigDecimal tierPrice = BigDecimal.ZERO;
+
+			List<CommerceTierPriceEntry> commerceTierPriceEntries =
+				_commerceTierPriceEntryLocalService.getCommerceTierPriceEntries(
+					commercePriceEntry.getCommercePriceEntryId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			for (CommerceTierPriceEntry commerceTierPriceEntry :
+					commerceTierPriceEntries) {
+
+				int tierQuantity = 0;
+
+				if (commerceTierPriceEntry.getMinQuantity() >= quantity) {
+					tierQuantity = quantity;
+					quantity = 0;
+				}
+				else {
+					tierQuantity = commerceTierPriceEntry.getMinQuantity();
+					quantity -= commerceTierPriceEntry.getMinQuantity();
+				}
+
+				if (tierQuantity > 0) {
+					CommercePriceModifierValue
+						commercePriceListPriceModifierValue =
+							_commercePriceModifierCalculation.
+								getPriceListPriceModifierValue(
+									commerceTierPriceEntry.getPrice(),
+									cpInstance.getCompanyId(),
+									commercePriceList.getCommercePriceListId(),
+									commerceContext);
+
+					CommerceMoney modifiedPrice =
+						commercePriceListPriceModifierValue.getModifiedPrice();
+
+					BigDecimal unitPrice = modifiedPrice.getPrice();
+
+					tierPrice = tierPrice.add(
+						unitPrice.multiply(BigDecimal.valueOf(tierQuantity)));
+				}
+			}
+
+			return tierPrice;
+		}
+
+		return finalPrice.multiply(BigDecimal.valueOf(quantity));
 	}
 
 	private CommercePriceList _getPriceList(
@@ -364,49 +425,29 @@ public class CommerceProductPLPriceCalculationImpl
 		return commercePriceList.get();
 	}
 
-	private BigDecimal _getPriceListPrice(
-			long cpInstanceId, int quantity,
-			CommercePriceList commercePriceList,
-			CommerceCurrency commerceCurrency, boolean promo)
+	private BigDecimal _getUnitPrice(
+			long commercePriceListId, String cpInstanceUuid, int quantity)
 		throws PortalException {
-
-		BigDecimal price = null;
 
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
-				cpInstanceId, commercePriceList.getCommercePriceListId());
+				commercePriceListId, cpInstanceUuid);
 
-		if (commercePriceEntry != null) {
-			price = commercePriceEntry.getPrice();
+		if ((commercePriceEntry.isHasTierPrice() &&
+			 commercePriceEntry.isBulk()) ||
+			(quantity == 1)) {
 
-			if (commercePriceEntry.isHasTierPrice()) {
-				CommerceTierPriceEntry commerceTierPriceEntry =
-					_commerceTierPriceEntryLocalService.
-						findClosestCommerceTierPriceEntry(
-							commercePriceEntry.getCommercePriceEntryId(),
-							quantity);
+			CommerceTierPriceEntry commerceTierPriceEntry =
+				_commerceTierPriceEntryLocalService.
+					findClosestCommerceTierPriceEntry(
+						commercePriceEntry.getCommercePriceEntryId(), quantity);
 
-				if (commerceTierPriceEntry != null) {
-					price = commerceTierPriceEntry.getPrice();
-				}
-			}
-
-			CommerceCurrency priceListCurrency =
-				_commerceCurrencyLocalService.getCommerceCurrency(
-					commercePriceList.getCommerceCurrencyId());
-
-			if (priceListCurrency.getCommerceCurrencyId() !=
-					commerceCurrency.getCommerceCurrencyId()) {
-
-				price = price.divide(
-					priceListCurrency.getRate(),
-					RoundingMode.valueOf(priceListCurrency.getRoundingMode()));
-
-				price = price.multiply(commerceCurrency.getRate());
+			if (commerceTierPriceEntry != null) {
+				return commerceTierPriceEntry.getPrice();
 			}
 		}
 
-		return price;
+		return commercePriceEntry.getPrice();
 	}
 
 	private boolean _hasViewPricePermission(CommerceContext commerceContext)

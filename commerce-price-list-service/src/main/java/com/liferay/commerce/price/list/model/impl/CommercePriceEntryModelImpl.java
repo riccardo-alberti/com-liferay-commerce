@@ -85,7 +85,8 @@ public class CommercePriceEntryModelImpl
 		{"commercePriceListId", Types.BIGINT},
 		{"CPInstanceUuid", Types.VARCHAR}, {"CProductId", Types.BIGINT},
 		{"price", Types.DECIMAL}, {"promoPrice", Types.DECIMAL},
-		{"hasTierPrice", Types.BOOLEAN}, {"lastPublishDate", Types.TIMESTAMP}
+		{"hasTierPrice", Types.BOOLEAN}, {"bulk", Types.BOOLEAN},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -106,11 +107,12 @@ public class CommercePriceEntryModelImpl
 		TABLE_COLUMNS_MAP.put("price", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("promoPrice", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("hasTierPrice", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("bulk", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommercePriceEntry (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commercePriceEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceListId LONG,CPInstanceUuid VARCHAR(75) null,CProductId LONG,price DECIMAL(30, 16) null,promoPrice DECIMAL(30, 16) null,hasTierPrice BOOLEAN,lastPublishDate DATE null)";
+		"create table CommercePriceEntry (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commercePriceEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceListId LONG,CPInstanceUuid VARCHAR(75) null,CProductId LONG,price DECIMAL(30, 16) null,promoPrice DECIMAL(30, 16) null,hasTierPrice BOOLEAN,bulk BOOLEAN,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommercePriceEntry";
 
@@ -180,6 +182,7 @@ public class CommercePriceEntryModelImpl
 		model.setPrice(soapModel.getPrice());
 		model.setPromoPrice(soapModel.getPromoPrice());
 		model.setHasTierPrice(soapModel.isHasTierPrice());
+		model.setBulk(soapModel.isBulk());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
@@ -356,9 +359,9 @@ public class CommercePriceEntryModelImpl
 
 				@Override
 				public void accept(
-					CommercePriceEntry commercePriceEntry, Object uuid) {
+					CommercePriceEntry commercePriceEntry, Object uuidObject) {
 
-					commercePriceEntry.setUuid((String)uuid);
+					commercePriceEntry.setUuid((String)uuidObject);
 				}
 
 			});
@@ -379,10 +382,10 @@ public class CommercePriceEntryModelImpl
 				@Override
 				public void accept(
 					CommercePriceEntry commercePriceEntry,
-					Object externalReferenceCode) {
+					Object externalReferenceCodeObject) {
 
 					commercePriceEntry.setExternalReferenceCode(
-						(String)externalReferenceCode);
+						(String)externalReferenceCodeObject);
 				}
 
 			});
@@ -403,10 +406,10 @@ public class CommercePriceEntryModelImpl
 				@Override
 				public void accept(
 					CommercePriceEntry commercePriceEntry,
-					Object commercePriceEntryId) {
+					Object commercePriceEntryIdObject) {
 
 					commercePriceEntry.setCommercePriceEntryId(
-						(Long)commercePriceEntryId);
+						(Long)commercePriceEntryIdObject);
 				}
 
 			});
@@ -426,9 +429,10 @@ public class CommercePriceEntryModelImpl
 
 				@Override
 				public void accept(
-					CommercePriceEntry commercePriceEntry, Object companyId) {
+					CommercePriceEntry commercePriceEntry,
+					Object companyIdObject) {
 
-					commercePriceEntry.setCompanyId((Long)companyId);
+					commercePriceEntry.setCompanyId((Long)companyIdObject);
 				}
 
 			});
@@ -448,9 +452,10 @@ public class CommercePriceEntryModelImpl
 
 				@Override
 				public void accept(
-					CommercePriceEntry commercePriceEntry, Object userId) {
+					CommercePriceEntry commercePriceEntry,
+					Object userIdObject) {
 
-					commercePriceEntry.setUserId((Long)userId);
+					commercePriceEntry.setUserId((Long)userIdObject);
 				}
 
 			});
@@ -470,9 +475,10 @@ public class CommercePriceEntryModelImpl
 
 				@Override
 				public void accept(
-					CommercePriceEntry commercePriceEntry, Object userName) {
+					CommercePriceEntry commercePriceEntry,
+					Object userNameObject) {
 
-					commercePriceEntry.setUserName((String)userName);
+					commercePriceEntry.setUserName((String)userNameObject);
 				}
 
 			});
@@ -492,9 +498,10 @@ public class CommercePriceEntryModelImpl
 
 				@Override
 				public void accept(
-					CommercePriceEntry commercePriceEntry, Object createDate) {
+					CommercePriceEntry commercePriceEntry,
+					Object createDateObject) {
 
-					commercePriceEntry.setCreateDate((Date)createDate);
+					commercePriceEntry.setCreateDate((Date)createDateObject);
 				}
 
 			});
@@ -515,9 +522,10 @@ public class CommercePriceEntryModelImpl
 				@Override
 				public void accept(
 					CommercePriceEntry commercePriceEntry,
-					Object modifiedDate) {
+					Object modifiedDateObject) {
 
-					commercePriceEntry.setModifiedDate((Date)modifiedDate);
+					commercePriceEntry.setModifiedDate(
+						(Date)modifiedDateObject);
 				}
 
 			});
@@ -538,10 +546,10 @@ public class CommercePriceEntryModelImpl
 				@Override
 				public void accept(
 					CommercePriceEntry commercePriceEntry,
-					Object commercePriceListId) {
+					Object commercePriceListIdObject) {
 
 					commercePriceEntry.setCommercePriceListId(
-						(Long)commercePriceListId);
+						(Long)commercePriceListIdObject);
 				}
 
 			});
@@ -562,10 +570,10 @@ public class CommercePriceEntryModelImpl
 				@Override
 				public void accept(
 					CommercePriceEntry commercePriceEntry,
-					Object CPInstanceUuid) {
+					Object CPInstanceUuidObject) {
 
 					commercePriceEntry.setCPInstanceUuid(
-						(String)CPInstanceUuid);
+						(String)CPInstanceUuidObject);
 				}
 
 			});
@@ -585,9 +593,10 @@ public class CommercePriceEntryModelImpl
 
 				@Override
 				public void accept(
-					CommercePriceEntry commercePriceEntry, Object CProductId) {
+					CommercePriceEntry commercePriceEntry,
+					Object CProductIdObject) {
 
-					commercePriceEntry.setCProductId((Long)CProductId);
+					commercePriceEntry.setCProductId((Long)CProductIdObject);
 				}
 
 			});
@@ -607,9 +616,9 @@ public class CommercePriceEntryModelImpl
 
 				@Override
 				public void accept(
-					CommercePriceEntry commercePriceEntry, Object price) {
+					CommercePriceEntry commercePriceEntry, Object priceObject) {
 
-					commercePriceEntry.setPrice((BigDecimal)price);
+					commercePriceEntry.setPrice((BigDecimal)priceObject);
 				}
 
 			});
@@ -629,9 +638,11 @@ public class CommercePriceEntryModelImpl
 
 				@Override
 				public void accept(
-					CommercePriceEntry commercePriceEntry, Object promoPrice) {
+					CommercePriceEntry commercePriceEntry,
+					Object promoPriceObject) {
 
-					commercePriceEntry.setPromoPrice((BigDecimal)promoPrice);
+					commercePriceEntry.setPromoPrice(
+						(BigDecimal)promoPriceObject);
 				}
 
 			});
@@ -652,9 +663,32 @@ public class CommercePriceEntryModelImpl
 				@Override
 				public void accept(
 					CommercePriceEntry commercePriceEntry,
-					Object hasTierPrice) {
+					Object hasTierPriceObject) {
 
-					commercePriceEntry.setHasTierPrice((Boolean)hasTierPrice);
+					commercePriceEntry.setHasTierPrice(
+						(Boolean)hasTierPriceObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"bulk",
+			new Function<CommercePriceEntry, Object>() {
+
+				@Override
+				public Object apply(CommercePriceEntry commercePriceEntry) {
+					return commercePriceEntry.getBulk();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"bulk",
+			new BiConsumer<CommercePriceEntry, Object>() {
+
+				@Override
+				public void accept(
+					CommercePriceEntry commercePriceEntry, Object bulkObject) {
+
+					commercePriceEntry.setBulk((Boolean)bulkObject);
 				}
 
 			});
@@ -675,10 +709,10 @@ public class CommercePriceEntryModelImpl
 				@Override
 				public void accept(
 					CommercePriceEntry commercePriceEntry,
-					Object lastPublishDate) {
+					Object lastPublishDateObject) {
 
 					commercePriceEntry.setLastPublishDate(
-						(Date)lastPublishDate);
+						(Date)lastPublishDateObject);
 				}
 
 			});
@@ -949,6 +983,23 @@ public class CommercePriceEntryModelImpl
 
 	@JSON
 	@Override
+	public boolean getBulk() {
+		return _bulk;
+	}
+
+	@JSON
+	@Override
+	public boolean isBulk() {
+		return _bulk;
+	}
+
+	@Override
+	public void setBulk(boolean bulk) {
+		_bulk = bulk;
+	}
+
+	@JSON
+	@Override
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -1018,6 +1069,7 @@ public class CommercePriceEntryModelImpl
 		commercePriceEntryImpl.setPrice(getPrice());
 		commercePriceEntryImpl.setPromoPrice(getPromoPrice());
 		commercePriceEntryImpl.setHasTierPrice(isHasTierPrice());
+		commercePriceEntryImpl.setBulk(isBulk());
 		commercePriceEntryImpl.setLastPublishDate(getLastPublishDate());
 
 		commercePriceEntryImpl.resetOriginalValues();
@@ -1183,6 +1235,8 @@ public class CommercePriceEntryModelImpl
 
 		commercePriceEntryCacheModel.hasTierPrice = isHasTierPrice();
 
+		commercePriceEntryCacheModel.bulk = isBulk();
+
 		Date lastPublishDate = getLastPublishDate();
 
 		if (lastPublishDate != null) {
@@ -1288,6 +1342,7 @@ public class CommercePriceEntryModelImpl
 	private BigDecimal _price;
 	private BigDecimal _promoPrice;
 	private boolean _hasTierPrice;
+	private boolean _bulk;
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private CommercePriceEntry _escapedModel;

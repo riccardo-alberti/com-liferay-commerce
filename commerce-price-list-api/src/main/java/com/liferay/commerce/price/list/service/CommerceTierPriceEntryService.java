@@ -67,13 +67,13 @@ public interface CommerceTierPriceEntryService extends BaseService {
 	 */
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
 			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
-			int minQuantity, ServiceContext serviceContext)
+			int minQuantity, boolean bulk, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
 			long commercePriceEntryId, String externalReferenceCode,
 			BigDecimal price, BigDecimal promoPrice, int minQuantity,
-			ServiceContext serviceContext)
+			boolean bulk, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteCommerceTierPriceEntry(long commerceTierPriceEntryId)
@@ -146,7 +146,7 @@ public interface CommerceTierPriceEntryService extends BaseService {
 	public CommerceTierPriceEntry upsertCommerceTierPriceEntry(
 			long commerceTierPriceEntryId, long commercePriceEntryId,
 			String externalReferenceCode, BigDecimal price,
-			BigDecimal promoPrice, int minQuantity,
+			BigDecimal promoPrice, int minQuantity, boolean bulk,
 			String priceEntryExternalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException;

@@ -37,7 +37,7 @@ public class TierPriceUtil {
 			GetterUtil.getLong(tierPrice.getId()),
 			commercePriceEntry.getCommercePriceEntryId(),
 			tierPrice.getExternalReferenceCode(), tierPrice.getPrice(),
-			tierPrice.getPromoPrice(), tierPrice.getMinimumQuantity(),
+			tierPrice.getPromoPrice(), tierPrice.getMinimumQuantity(), true,
 			tierPrice.getPriceEntryExternalReferenceCode(), serviceContext);
 	}
 

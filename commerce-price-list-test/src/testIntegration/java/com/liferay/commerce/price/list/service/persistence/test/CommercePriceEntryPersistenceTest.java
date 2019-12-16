@@ -158,6 +158,8 @@ public class CommercePriceEntryPersistenceTest {
 
 		newCommercePriceEntry.setHasTierPrice(RandomTestUtil.randomBoolean());
 
+		newCommercePriceEntry.setBulk(RandomTestUtil.randomBoolean());
+
 		newCommercePriceEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_commercePriceEntries.add(_persistence.update(newCommercePriceEntry));
@@ -209,6 +211,9 @@ public class CommercePriceEntryPersistenceTest {
 		Assert.assertEquals(
 			existingCommercePriceEntry.isHasTierPrice(),
 			newCommercePriceEntry.isHasTierPrice());
+		Assert.assertEquals(
+			existingCommercePriceEntry.isBulk(),
+			newCommercePriceEntry.isBulk());
 		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingCommercePriceEntry.getLastPublishDate()),
@@ -305,7 +310,7 @@ public class CommercePriceEntryPersistenceTest {
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"commercePriceListId", true, "CPInstanceUuid", true, "CProductId",
 			true, "price", true, "promoPrice", true, "hasTierPrice", true,
-			"lastPublishDate", true);
+			"bulk", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -599,6 +604,8 @@ public class CommercePriceEntryPersistenceTest {
 			new BigDecimal(RandomTestUtil.nextDouble()));
 
 		commercePriceEntry.setHasTierPrice(RandomTestUtil.randomBoolean());
+
+		commercePriceEntry.setBulk(RandomTestUtil.randomBoolean());
 
 		commercePriceEntry.setLastPublishDate(RandomTestUtil.nextDate());
 

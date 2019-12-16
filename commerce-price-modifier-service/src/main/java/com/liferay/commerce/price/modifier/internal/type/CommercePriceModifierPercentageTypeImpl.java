@@ -17,7 +17,6 @@ package com.liferay.commerce.price.modifier.internal.type;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.model.CommerceMoneyFactory;
-import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.modifier.constants.CommercePriceModifierConstants;
 import com.liferay.commerce.price.modifier.model.CommercePriceModifier;
 import com.liferay.commerce.price.modifier.type.CommercePriceModifierType;
@@ -49,13 +48,10 @@ public class CommercePriceModifierPercentageTypeImpl
 
 	@Override
 	public CommerceMoney evaluate(
-			CommercePriceEntry commercePriceEntry, int quantity,
+			CommerceMoney originalCommerceMoney,
 			CommercePriceModifier commercePriceModifier,
 			CommerceCurrency commerceCurrency)
 		throws PortalException {
-
-		CommerceMoney originalCommerceMoney = commercePriceEntry.getPriceMoney(
-			commerceCurrency.getCommerceCurrencyId());
 
 		BigDecimal modifierAmount = commercePriceModifier.getModifierAmount();
 
@@ -63,14 +59,12 @@ public class CommercePriceModifierPercentageTypeImpl
 			return originalCommerceMoney;
 		}
 
-		BigDecimal percentage = BigDecimal.ONE.subtract(
+		BigDecimal percentage = BigDecimal.ONE.add(
 			modifierAmount.divide(_ONE_HUNDRED));
 
 		BigDecimal originalPrice = originalCommerceMoney.getPrice();
 
 		BigDecimal modifiedPrice = originalPrice.multiply(percentage);
-
-		modifiedPrice.multiply(BigDecimal.valueOf(quantity));
 
 		return _commerceMoneyFactory.create(commerceCurrency, modifiedPrice);
 	}

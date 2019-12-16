@@ -16,7 +16,6 @@ package com.liferay.commerce.price.modifier.type;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
-import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.modifier.model.CommercePriceModifier;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -28,7 +27,7 @@ import java.util.Locale;
 public interface CommercePriceModifierType {
 
 	public CommerceMoney evaluate(
-			CommercePriceEntry commercePriceEntry, int quantity,
+			CommerceMoney commerceMoney,
 			CommercePriceModifier commercePriceModifier,
 			CommerceCurrency commerceCurrency)
 		throws PortalException;
@@ -41,7 +40,7 @@ public interface CommercePriceModifierType {
 
 	public enum Type {
 
-		ABSOLUTE("ABSOLUTE"), FORMULA("FORMULA"), PERCENTAGE("PERCENTAGE");
+		ABSOLUTE("ABSOLUTE"), FORMULA("FORMULA"), PERCENTAGE("PERCENTAGE"), OVERRIDE("OVERRIDE");
 
 		public String getValue() {
 			return _value;

@@ -72,6 +72,7 @@ public class CommercePriceEntryWrapper
 		attributes.put("price", getPrice());
 		attributes.put("promoPrice", getPromoPrice());
 		attributes.put("hasTierPrice", isHasTierPrice());
+		attributes.put("bulk", isBulk());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -165,6 +166,12 @@ public class CommercePriceEntryWrapper
 			setHasTierPrice(hasTierPrice);
 		}
 
+		Boolean bulk = (Boolean)attributes.get("bulk");
+
+		if (bulk != null) {
+			setBulk(bulk);
+		}
+
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
 
 		if (lastPublishDate != null) {
@@ -181,6 +188,16 @@ public class CommercePriceEntryWrapper
 	@Override
 	public int compareTo(CommercePriceEntry commercePriceEntry) {
 		return _commercePriceEntry.compareTo(commercePriceEntry);
+	}
+
+	/**
+	 * Returns the bulk of this commerce price entry.
+	 *
+	 * @return the bulk of this commerce price entry
+	 */
+	@Override
+	public boolean getBulk() {
+		return _commercePriceEntry.getBulk();
 	}
 
 	/**
@@ -398,6 +415,16 @@ public class CommercePriceEntryWrapper
 		return _commercePriceEntry.hashCode();
 	}
 
+	/**
+	 * Returns <code>true</code> if this commerce price entry is bulk.
+	 *
+	 * @return <code>true</code> if this commerce price entry is bulk; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isBulk() {
+		return _commercePriceEntry.isBulk();
+	}
+
 	@Override
 	public boolean isCachedModel() {
 		return _commercePriceEntry.isCachedModel();
@@ -431,6 +458,16 @@ public class CommercePriceEntryWrapper
 	@Override
 	public void persist() {
 		_commercePriceEntry.persist();
+	}
+
+	/**
+	 * Sets whether this commerce price entry is bulk.
+	 *
+	 * @param bulk the bulk of this commerce price entry
+	 */
+	@Override
+	public void setBulk(boolean bulk) {
+		_commercePriceEntry.setBulk(bulk);
 	}
 
 	@Override

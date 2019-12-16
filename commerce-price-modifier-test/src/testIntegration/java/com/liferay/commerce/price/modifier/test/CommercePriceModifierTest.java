@@ -116,10 +116,10 @@ public class CommercePriceModifierTest {
 		CPDefinition cpDefinition =
 			CPDefinitionLocalServiceUtil.getCPDefinition(
 				cpInstance.getCPDefinitionId());
-		
+
 		_commercePriceList = CommercePriceListTestUtil.addCommercePriceList(
-				commerceCatalog.getGroupId(), _commerceCurrency.getCode(), name,
-				RandomTestUtil.randomDouble(), true, null, null, null);
+			commerceCatalog.getGroupId(), _commerceCurrency.getCode(), name,
+			RandomTestUtil.randomDouble(), true, null, null, null);
 
 		BigDecimal priceEntryPrice = BigDecimal.valueOf(10);
 		BigDecimal promoPrice = BigDecimal.valueOf(0);

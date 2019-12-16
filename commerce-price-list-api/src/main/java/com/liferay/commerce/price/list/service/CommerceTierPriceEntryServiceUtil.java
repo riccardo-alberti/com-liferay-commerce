@@ -46,12 +46,12 @@ public class CommerceTierPriceEntryServiceUtil {
 	public static com.liferay.commerce.price.list.model.CommerceTierPriceEntry
 			addCommerceTierPriceEntry(
 				long commercePriceEntryId, java.math.BigDecimal price,
-				java.math.BigDecimal promoPrice, int minQuantity,
+				java.math.BigDecimal promoPrice, int minQuantity, boolean bulk,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addCommerceTierPriceEntry(
-			commercePriceEntryId, price, promoPrice, minQuantity,
+			commercePriceEntryId, price, promoPrice, minQuantity, bulk,
 			serviceContext);
 	}
 
@@ -59,13 +59,13 @@ public class CommerceTierPriceEntryServiceUtil {
 			addCommerceTierPriceEntry(
 				long commercePriceEntryId, String externalReferenceCode,
 				java.math.BigDecimal price, java.math.BigDecimal promoPrice,
-				int minQuantity,
+				int minQuantity, boolean bulk,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addCommerceTierPriceEntry(
 			commercePriceEntryId, externalReferenceCode, price, promoPrice,
-			minQuantity, serviceContext);
+			minQuantity, bulk, serviceContext);
 	}
 
 	public static void deleteCommerceTierPriceEntry(
@@ -196,14 +196,14 @@ public class CommerceTierPriceEntryServiceUtil {
 			upsertCommerceTierPriceEntry(
 				long commerceTierPriceEntryId, long commercePriceEntryId,
 				String externalReferenceCode, java.math.BigDecimal price,
-				java.math.BigDecimal promoPrice, int minQuantity,
+				java.math.BigDecimal promoPrice, int minQuantity, boolean bulk,
 				String priceEntryExternalReferenceCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().upsertCommerceTierPriceEntry(
 			commerceTierPriceEntryId, commercePriceEntryId,
-			externalReferenceCode, price, promoPrice, minQuantity,
+			externalReferenceCode, price, promoPrice, minQuantity, bulk,
 			priceEntryExternalReferenceCode, serviceContext);
 	}
 

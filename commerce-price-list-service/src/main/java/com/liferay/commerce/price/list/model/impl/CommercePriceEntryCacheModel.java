@@ -66,7 +66,7 @@ public class CommercePriceEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -96,6 +96,8 @@ public class CommercePriceEntryCacheModel
 		sb.append(promoPrice);
 		sb.append(", hasTierPrice=");
 		sb.append(hasTierPrice);
+		sb.append(", bulk=");
+		sb.append(bulk);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -161,6 +163,7 @@ public class CommercePriceEntryCacheModel
 		commercePriceEntryImpl.setPrice(price);
 		commercePriceEntryImpl.setPromoPrice(promoPrice);
 		commercePriceEntryImpl.setHasTierPrice(hasTierPrice);
+		commercePriceEntryImpl.setBulk(bulk);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			commercePriceEntryImpl.setLastPublishDate(null);
@@ -199,6 +202,8 @@ public class CommercePriceEntryCacheModel
 		promoPrice = (BigDecimal)objectInput.readObject();
 
 		hasTierPrice = objectInput.readBoolean();
+
+		bulk = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -248,6 +253,8 @@ public class CommercePriceEntryCacheModel
 		objectOutput.writeObject(promoPrice);
 
 		objectOutput.writeBoolean(hasTierPrice);
+
+		objectOutput.writeBoolean(bulk);
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -265,6 +272,7 @@ public class CommercePriceEntryCacheModel
 	public BigDecimal price;
 	public BigDecimal promoPrice;
 	public boolean hasTierPrice;
+	public boolean bulk;
 	public long lastPublishDate;
 
 }

@@ -71,11 +71,11 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	@Override
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
 			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
-			int minQuantity, ServiceContext serviceContext)
+			int minQuantity, boolean bulk, ServiceContext serviceContext)
 		throws PortalException {
 
 		return addCommerceTierPriceEntry(
-			commercePriceEntryId, null, price, promoPrice, minQuantity,
+			commercePriceEntryId, null, price, promoPrice, minQuantity, bulk,
 			serviceContext);
 	}
 
@@ -83,7 +83,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	@Override
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
 			long commercePriceEntryId, String externalReferenceCode,
-			BigDecimal price, BigDecimal promoPrice, int minQuantity,
+			BigDecimal price, BigDecimal promoPrice, int minQuantity, boolean bulk,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -121,6 +121,8 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 		commercePriceEntryLocalService.setHasTierPrice(
 			commercePriceEntryId, true);
+		
+		commercePriceEntryLocalService.setBulk(commercePriceEntryId, bulk);
 
 		return commerceTierPriceEntry;
 	}
@@ -162,6 +164,8 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		if (commerceTierPriceEntries.isEmpty()) {
 			commercePriceEntryLocalService.setHasTierPrice(
 				commerceTierPriceEntry.getCommercePriceEntryId(), false);
+			
+			commercePriceEntryLocalService.setBulk(commerceTierPriceEntry.getCommercePriceEntryId(), false);
 		}
 
 		// Expando
@@ -347,7 +351,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	public CommerceTierPriceEntry upsertCommerceTierPriceEntry(
 			long commerceTierPriceEntryId, long commercePriceEntryId,
 			String externalReferenceCode, BigDecimal price,
-			BigDecimal promoPrice, int minQuantity,
+			BigDecimal promoPrice, int minQuantity, boolean bulk,
 			String priceEntryExternalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -396,7 +400,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 			return addCommerceTierPriceEntry(
 				commercePriceEntry.getCommercePriceEntryId(),
-				externalReferenceCode, price, promoPrice, minQuantity,
+				externalReferenceCode, price, promoPrice, minQuantity, bulk,
 				serviceContext);
 		}
 
@@ -411,7 +415,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 			return addCommerceTierPriceEntry(
 				commercePriceEntry.getCommercePriceEntryId(),
-				externalReferenceCode, price, promoPrice, minQuantity,
+				externalReferenceCode, price, promoPrice, minQuantity, bulk,
 				serviceContext);
 		}
 

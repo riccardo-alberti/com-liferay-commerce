@@ -42,6 +42,7 @@ create table CommercePriceEntry (
 	price DECIMAL(30, 16) null,
 	promoPrice DECIMAL(30, 16) null,
 	hasTierPrice BOOLEAN,
+	bulk BOOLEAN,
 	lastPublishDate DATE null
 );
 

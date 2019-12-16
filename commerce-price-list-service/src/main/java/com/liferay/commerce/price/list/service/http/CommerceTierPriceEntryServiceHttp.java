@@ -55,7 +55,7 @@ public class CommerceTierPriceEntryServiceHttp {
 			addCommerceTierPriceEntry(
 				HttpPrincipal httpPrincipal, long commercePriceEntryId,
 				java.math.BigDecimal price, java.math.BigDecimal promoPrice,
-				int minQuantity,
+				int minQuantity, boolean bulk,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -67,7 +67,7 @@ public class CommerceTierPriceEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePriceEntryId, price, promoPrice, minQuantity,
-				serviceContext);
+				bulk, serviceContext);
 
 			Object returnObj = null;
 
@@ -100,7 +100,7 @@ public class CommerceTierPriceEntryServiceHttp {
 			addCommerceTierPriceEntry(
 				HttpPrincipal httpPrincipal, long commercePriceEntryId,
 				String externalReferenceCode, java.math.BigDecimal price,
-				java.math.BigDecimal promoPrice, int minQuantity,
+				java.math.BigDecimal promoPrice, int minQuantity, boolean bulk,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -112,7 +112,7 @@ public class CommerceTierPriceEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePriceEntryId, externalReferenceCode, price,
-				promoPrice, minQuantity, serviceContext);
+				promoPrice, minQuantity, bulk, serviceContext);
 
 			Object returnObj = null;
 
@@ -653,7 +653,8 @@ public class CommerceTierPriceEntryServiceHttp {
 				HttpPrincipal httpPrincipal, long commerceTierPriceEntryId,
 				long commercePriceEntryId, String externalReferenceCode,
 				java.math.BigDecimal price, java.math.BigDecimal promoPrice,
-				int minQuantity, String priceEntryExternalReferenceCode,
+				int minQuantity, boolean bulk,
+				String priceEntryExternalReferenceCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -665,7 +666,7 @@ public class CommerceTierPriceEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceTierPriceEntryId, commercePriceEntryId,
-				externalReferenceCode, price, promoPrice, minQuantity,
+				externalReferenceCode, price, promoPrice, minQuantity, bulk,
 				priceEntryExternalReferenceCode, serviceContext);
 
 			Object returnObj = null;
@@ -701,12 +702,13 @@ public class CommerceTierPriceEntryServiceHttp {
 	private static final Class<?>[] _addCommerceTierPriceEntryParameterTypes0 =
 		new Class[] {
 			long.class, java.math.BigDecimal.class, java.math.BigDecimal.class,
-			int.class, com.liferay.portal.kernel.service.ServiceContext.class
+			int.class, boolean.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addCommerceTierPriceEntryParameterTypes1 =
 		new Class[] {
 			long.class, String.class, java.math.BigDecimal.class,
-			java.math.BigDecimal.class, int.class,
+			java.math.BigDecimal.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
@@ -757,7 +759,7 @@ public class CommerceTierPriceEntryServiceHttp {
 	private static final Class<?>[]
 		_upsertCommerceTierPriceEntryParameterTypes14 = new Class[] {
 			long.class, long.class, String.class, java.math.BigDecimal.class,
-			java.math.BigDecimal.class, int.class, String.class,
+			java.math.BigDecimal.class, int.class, boolean.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 

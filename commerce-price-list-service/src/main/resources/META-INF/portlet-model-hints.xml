@@ -18,6 +18,7 @@
 		</field>
 		<field name="promoPrice" type="BigDecimal" />
 		<field name="hasTierPrice" type="boolean" />
+		<field name="bulk" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.price.list.model.CommercePriceList">

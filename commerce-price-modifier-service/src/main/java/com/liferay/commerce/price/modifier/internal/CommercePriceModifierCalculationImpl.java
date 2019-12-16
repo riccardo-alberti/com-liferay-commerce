@@ -18,8 +18,8 @@ import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.model.CommerceMoneyFactory;
+import com.liferay.commerce.currency.model.CommerceMoneyFactoryUtil;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.modifier.CommercePriceModifierCalculation;
 import com.liferay.commerce.price.modifier.CommercePriceModifierValue;
 import com.liferay.commerce.price.modifier.exception.InvalidPriceModifierTypeException;
@@ -29,7 +29,6 @@ import com.liferay.commerce.price.modifier.service.CommercePriceModifierLocalSer
 import com.liferay.commerce.price.modifier.target.CommercePriceModifierTarget;
 import com.liferay.commerce.price.modifier.type.CommercePriceModifierType;
 import com.liferay.commerce.price.modifier.type.CommercePriceModifierTypeRegistry;
-import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -97,19 +96,16 @@ public class CommercePriceModifierCalculationImpl
 
 	@Override
 	public CommercePriceModifierValue getPriceListPriceModifierValue(
-			CommercePriceEntry commercePriceEntry, int quantity,
+			BigDecimal priceListPrice, long companyId, long commercePriceListId,
 			CommerceContext commerceContext)
 		throws PortalException {
 
-		if (commercePriceEntry == null) {
+		if (priceListPrice == null) {
 			return null;
 		}
 
-		CPInstance cpInstance = commercePriceEntry.getCPInstance();
-
 		SearchContext searchContext = buildSearchContext(
-			cpInstance.getCompanyId(), 0, 0,
-			commercePriceEntry.getCommercePriceListId(), 0,
+			companyId, 0, 0, commercePriceListId, 0,
 			commerceContext.getCommerceAccountGroupIds(),
 			CommercePriceModifierTarget.Type.APPLY_TO_PRICELIST);
 
@@ -122,30 +118,27 @@ public class CommercePriceModifierCalculationImpl
 		searchContext.setSorts(sort);
 
 		return _getCommercePriceModifierValue(
-			commercePriceEntry, quantity, commerceContext, searchContext);
+			priceListPrice, commerceContext, searchContext);
 	}
 
 	@Override
 	public CommercePriceModifierValue getProductPriceModifierValue(
-			CommercePriceEntry commercePriceEntry, int quantity,
+			BigDecimal priceListPrice, long companyId, long cpInstanceId,
+			long cpDefinitionId, long commercePriceListId,
 			CommerceContext commerceContext)
 		throws PortalException {
 
-		if (commercePriceEntry == null) {
+		if (priceListPrice == null) {
 			return null;
 		}
 
-		CPInstance cpInstance = commercePriceEntry.getCPInstance();
-
 		SearchContext searchContext = buildSearchContext(
-			cpInstance.getCompanyId(), cpInstance.getCPDefinitionId(),
-			cpInstance.getCPInstanceId(),
-			commercePriceEntry.getCommercePriceListId(), 0,
+			companyId, cpDefinitionId, cpInstanceId, commercePriceListId, 0,
 			commerceContext.getCommerceAccountGroupIds(),
 			CommercePriceModifierTarget.Type.APPLY_TO_PRODUCT);
 
 		return _getCommercePriceModifierValue(
-			commercePriceEntry, quantity, commerceContext, searchContext);
+			priceListPrice, commerceContext, searchContext);
 	}
 
 	protected SearchContext buildSearchContext(
@@ -184,8 +177,8 @@ public class CommercePriceModifierCalculationImpl
 	}
 
 	private CommercePriceModifierValue _getCommercePriceModifierValue(
-			CommercePriceEntry commercePriceEntry, int quantity,
-			CommerceContext commerceContext, SearchContext searchContext)
+			BigDecimal priceListPrice, CommerceContext commerceContext,
+			SearchContext searchContext)
 		throws PortalException {
 
 		CommerceCurrency commerceCurrency =
@@ -198,12 +191,14 @@ public class CommercePriceModifierCalculationImpl
 		List<CommercePriceModifier> commercePriceModifiers =
 			baseModelSearchResult.getBaseModels();
 
-		if (commercePriceModifiers == null) {
+		CommerceMoney commerceMoney = CommerceMoneyFactoryUtil.create(
+			commerceCurrency.getCommerceCurrencyId(), priceListPrice);
+
+		if ((commercePriceModifiers == null) ||
+			commercePriceModifiers.isEmpty()) {
+
 			return new CommercePriceModifierValue(
-				0,
-				commercePriceEntry.getPriceMoney(
-					commerceCurrency.getCommerceCurrencyId()),
-				null, null);
+				0, commerceMoney, commerceMoney, null);
 		}
 
 		// Solve price modifier hierarchy
@@ -212,15 +207,14 @@ public class CommercePriceModifierCalculationImpl
 				baseModelSearchResult.getBaseModels()) {
 
 			return _getCommercePriceModifierValueByType(
-				commercePriceEntry, quantity, commercePriceModifier,
-				commerceCurrency);
+				commerceMoney, commercePriceModifier, commerceCurrency);
 		}
 
 		return null;
 	}
 
 	private CommercePriceModifierValue _getCommercePriceModifierValueByType(
-			CommercePriceEntry commercePriceEntry, int quantity,
+			CommerceMoney originalCommerceMoney,
 			CommercePriceModifier commercePriceModifier,
 			CommerceCurrency commerceCurrency)
 		throws PortalException {
@@ -237,11 +231,7 @@ public class CommercePriceModifierCalculationImpl
 
 		CommerceMoney modifiedCommerceMoney =
 			commercePriceModifierType.evaluate(
-				commercePriceEntry, quantity, commercePriceModifier,
-				commerceCurrency);
-
-		CommerceMoney originalCommerceMoney = commercePriceEntry.getPriceMoney(
-			commerceCurrency.getCommerceCurrencyId());
+				originalCommerceMoney, commercePriceModifier, commerceCurrency);
 
 		RoundingMode roundingMode = RoundingMode.valueOf(
 			commerceCurrency.getRoundingMode());

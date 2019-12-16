@@ -12,31 +12,20 @@
  * details.
  */
 
-package com.liferay.commerce.price;
+package com.liferay.commerce.price.list.internal.upgrade.v2_1_0;
 
-import java.math.BigDecimal;
-import java.util.List;
-
-import com.liferay.commerce.currency.model.CommerceMoney;
-import com.liferay.commerce.discount.CommerceDiscountValue;
-
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.commerce.price.list.internal.upgrade.base.BaseCommercePriceListUpgradeProcess;
+import com.liferay.commerce.price.list.model.impl.CommercePriceEntryModelImpl;
 
 /**
- * @author Marco Leo
+ * @author Riccardo Alberti
  */
-@ProviderType
-public interface CommerceProductPrice {
+public class CommercePriceEntryUpgradeProcess
+	extends BaseCommercePriceListUpgradeProcess {
 
-	public CommerceDiscountValue getDiscountValue();
+	@Override
+	public void doUpgrade() throws Exception {
+		addColumn(CommercePriceEntryModelImpl.class, CommercePriceEntryModelImpl.TABLE_NAME, "bulk", "BOOLEAN");
+	}
 
-	public CommerceMoney getFinalPrice();
-
-	public int getQuantity();
-
-	public BigDecimal getTaxValue();
-
-	public CommerceMoney getUnitPrice();
-
-	public CommerceMoney getUnitPromoPrice();
 }

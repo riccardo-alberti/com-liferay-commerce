@@ -53,7 +53,7 @@ public class CommerceTierPriceEntryTestUtil {
 		return CommerceTierPriceEntryLocalServiceUtil.addCommerceTierPriceEntry(
 			commercePriceEntryId, externalReferenceCode,
 			BigDecimal.valueOf(price), BigDecimal.valueOf(promoPrice),
-			minQuantity, serviceContext);
+			minQuantity, true, serviceContext);
 	}
 
 	public static CommerceTierPriceEntry upsertCommerceTierPriceEntry(
@@ -70,7 +70,7 @@ public class CommerceTierPriceEntryTestUtil {
 			upsertCommerceTierPriceEntry(
 				commerceTierPriceEntryId, commercePriceEntryId,
 				externalReferenceCode, BigDecimal.valueOf(price),
-				BigDecimal.valueOf(promoPrice), minQuantity,
+				BigDecimal.valueOf(promoPrice), minQuantity, true,
 				priceEntryExternalReferenceCode,
 				ServiceContextTestUtil.getServiceContext(groupId));
 	}

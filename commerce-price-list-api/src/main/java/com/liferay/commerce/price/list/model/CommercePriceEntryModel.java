@@ -301,6 +301,27 @@ public interface CommercePriceEntryModel
 	public void setHasTierPrice(boolean hasTierPrice);
 
 	/**
+	 * Returns the bulk of this commerce price entry.
+	 *
+	 * @return the bulk of this commerce price entry
+	 */
+	public boolean getBulk();
+
+	/**
+	 * Returns <code>true</code> if this commerce price entry is bulk.
+	 *
+	 * @return <code>true</code> if this commerce price entry is bulk; <code>false</code> otherwise
+	 */
+	public boolean isBulk();
+
+	/**
+	 * Sets whether this commerce price entry is bulk.
+	 *
+	 * @param bulk the bulk of this commerce price entry
+	 */
+	public void setBulk(boolean bulk);
+
+	/**
 	 * Returns the last publish date of this commerce price entry.
 	 *
 	 * @return the last publish date of this commerce price entry

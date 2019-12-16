@@ -16,7 +16,6 @@ package com.liferay.commerce.price.modifier;
 
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.math.BigDecimal;
@@ -44,12 +43,13 @@ public interface CommercePriceModifierCalculation {
 		throws PortalException;
 
 	public CommercePriceModifierValue getPriceListPriceModifierValue(
-			CommercePriceEntry commercePriceEntry, int quantity,
+			BigDecimal priceListPrice, long companyId, long commercePriceList,
 			CommerceContext commerceContext)
 		throws PortalException;
 
 	public CommercePriceModifierValue getProductPriceModifierValue(
-			CommercePriceEntry commercePriceEntry, int quantity,
+			BigDecimal priceListPrice, long companyId, long cpInstanceId,
+			long cpDefinitionId, long commercePriceListId,
 			CommerceContext commerceContext)
 		throws PortalException;
 

@@ -47,6 +47,7 @@ public class CommercePriceEntrySoap implements Serializable {
 		soapModel.setPrice(model.getPrice());
 		soapModel.setPromoPrice(model.getPromoPrice());
 		soapModel.setHasTierPrice(model.isHasTierPrice());
+		soapModel.setBulk(model.isBulk());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
@@ -226,6 +227,18 @@ public class CommercePriceEntrySoap implements Serializable {
 		_hasTierPrice = hasTierPrice;
 	}
 
+	public boolean getBulk() {
+		return _bulk;
+	}
+
+	public boolean isBulk() {
+		return _bulk;
+	}
+
+	public void setBulk(boolean bulk) {
+		_bulk = bulk;
+	}
+
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -248,6 +261,7 @@ public class CommercePriceEntrySoap implements Serializable {
 	private BigDecimal _price;
 	private BigDecimal _promoPrice;
 	private boolean _hasTierPrice;
+	private boolean _bulk;
 	private Date _lastPublishDate;
 
 }

@@ -38,12 +38,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.price.modifier.type.key=" + CommercePriceModifierConstants.ABSOLUTE,
+		"commerce.price.modifier.type.key=" + CommercePriceModifierConstants.OVERRIDE,
 		"commerce.price.modifier.type.order:Integer=20"
 	},
 	service = CommercePriceModifierType.class
 )
-public class CommercePriceModifierAbsoluteTypeImpl
+public class CommercePriceModifierOverrideTypeImpl
 	implements CommercePriceModifierType {
 
 	@Override
@@ -52,24 +52,19 @@ public class CommercePriceModifierAbsoluteTypeImpl
 			CommercePriceModifier commercePriceModifier,
 			CommerceCurrency commerceCurrency)
 		throws PortalException {
+		
+		BigDecimal modifiedPrice = commercePriceModifier.getModifierAmount();
 
-		BigDecimal originalPrice = originalCommerceMoney.getPrice();
-
-		if (originalPrice.compareTo(commercePriceModifier.getModifierAmount()) <
-				0) {
-
+		if (modifiedPrice.compareTo(BigDecimal.ZERO) < 0) {
 			return originalCommerceMoney;
 		}
-
-		BigDecimal modifiedPrice = originalPrice.add(
-			commercePriceModifier.getModifierAmount());
 
 		return _commerceMoneyFactory.create(commerceCurrency, modifiedPrice);
 	}
 
 	@Override
 	public String getKey() {
-		return CommercePriceModifierConstants.ABSOLUTE;
+		return CommercePriceModifierConstants.OVERRIDE;
 	}
 
 	@Override
@@ -77,12 +72,12 @@ public class CommercePriceModifierAbsoluteTypeImpl
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "absolute");
+		return LanguageUtil.get(resourceBundle, "override");
 	}
 
 	@Override
 	public Type getType() {
-		return Type.ABSOLUTE;
+		return Type.OVERRIDE;
 	}
 
 	@Reference

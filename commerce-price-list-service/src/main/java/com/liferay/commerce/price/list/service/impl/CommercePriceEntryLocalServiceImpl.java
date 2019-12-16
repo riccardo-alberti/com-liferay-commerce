@@ -14,6 +14,15 @@
 
 package com.liferay.commerce.price.list.service.impl;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException;
 import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
@@ -52,17 +61,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
-
-import java.io.Serializable;
-
-import java.math.BigDecimal;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Marco Leo
@@ -483,6 +481,21 @@ public class CommercePriceEntryLocalServiceImpl
 				commercePriceEntryId);
 
 		commercePriceEntry.setHasTierPrice(hasTierPrice);
+
+		return commercePriceEntryPersistence.update(commercePriceEntry);
+	}
+	
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommercePriceEntry setBulk(
+			long commercePriceEntryId, boolean bulk)
+		throws PortalException {
+
+		CommercePriceEntry commercePriceEntry =
+			commercePriceEntryPersistence.findByPrimaryKey(
+				commercePriceEntryId);
+
+		commercePriceEntry.setBulk(bulk);
 
 		return commercePriceEntryPersistence.update(commercePriceEntry);
 	}
