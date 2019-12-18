@@ -17,9 +17,18 @@
 	<bean class="com.liferay.commerce.price.list.service.impl.CommercePriceListAccountRelLocalServiceImpl" id="com.liferay.commerce.price.list.service.CommercePriceListAccountRelLocalService" />
 	<bean class="com.liferay.commerce.price.list.service.impl.CommercePriceListAccountRelServiceImpl" id="com.liferay.commerce.price.list.service.CommercePriceListAccountRelService" />
 	<bean class="com.liferay.commerce.price.list.service.persistence.impl.CommercePriceListAccountRelPersistenceImpl" id="com.liferay.commerce.price.list.service.persistence.CommercePriceListAccountRelPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.price.list.service.impl.CommercePriceListChannelRelLocalServiceImpl" id="com.liferay.commerce.price.list.service.CommercePriceListChannelRelLocalService" />
+	<bean class="com.liferay.commerce.price.list.service.impl.CommercePriceListChannelRelServiceImpl" id="com.liferay.commerce.price.list.service.CommercePriceListChannelRelService" />
+	<bean class="com.liferay.commerce.price.list.service.persistence.impl.CommercePriceListChannelRelPersistenceImpl" id="com.liferay.commerce.price.list.service.persistence.CommercePriceListChannelRelPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.price.list.service.impl.CommercePriceListCommerceAccountGroupRelLocalServiceImpl" id="com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelLocalService" />
 	<bean class="com.liferay.commerce.price.list.service.impl.CommercePriceListCommerceAccountGroupRelServiceImpl" id="com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelService" />
 	<bean class="com.liferay.commerce.price.list.service.persistence.impl.CommercePriceListCommerceAccountGroupRelPersistenceImpl" id="com.liferay.commerce.price.list.service.persistence.CommercePriceListCommerceAccountGroupRelPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.price.list.service.impl.CommercePriceListContractRelLocalServiceImpl" id="com.liferay.commerce.price.list.service.CommercePriceListContractRelLocalService" />
+	<bean class="com.liferay.commerce.price.list.service.impl.CommercePriceListContractRelServiceImpl" id="com.liferay.commerce.price.list.service.CommercePriceListContractRelService" />
+	<bean class="com.liferay.commerce.price.list.service.persistence.impl.CommercePriceListContractRelPersistenceImpl" id="com.liferay.commerce.price.list.service.persistence.CommercePriceListContractRelPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.price.list.service.impl.CommercePriceListRelLocalServiceImpl" id="com.liferay.commerce.price.list.service.CommercePriceListRelLocalService" />
+	<bean class="com.liferay.commerce.price.list.service.impl.CommercePriceListRelServiceImpl" id="com.liferay.commerce.price.list.service.CommercePriceListRelService" />
+	<bean class="com.liferay.commerce.price.list.service.persistence.impl.CommercePriceListRelPersistenceImpl" id="com.liferay.commerce.price.list.service.persistence.CommercePriceListRelPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.price.list.service.impl.CommerceTierPriceEntryLocalServiceImpl" id="com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService" />
 	<bean class="com.liferay.commerce.price.list.service.impl.CommerceTierPriceEntryServiceImpl" id="com.liferay.commerce.price.list.service.CommerceTierPriceEntryService" />
 	<bean class="com.liferay.commerce.price.list.service.persistence.impl.CommerceTierPriceEntryPersistenceImpl" id="com.liferay.commerce.price.list.service.persistence.CommerceTierPriceEntryPersistence" parent="basePersistence" />

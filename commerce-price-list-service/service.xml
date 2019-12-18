@@ -213,6 +213,130 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
+	<entity local-service="true" name="CommercePriceListChannelRel" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commercePriceListChannelRelId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceChannelId" type="long" />
+		<column name="commercePriceListId" type="long" />
+		<column name="order" type="int" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="order" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommercePriceListId" return-type="Collection">
+			<finder-column name="commercePriceListId" />
+		</finder>
+		<finder name="C_C" return-type="CommercePriceListChannelRel" unique="true">
+			<finder-column name="commerceChannelId" />
+			<finder-column name="commercePriceListId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+	</entity>
+	<entity local-service="true" name="CommercePriceListContractRel" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commercePriceListContractRelId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceContractId" type="long" />
+		<column name="commercePriceListId" type="long" />
+		<column name="order" type="int" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="order" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommercePriceListId" return-type="Collection">
+			<finder-column name="commercePriceListId" />
+		</finder>
+		<finder name="C_C" return-type="CommercePriceListContractRel" unique="true">
+			<finder-column name="commerceContractId" />
+			<finder-column name="commercePriceListId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+	</entity>
+	<entity local-service="true" name="CommercePriceListRel" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commercePriceListRelId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="commercePriceListId" type="long" />
+		<column name="order" type="int" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="order" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommercePriceListId" return-type="Collection">
+			<finder-column name="commercePriceListId" />
+		</finder>
+		<finder name="C_CN" return-type="CommercePriceListRel" unique="true">
+			<finder-column name="classNameId" />
+			<finder-column name="commercePriceListId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+	</entity>
 	<entity external-reference-code="true" local-service="true" name="CommerceTierPriceEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->

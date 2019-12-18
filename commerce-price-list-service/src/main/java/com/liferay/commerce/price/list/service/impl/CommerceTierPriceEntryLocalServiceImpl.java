@@ -83,8 +83,8 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	@Override
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
 			long commercePriceEntryId, String externalReferenceCode,
-			BigDecimal price, BigDecimal promoPrice, int minQuantity, boolean bulk,
-			ServiceContext serviceContext)
+			BigDecimal price, BigDecimal promoPrice, int minQuantity,
+			boolean bulk, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce tier price entry
@@ -121,7 +121,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 		commercePriceEntryLocalService.setHasTierPrice(
 			commercePriceEntryId, true);
-		
+
 		commercePriceEntryLocalService.setBulk(commercePriceEntryId, bulk);
 
 		return commerceTierPriceEntry;
@@ -164,8 +164,9 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		if (commerceTierPriceEntries.isEmpty()) {
 			commercePriceEntryLocalService.setHasTierPrice(
 				commerceTierPriceEntry.getCommercePriceEntryId(), false);
-			
-			commercePriceEntryLocalService.setBulk(commerceTierPriceEntry.getCommercePriceEntryId(), false);
+
+			commercePriceEntryLocalService.setBulk(
+				commerceTierPriceEntry.getCommercePriceEntryId(), false);
 		}
 
 		// Expando

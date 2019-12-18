@@ -83,6 +83,49 @@ create table CommercePriceListAccountRel (
 	lastPublishDate DATE null
 );
 
+create table CommercePriceListChannelRel (
+	uuid_ VARCHAR(75) null,
+	commercePriceListChannelRelId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	commerceChannelId LONG,
+	commercePriceListId LONG,
+	order_ INTEGER,
+	lastPublishDate DATE null
+);
+
+create table CommercePriceListContractRel (
+	uuid_ VARCHAR(75) null,
+	commercePriceListContractRelId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	commerceContractId LONG,
+	commercePriceListId LONG,
+	order_ INTEGER,
+	lastPublishDate DATE null
+);
+
+create table CommercePriceListRel (
+	uuid_ VARCHAR(75) null,
+	commercePriceListRelId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	classNameId LONG,
+	classPK LONG,
+	commercePriceListId LONG,
+	order_ INTEGER,
+	lastPublishDate DATE null
+);
+
 create table CommerceTierPriceEntry (
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,

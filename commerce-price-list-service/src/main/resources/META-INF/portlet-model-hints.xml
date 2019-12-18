@@ -60,6 +60,19 @@
 		<field name="order" type="int" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
+	<model name="com.liferay.commerce.price.list.model.CommercePriceListChannelRel">
+		<field name="uuid" type="String" />
+		<field name="commercePriceListChannelRelId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceChannelId" type="long" />
+		<field name="commercePriceListId" type="long" />
+		<field name="order" type="int" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
 	<model name="com.liferay.commerce.price.list.model.CommercePriceListCommerceAccountGroupRel">
 		<field name="uuid" type="String" />
 		<field name="commercePriceListCommerceAccountGroupRelId" type="long" />
@@ -70,6 +83,33 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="commercePriceListId" type="long" />
 		<field name="commerceAccountGroupId" type="long" />
+		<field name="order" type="int" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.price.list.model.CommercePriceListContractRel">
+		<field name="uuid" type="String" />
+		<field name="commercePriceListContractRelId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceContractId" type="long" />
+		<field name="commercePriceListId" type="long" />
+		<field name="order" type="int" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.price.list.model.CommercePriceListRel">
+		<field name="uuid" type="String" />
+		<field name="commercePriceListRelId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="commercePriceListId" type="long" />
 		<field name="order" type="int" />
 		<field name="lastPublishDate" type="Date" />
 	</model>

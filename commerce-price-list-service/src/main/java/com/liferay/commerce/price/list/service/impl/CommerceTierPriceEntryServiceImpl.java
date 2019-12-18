@@ -49,8 +49,8 @@ public class CommerceTierPriceEntryServiceImpl
 	@Override
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
 			long commercePriceEntryId, String externalReferenceCode,
-			BigDecimal price, BigDecimal promoPrice, int minQuantity, boolean bulk,
-			ServiceContext serviceContext)
+			BigDecimal price, BigDecimal promoPrice, int minQuantity,
+			boolean bulk, ServiceContext serviceContext)
 		throws PortalException {
 
 		PortalPermissionUtil.check(

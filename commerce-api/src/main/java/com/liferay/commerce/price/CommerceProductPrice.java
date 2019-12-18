@@ -39,4 +39,6 @@ public interface CommerceProductPrice {
 	public CommerceMoney getUnitPrice();
 
 	public CommerceMoney getUnitPromoPrice();
+	
+	public List<CommerceTierPrice> getTierPrices();
 }

@@ -25,7 +25,9 @@ public class CommercePriceEntryUpgradeProcess
 
 	@Override
 	public void doUpgrade() throws Exception {
-		addColumn(CommercePriceEntryModelImpl.class, CommercePriceEntryModelImpl.TABLE_NAME, "bulk", "BOOLEAN");
+		addColumn(
+			CommercePriceEntryModelImpl.class,
+			CommercePriceEntryModelImpl.TABLE_NAME, "bulk", "BOOLEAN");
 	}
 
 }

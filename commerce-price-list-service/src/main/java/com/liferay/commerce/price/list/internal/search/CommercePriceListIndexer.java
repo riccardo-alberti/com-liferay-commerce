@@ -16,9 +16,13 @@ package com.liferay.commerce.price.list.internal.search;
 
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommercePriceListAccountRel;
+import com.liferay.commerce.price.list.model.CommercePriceListChannelRel;
 import com.liferay.commerce.price.list.model.CommercePriceListCommerceAccountGroupRel;
+import com.liferay.commerce.price.list.model.CommercePriceListContractRel;
 import com.liferay.commerce.price.list.service.CommercePriceListAccountRelLocalService;
+import com.liferay.commerce.price.list.service.CommercePriceListChannelRelLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelLocalService;
+import com.liferay.commerce.price.list.service.CommercePriceListContractRelLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -252,6 +256,41 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 			"commerceAccountGroupIds_required_matches",
 			commerceAccountGroupIds.length);
 
+		List<CommercePriceListChannelRel> commercePriceListCommerceChannelRels =
+			_commercePriceListChannelRelLocalService.
+				getCommercePriceListChannelRels(
+					commercePriceList.getCommercePriceListId());
+
+		Stream<CommercePriceListChannelRel>
+			commercePriceListCommerceChannelRelStream =
+				commercePriceListCommerceChannelRels.stream();
+
+		long[] commerceChannelIds =
+			commercePriceListCommerceChannelRelStream.mapToLong(
+				CommercePriceListChannelRel::getCommerceChannelId
+			).toArray();
+
+		document.addNumber("commerceChannelIds", commerceChannelIds);
+
+		List<CommercePriceListContractRel>
+			commercePriceListCommerceContractRels =
+				_commercePriceListContractRelLocalService.
+					getCommercePriceListContractRels(
+						commercePriceList.getCommercePriceListId());
+
+		Stream<CommercePriceListContractRel>
+			commercePriceListCommerceContractRelStream =
+				commercePriceListCommerceContractRels.stream();
+
+		long[] commerceContractIds =
+			commercePriceListCommerceContractRelStream.mapToLong(
+				CommercePriceListContractRel::getCommerceContractId
+			).toArray();
+
+		document.addNumber("commerceContractIds", commerceContractIds);
+
+		// ADD DYNAMIC DOC SELECTOR
+
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"Document " + commercePriceList + " indexed successfully");
@@ -332,8 +371,16 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 		_commercePriceListAccountRelLocalService;
 
 	@Reference
+	private CommercePriceListChannelRelLocalService
+		_commercePriceListChannelRelLocalService;
+
+	@Reference
 	private CommercePriceListCommerceAccountGroupRelLocalService
 		_commercePriceListCommerceAccountGroupRelLocalService;
+
+	@Reference
+	private CommercePriceListContractRelLocalService
+		_commercePriceListContractRelLocalService;
 
 	@Reference
 	private CommercePriceListLocalService _commercePriceListLocalService;

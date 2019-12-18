@@ -318,6 +318,73 @@ public class CommercePriceListLocalServiceImpl
 		return commercePriceListPersistence.fetchByC_ERC(
 			companyId, externalReferenceCode);
 	}
+	
+	public Optional<CommercePriceList> getCommercePriceList(long companyId, long groupId, long commerceAccountId,
+			long[] commerceAccountGroupIds, long[] commerceChannelIds, long[] contractIds)
+		throws PortalException {
+		
+		Company company = companyLocalService.getCompany(companyId);
+
+		if (commerceAccountGroupIds == null) {
+			commerceAccountGroupIds = new long[0];
+		}
+		else if (commerceAccountGroupIds.length > 1) {
+			commerceAccountGroupIds = ArrayUtil.unique(commerceAccountGroupIds);
+
+			Arrays.sort(commerceAccountGroupIds);
+		}
+
+		String cacheKey = StringBundler.concat(
+			groupId, StringPool.POUND, commerceAccountId, StringPool.POUND,
+			StringUtil.merge(commerceAccountGroupIds));
+
+		PortalCache<String, Serializable> portalCache =
+			MultiVMPoolUtil.getPortalCache(
+				"PRICE_LISTS_" + company.getCompanyId());
+
+		boolean priceListCalculated = GetterUtil.getBoolean(
+			portalCache.get(cacheKey + "_calculated"));
+
+		CommercePriceList commercePriceList =
+			(CommercePriceList)portalCache.get(cacheKey);
+
+		if (priceListCalculated) {
+			return Optional.ofNullable(commercePriceList);
+		}
+
+		SearchContext searchContext = buildSearchContext(
+			company.getCompanyId(), groupId, commerceAccountId,
+			commerceAccountGroupIds);
+		
+		searchContext.setAttribute("commerceChannelIds", commerceChannelIds);
+		searchContext.setAttribute("contractIds", contractIds);
+
+		Indexer<CommercePriceList> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommercePriceList.class);
+
+		Hits hits = indexer.search(searchContext, Field.ENTRY_CLASS_PK);
+
+		List<Document> documents = hits.toList();
+
+		if (documents.isEmpty()) {
+			portalCache.put(cacheKey + "_calculated", true);
+
+			return Optional.empty();
+		}
+
+		Document document = documents.get(0);
+
+		long commercePriceListId = GetterUtil.getLong(
+			document.get(Field.ENTRY_CLASS_PK));
+
+		commercePriceList = fetchCommercePriceList(commercePriceListId);
+
+		portalCache.put(cacheKey, commercePriceList);
+
+		portalCache.put(cacheKey + "_calculated", true);
+
+		return Optional.ofNullable(commercePriceList);
+	}
 
 	@Override
 	public Optional<CommercePriceList> getCommercePriceList(
@@ -767,10 +834,13 @@ public class CommercePriceListLocalServiceImpl
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
 
-		Sort sort = SortFactoryUtil.create(
+		Sort sort1 = SortFactoryUtil.create(
+			Field.PRIORITY + "_Number_sortable", true);
+		
+		Sort sort2 = SortFactoryUtil.create(
 			Field.PRIORITY + "_Number_sortable", true);
 
-		searchContext.setSorts(sort);
+		searchContext.setSorts(sort1, sort2);
 
 		return searchContext;
 	}
